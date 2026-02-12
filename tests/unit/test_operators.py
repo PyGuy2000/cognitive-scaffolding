@@ -1,5 +1,7 @@
 """Unit tests for operators."""
 
+import json
+
 import pytest
 from cognitive_scaffolding.core.models import AudienceControlVector, AudienceProfile, LayerName
 from cognitive_scaffolding.operators.activation import ActivationOperator
@@ -87,6 +89,36 @@ class TestReflectionOperator:
         output = op.execute("neural networks", audience, {})
         assert output.layer == LayerName.REFLECTION
         assert "calibration_questions" in output.content
+
+
+class TestParseOutput:
+    """Tests for BaseOperator.parse_output() inherited by all operators."""
+
+    def test_plain_json(self):
+        op = ActivationOperator(ai_client=None)
+        raw = json.dumps({"hook": "Did you know?", "stakes": "very important"})
+        result = op.parse_output(raw)
+        assert result == {"hook": "Did you know?", "stakes": "very important"}
+
+    def test_json_code_fence_with_language_tag(self):
+        op = ActivationOperator(ai_client=None)
+        payload = {"hook": "Did you know?", "stakes": "very important"}
+        raw = f"```json\n{json.dumps(payload)}\n```"
+        result = op.parse_output(raw)
+        assert result == payload
+
+    def test_json_code_fence_without_language_tag(self):
+        op = ActivationOperator(ai_client=None)
+        payload = {"hook": "Did you know?", "stakes": "very important"}
+        raw = f"```\n{json.dumps(payload)}\n```"
+        result = op.parse_output(raw)
+        assert result == payload
+
+    def test_non_json_text(self):
+        op = ActivationOperator(ai_client=None)
+        raw = "This is just plain text, not JSON at all."
+        result = op.parse_output(raw)
+        assert result == {"text": raw}
 
 
 class TestGradingOperator:

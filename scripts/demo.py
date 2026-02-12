@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 """CLI demo for the Cognitive Scaffolding pipeline.
 
-Validates the full pipeline end-to-end across all three adapters
-and the experiment runner.
-
 Usage:
-    python scripts/demo.py chatbot    --topic "neural networks" --audience child
-    python scripts/demo.py rag        --topic "gradient descent" --audience data_scientist
-    python scripts/demo.py etl        --topic "transformers"    --audience general
+    python scripts/demo.py compile    --topic "neural networks" --audience child
+    python scripts/demo.py compile    --topic "gradient descent" --audience data_scientist --format rag
+    python scripts/demo.py compile    --topic "transformers"    --audience general --format etl
     python scripts/demo.py experiment --topic "neural networks" --audience general --layers metaphor encoding
 """
 
@@ -36,6 +33,12 @@ from cognitive_scaffolding.orchestrator.experiment_runner import (
 from utils.ai_client import AIClient
 
 SEPARATOR = "=" * 60
+
+DEFAULT_PROFILES = {
+    "chatbot": "chatbot_tutor",
+    "rag": "rag_explainer",
+    "etl": "etl_explain",
+}
 
 
 def _header(title: str) -> None:
@@ -71,16 +74,9 @@ def _build_conductor(args: argparse.Namespace) -> CognitiveConductor:
     )
 
 
-# ── Chatbot ─────────────────────────────────────────────────
+# ── Print helpers ──────────────────────────────────────────
 
-def cmd_chatbot(args: argparse.Namespace) -> None:
-    profile = args.profile or "chatbot_tutor"
-    _header(f"Chatbot  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
-
-    conductor = _build_conductor(args)
-    record = conductor.compile(args.topic, args.audience, profile)
-    messages = ChatbotAdapter().format(record)
-
+def _print_chatbot(messages: List[Dict[str, Any]]) -> None:
     for msg in messages:
         layer = msg.get("layer", "?")
         confidence = msg.get("confidence", 0)
@@ -93,16 +89,7 @@ def cmd_chatbot(args: argparse.Namespace) -> None:
     print(SEPARATOR)
 
 
-# ── RAG ─────────────────────────────────────────────────────
-
-def cmd_rag(args: argparse.Namespace) -> None:
-    profile = args.profile or "rag_explainer"
-    _header(f"RAG  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
-
-    conductor = _build_conductor(args)
-    record = conductor.compile(args.topic, args.audience, profile)
-    chunks = RAGAdapter().format(record)
-
+def _print_rag(chunks: List[Dict[str, Any]]) -> None:
     for i, chunk in enumerate(chunks, 1):
         meta = chunk.get("metadata", {})
         print(f"\n--- Chunk {i}/{len(chunks)} ---")
@@ -121,17 +108,7 @@ def cmd_rag(args: argparse.Namespace) -> None:
     print(SEPARATOR)
 
 
-# ── ETL ─────────────────────────────────────────────────────
-
-def cmd_etl(args: argparse.Namespace) -> None:
-    profile = args.profile or "etl_explain"
-    _header(f"ETL  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
-
-    conductor = _build_conductor(args)
-    record = conductor.compile(args.topic, args.audience, profile)
-    flat = ETLAdapter().format(record)
-
-    # Group keys for readability
+def _print_etl(flat: Dict[str, Any]) -> None:
     groups = {
         "Artifact": ["artifact_id", "record_id", "topic", "audience_id",
                       "audience_name", "expertise_level", "profile_name",
@@ -157,7 +134,22 @@ def cmd_etl(args: argparse.Namespace) -> None:
     print(SEPARATOR)
 
 
-# ── Experiment ──────────────────────────────────────────────
+# ── Commands ───────────────────────────────────────────────
+
+def cmd_compile(args: argparse.Namespace) -> None:
+    fmt = args.format
+    profile = args.profile or DEFAULT_PROFILES[fmt]
+    _header(f"Compile ({fmt})  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
+
+    conductor = _build_conductor(args)
+    record = conductor.compile(args.topic, args.audience, profile)
+
+    adapters = {"chatbot": ChatbotAdapter, "rag": RAGAdapter, "etl": ETLAdapter}
+    output = adapters[fmt]().format(record)
+
+    printers = {"chatbot": _print_chatbot, "rag": _print_rag, "etl": _print_etl}
+    printers[fmt](output)
+
 
 def cmd_experiment(args: argparse.Namespace) -> None:
     profile = args.profile or "chatbot_tutor"
@@ -221,17 +213,13 @@ def build_parser() -> argparse.ArgumentParser:
         p.add_argument("--provider", default=None, help="AI provider (anthropic or openai)")
         p.add_argument("--model", default=None, help="Override the default model")
 
-    # chatbot
-    p_chat = sub.add_parser("chatbot", help="Compile and format as chat messages")
-    add_common(p_chat)
-
-    # rag
-    p_rag = sub.add_parser("rag", help="Compile and format as RAG document chunks")
-    add_common(p_rag)
-
-    # etl
-    p_etl = sub.add_parser("etl", help="Compile and format as flat ETL record")
-    add_common(p_etl)
+    # compile
+    p_compile = sub.add_parser("compile", help="Compile a topic and format the output")
+    add_common(p_compile)
+    p_compile.add_argument(
+        "--format", choices=["chatbot", "rag", "etl"], default="chatbot",
+        help="Output format (default: chatbot)",
+    )
 
     # experiment
     p_exp = sub.add_parser("experiment", help="Run A/B experiment on layer toggles")
@@ -250,9 +238,7 @@ def main() -> None:
     args = parser.parse_args()
 
     dispatch = {
-        "chatbot": cmd_chatbot,
-        "rag": cmd_rag,
-        "etl": cmd_etl,
+        "compile": cmd_compile,
         "experiment": cmd_experiment,
     }
 
