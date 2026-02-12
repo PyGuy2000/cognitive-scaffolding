@@ -5,7 +5,6 @@ Note: This is NOT a cognitive layer in the 7-layer model. It operates on
 the completed artifact to evaluate and suggest improvements.
 """
 
-import json
 from typing import Any, Dict
 
 from cognitive_scaffolding.core.models import AudienceProfile, LayerName, LayerOutput

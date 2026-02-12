@@ -6,7 +6,7 @@ Score = sum(w_k * x_k) / sum(w_k)
 - Required layers that are enabled but empty trigger penalty (0.7 multiplier)
 """
 
-from typing import Dict, Optional
+from typing import Dict
 from cognitive_scaffolding.core.models import CognitiveArtifact, EvaluationResult, LayerName
 
 

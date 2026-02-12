@@ -7,7 +7,7 @@ re-run those specific operators with enriched context.
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, Optional
+from typing import Dict
 
 from cognitive_scaffolding.core.models import ArtifactRecord, LayerName
 from cognitive_scaffolding.core.scoring import LayerConfig, score_artifact

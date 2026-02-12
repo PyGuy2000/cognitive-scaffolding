@@ -1,10 +1,8 @@
 """Integration tests for end-to-end pipeline."""
 
-import pytest
 from pathlib import Path
 
 from cognitive_scaffolding.orchestrator.conductor import CognitiveConductor
-from cognitive_scaffolding.orchestrator.toggle_manager import ToggleManager
 from cognitive_scaffolding.adapters.chatbot_adapter import ChatbotAdapter
 from cognitive_scaffolding.adapters.rag_adapter import RAGAdapter
 from cognitive_scaffolding.adapters.etl_adapter import ETLAdapter

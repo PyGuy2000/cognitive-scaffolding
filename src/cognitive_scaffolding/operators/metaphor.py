@@ -8,7 +8,7 @@ import json
 import logging
 from typing import Any, Dict, Optional
 
-from cognitive_scaffolding.core.models import AudienceProfile, LayerName
+from cognitive_scaffolding.core.models import AudienceProfile, LayerName, LayerOutput
 from cognitive_scaffolding.operators.base import BaseOperator
 
 logger = logging.getLogger(__name__)
@@ -63,7 +63,6 @@ class MetaphorOperator(BaseOperator):
         config: Dict[str, Any],
     ) -> "LayerOutput":
         """Execute using the existing MetaphorEngine."""
-        from cognitive_scaffolding.core.models import LayerOutput
         from datetime import datetime, timezone
 
         concept_id = config.get("concept_id", topic.lower().replace(" ", "_"))

@@ -3,7 +3,7 @@
 Designed for data pipeline ingestion with flat, queryable fields.
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from cognitive_scaffolding.adapters.base import BaseAdapter
 from cognitive_scaffolding.core.models import ArtifactRecord, LayerName

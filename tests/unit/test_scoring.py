@@ -1,6 +1,5 @@
 """Unit tests for scoring module."""
 
-import pytest
 from cognitive_scaffolding.core.models import (
     AudienceProfile,
     CognitiveArtifact,

@@ -6,7 +6,6 @@ from cognitive_scaffolding.core.models import (
     AudienceControlVector,
     AudienceProfile,
     CognitiveArtifact,
-    EvaluationResult,
     LayerName,
     LayerOutput,
 )

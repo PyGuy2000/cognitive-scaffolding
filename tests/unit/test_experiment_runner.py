@@ -6,7 +6,6 @@ from pathlib import Path
 from cognitive_scaffolding.orchestrator.conductor import CognitiveConductor
 from cognitive_scaffolding.orchestrator.experiment_runner import (
     ExperimentConfig,
-    ExperimentReport,
     ExperimentRunner,
     LayerExperimentResult,
     VariantResult,

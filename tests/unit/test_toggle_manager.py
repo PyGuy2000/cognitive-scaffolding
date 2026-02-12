@@ -1,14 +1,10 @@
 """Unit tests for toggle manager."""
 
 import pytest
-import tempfile
-import os
-from pathlib import Path
 
 import yaml
 
 from cognitive_scaffolding.core.models import LayerName
-from cognitive_scaffolding.core.scoring import LayerConfig
 from cognitive_scaffolding.orchestrator.toggle_manager import ToggleManager
 
 
