@@ -1,0 +1,29 @@
+concept_id: privacy_preserving_ai
+name: Privacy-Preserving AI
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Privacy-Preserving AI - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- human_in_the_loop
+- ai_and_sustainability
+- affective_computing
+- adversarial_ml

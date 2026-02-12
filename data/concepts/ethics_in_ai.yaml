@@ -1,0 +1,28 @@
+concept_id: ethics_in_ai
+name: Ethics in AI
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Ethics in AI - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ai_policy_and_regulation
+- eu_ai_act
+- ai_and_law
+- collaborative_ai

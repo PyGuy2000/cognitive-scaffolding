@@ -1,0 +1,31 @@
+concept_id: "large_language_models"
+name: "Large Language Models"
+category: "ai_applications"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "very_fast"
+description: "AI systems trained on vast text data to understand and generate language"
+key_components:
+  - transformer_architecture
+  - massive_parameters
+  - training_data
+  - fine_tuning
+  - inference_engine
+properties:
+  - language_understanding
+  - text_generation
+  - few_shot_learning
+  - context_awareness
+  - emergent_capabilities
+common_misconceptions:
+  - truly_understands_language
+  - conscious_awareness
+  - always_factually_correct
+  - can_learn_everything
+prerequisite_concepts:
+  - transformers
+  - deep_learning
+related_concepts:
+  - prompt_engineering
+  - fine_tuning
+  - embeddings

@@ -1,0 +1,28 @@
+concept_id: missing_data_handling
+name: Missing Data Handling
+category: data_engineering
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Strategies for dealing with incomplete datasets
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- data_augmentation
+- data_labeling
+- data_versioning
+- data_preprocessing

@@ -1,0 +1,40 @@
+audience_id: data_scientist
+name: Data Scientist
+parent: technical_workers
+description: Professionals who develop ML models and algorithms
+age_range: 25-45
+show_formulas: full_mathematical
+show_code: full_implementations
+show_proofs: mathematical_derivations
+benchmark_focus: model_performance
+complexity_preference: very_high
+role: Develop and implement machine learning models and algorithms
+core_skills:
+- Python
+- R
+- Machine_Learning
+- Statistics
+- Data_Wrangling
+- Feature_Engineering
+primary_tools:
+- Python
+- R
+- Jupyter
+- TensorFlow
+- PyTorch
+- Scikit_learn
+preferred_domains:
+- statistical_learning
+- experimental_design
+- model_evaluation
+learning_assets:
+- python_notebooks
+- model_implementations
+- performance_benchmarks
+expertise_level: intermediate
+preferred_analogies:
+- data_workflows
+- analytical_processes
+attention_span: medium
+technical_background: none
+communication_style: accessible_friendly

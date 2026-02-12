@@ -1,0 +1,27 @@
+concept_id: cross_validation
+name: Cross-Validation
+category: mlops
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Cross-Validation - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- keras
+- huggingface_transformers
+- ray
+- dvc

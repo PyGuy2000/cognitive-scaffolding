@@ -1,0 +1,25 @@
+audience_id: marketing_professional
+name: Marketing Professionals
+parent: business
+description: Marketers looking to position products, analyze customer data, and optimize
+  campaigns.
+age_range: 22-55
+communication_style: persuasive_visual
+complexity_preference: medium
+show_proofs: optional
+show_citations: 'no'
+benchmark_focus: engagement_conversion
+preferred_domains:
+- customer_segmentation
+- branding
+- personalization
+learning_assets:
+- infographics
+- case_studies
+- dashboards
+expertise_level: varied
+preferred_analogies:
+- customer_journey
+- funnel_optimization
+attention_span: medium
+technical_background: marketing

@@ -1,0 +1,29 @@
+concept_id: agi_and_superintelligence
+name: AGI and Superintelligence
+category: ai_fundamentals
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Artificial general intelligence and beyond-human cognitive capabilities
+key_components:
+- theory
+- applications
+- limitations
+- future_directions
+properties:
+- foundational
+- broadly_applicable
+- evolving
+- interdisciplinary
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- artificial_intelligence_overview
+- emergent_behaviors
+- turing_test
+- philosophy_of_ai

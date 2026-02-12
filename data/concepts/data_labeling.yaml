@@ -1,0 +1,27 @@
+concept_id: data_labeling
+name: Data Labeling
+category: data_engineering
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Process of annotating raw data for supervised learning
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- feature_stores
+- missing_data_handling
+- data_preprocessing
+- data_governance

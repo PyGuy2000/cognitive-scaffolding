@@ -1,0 +1,38 @@
+audience_id: ml_engineer
+name: ML Engineer
+parent: technical_workers
+description: Professionals who deploy and scale ML systems
+age_range: 25-50
+show_formulas: performance_metrics
+show_code: architecture_implementations
+show_proofs: system_design_rationale
+benchmark_focus: system_performance
+role: Design and deploy ML systems ensuring scalability and reliability
+core_skills:
+- Python
+- SQL
+- Data_Warehousing
+- ETL
+- Big_Data
+- MLOps
+primary_tools:
+- Python
+- SQL
+- Hadoop
+- Spark
+- Airflow
+- Kubernetes
+- Docker
+preferred_domains:
+- system_architecture
+- scalability_patterns
+- infrastructure_design
+expertise_level: intermediate
+preferred_analogies:
+- systems
+- engineering
+- mechanical_processes
+complexity_preference: medium
+attention_span: medium
+technical_background: expert
+communication_style: accessible_friendly

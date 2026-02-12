@@ -1,0 +1,28 @@
+concept_id: history_of_ai
+name: History of AI
+category: ai_fundamentals
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Evolution of artificial intelligence from symbolic reasoning to modern
+  deep learning
+key_components:
+- theory
+- applications
+- limitations
+- future_directions
+properties:
+- foundational
+- broadly_applicable
+- evolving
+- interdisciplinary
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts: []
+related_concepts:
+- artificial_intelligence_overview
+- emergent_behaviors
+- turing_test
+- philosophy_of_ai

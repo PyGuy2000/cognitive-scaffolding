@@ -1,0 +1,28 @@
+concept_id: active_learning
+name: Active Learning
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Intelligently selecting data points for labeling
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- gaussian_processes
+- gradient_boosting
+- naive_bayes
+- k_means_clustering

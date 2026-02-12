@@ -1,0 +1,39 @@
+concept_id: transformers
+name: Transformer Architecture
+category: machine_learning
+complexity: advanced
+description: A neural network architecture that uses self-attention mechanisms to process sequential data
+key_components:
+  - self_attention:
+      description: Mechanism to weigh the importance of different parts of the input
+      importance: critical
+  - multi_head_attention:
+      description: Multiple parallel attention mechanisms
+      importance: high
+  - positional_encoding:
+      description: Method to inject sequence order information
+      importance: high
+  - feed_forward_networks:
+      description: Point-wise fully connected layers
+      importance: medium
+  - layer_normalization:
+      description: Normalization technique for stable training
+      importance: medium
+prerequisites:
+  - neural_networks
+  - linear_algebra
+  - sequence_modeling
+applications:
+  - Natural Language Processing
+  - Machine Translation
+  - Text Generation
+  - Computer Vision
+common_misconceptions:
+  - "Transformers are only for text"
+  - "Attention is the same as focusing"
+  - "Bigger is always better"
+teaching_hints:
+  - Start with the attention mechanism
+  - Use visual diagrams
+  - Compare to human reading comprehension
+  - Show concrete examples

@@ -1,0 +1,27 @@
+concept_id: openai_api
+name: OpenAI API
+category: mlops
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: OpenAI API - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts: []
+related_concepts:
+- distributed_training
+- tpu_computing
+- auto_ml
+- cross_validation

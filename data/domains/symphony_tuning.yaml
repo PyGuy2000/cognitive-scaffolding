@@ -1,0 +1,37 @@
+description: Metaphors based on symphony tuning sessions for machine learning model training
+domain_id: symphony_tuning
+examples:
+- model_training
+- hyperparameter_tuning
+- overfitting_prevention
+- generalization
+- fine_tuning
+metaphor_types:
+- iterative_refinement
+- performance_optimization
+- balance_adjustment
+- generalization_training
+name: Symphony Tuning
+properties:
+- iterative_adjustment
+- performance_refinement
+- balance_optimization
+- generalization_capability
+- incremental_improvement
+strengths:
+- machine_learning_concepts
+- model_training_processes
+- overfitting_explanation
+- generalization_theory
+suitable_for:
+- data_scientists
+- ml_engineers
+- technical_professionals
+- ai_researchers
+vocabulary:
+- like tuning instruments
+- similar to rehearsal
+- think of refinement
+- imagine calibration
+- as if practicing
+- just like fine tuning

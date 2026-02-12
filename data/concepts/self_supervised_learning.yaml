@@ -1,0 +1,29 @@
+concept_id: self_supervised_learning
+name: Self-Supervised Learning
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Learning representations from data without manual labels
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- meta_learning
+- naive_bayes
+- active_learning
+- gaussian_processes

@@ -1,0 +1,28 @@
+concept_id: hierarchical_clustering
+name: Hierarchical Clustering
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Building nested clusters in tree structure
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- active_learning
+- independent_component_analysis
+- support_vector_machines
+- naive_bayes

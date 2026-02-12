@@ -1,0 +1,33 @@
+concept_id: data_preprocessing
+name: Data Preprocessing
+category: data_engineering
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Essential steps to clean, transform, and prepare raw data for machine
+  learning
+key_components:
+- data_cleaning
+- missing_value_handling
+- outlier_detection
+- data_normalization
+- categorical_encoding
+- data_validation
+properties:
+- critical_for_model_success
+- time_consuming_process
+- domain_specific_requirements
+- impacts_model_performance
+- often_underestimated
+common_misconceptions:
+- boring_preliminary_step
+- can_be_fully_automated
+- same_approach_works_everywhere
+- less_important_than_modeling
+prerequisite_concepts:
+- probability_and_statistics
+related_concepts:
+- feature_engineering
+- data_quality
+- exploratory_data_analysis
+- machine_learning

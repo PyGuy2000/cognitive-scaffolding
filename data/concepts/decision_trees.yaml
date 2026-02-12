@@ -1,0 +1,27 @@
+concept_id: decision_trees
+name: Decision Trees
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Tree-like model for classification and regression
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- gaussian_processes
+- knowledge_graphs
+- random_forests
+- supervised_learning

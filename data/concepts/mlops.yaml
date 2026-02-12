@@ -1,0 +1,33 @@
+concept_id: mlops
+name: MLOps
+category: mlops
+complexity: advanced
+last_updated: '2025-06-13'
+evolution_rate: fast
+description: Practices for deploying and maintaining machine learning models in production
+key_components:
+- model_deployment
+- continuous_integration
+- model_monitoring
+- automated_pipelines
+- version_control
+- infrastructure_management
+properties:
+- bridges_development_production
+- ensures_model_reliability
+- enables_scalability
+- supports_collaboration
+- continuous_improvement
+common_misconceptions:
+- just_model_deployment
+- only_for_large_teams
+- slows_down_development
+- too_complex_for_startups
+prerequisite_concepts:
+- machine_learning
+- model_evaluation
+related_concepts:
+- model_deployment
+- model_monitoring
+- continuous_integration
+- data_engineering

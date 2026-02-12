@@ -1,0 +1,28 @@
+concept_id: data_versioning
+name: Data Versioning
+category: data_engineering
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Tracking and managing changes in datasets over time
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- feature_engineering
+- data_governance
+- feature_stores
+- data_augmentation

@@ -1,0 +1,32 @@
+concept_id: "fine_tuning"
+name: "Fine Tuning"
+category: "ai_techniques"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Adapting pre-trained models to specific tasks or domains"
+key_components:
+  - pre_trained_model
+  - task_specific_data
+  - parameter_adjustment
+  - learning_rate_scheduling
+  - evaluation_metrics
+properties:
+  - builds_on_existing_knowledge
+  - task_specific_adaptation
+  - computationally_efficient
+  - requires_quality_data
+  - iterative_process
+common_misconceptions:
+  - always_improves_performance
+  - no_new_training_needed
+  - works_with_any_data
+  - eliminates_bias
+prerequisite_concepts:
+  - machine_learning
+  - transfer_learning
+  - neural_networks
+related_concepts:
+  - transfer_learning
+  - prompt_engineering
+  - domain_adaptation

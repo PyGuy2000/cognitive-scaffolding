@@ -1,0 +1,28 @@
+concept_id: random_forests
+name: Random Forests
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Ensemble of decision trees for robust predictions
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- active_learning
+- gradient_boosting
+- hierarchical_clustering
+- support_vector_machines

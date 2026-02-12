@@ -1,0 +1,30 @@
+concept_id: actor_critic_methods
+name: Actor-Critic Methods
+category: reinforcement_learning
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Actor-Critic Methods - key AI/ML concept
+key_components:
+- environment
+- agent
+- reward
+- policy
+properties:
+- sequential
+- goal_oriented
+- exploratory
+- adaptive
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+- reinforcement_learning
+related_concepts:
+- hierarchical_rl
+- reinforcement_learning
+- policy_gradient_methods
+- value_based_methods

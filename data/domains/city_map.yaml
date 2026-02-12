@@ -1,0 +1,37 @@
+description: Metaphors based on city maps for graph theory and optimization
+domain_id: city_map
+examples:
+- graph_algorithms
+- routing_optimization
+- supply_chain_networks
+- energy_transmission
+- shortest_path_problems
+metaphor_types:
+- graph_structures
+- network_optimization
+- path_finding
+- connectivity_analysis
+name: City Map
+properties:
+- node_edge_relationships
+- weighted_connections
+- path_optimization
+- network_topology
+- distance_minimization
+strengths:
+- graph_theory
+- optimization_algorithms
+- network_analysis
+- routing_problems
+suitable_for:
+- algorithm_engineers
+- operations_researchers
+- logistics_planners
+- data_scientists
+vocabulary:
+- like a map
+- similar to intersections
+- think of routes
+- imagine navigation
+- as if traveling
+- just like pathfinding

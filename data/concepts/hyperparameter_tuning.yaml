@@ -1,0 +1,28 @@
+concept_id: hyperparameter_tuning
+name: Hyperparameter Tuning
+category: mlops
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Hyperparameter Tuning - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- cross_validation
+- pruning
+- auto_ml
+- kubernetes_for_ml

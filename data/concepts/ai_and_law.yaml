@@ -1,0 +1,28 @@
+concept_id: ai_and_law
+name: AI and Law
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI and Law - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- adversarial_ml
+- ai_and_sustainability
+- ai_auditing
+- accountability_in_ai

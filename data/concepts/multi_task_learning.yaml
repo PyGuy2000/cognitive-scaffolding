@@ -1,0 +1,29 @@
+concept_id: multi_task_learning
+name: Multi-Task Learning
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Training models to perform multiple related tasks simultaneously
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- independent_component_analysis
+- principal_component_analysis
+- logistic_regression
+- gradient_boosting

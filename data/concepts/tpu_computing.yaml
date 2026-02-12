@@ -1,0 +1,29 @@
+concept_id: tpu_computing
+name: TPU Computing
+category: mlops
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: TPU Computing - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- fpga_for_ai
+- llama_index
+- scikit_learn
+- keras

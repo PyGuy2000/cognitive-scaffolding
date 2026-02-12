@@ -1,0 +1,26 @@
+concept_id: "neural_networks"
+name: "Neural Networks"
+category: "ai_fundamentals"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "slow"
+description: "Interconnected nodes that process information"
+key_components:
+  - nodes_neurons
+  - connections_weights
+  - layers
+  - activation_functions
+properties:
+  - interconnected_processing
+  - pattern_recognition
+  - learning_from_data
+  - parallel_computation
+common_misconceptions:
+  - works_like_human_brain
+  - conscious_understanding
+  - always_accurate
+prerequisite_concepts:
+  - basic_statistics
+related_concepts:
+  - deep_learning
+  - machine_learning

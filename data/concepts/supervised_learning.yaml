@@ -1,0 +1,33 @@
+concept_id: supervised_learning
+name: Supervised Learning
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Machine learning approach using labeled training data to predict outcomes
+key_components:
+- labeled_training_data
+- input_features
+- target_labels
+- prediction_function
+- model_training
+- performance_evaluation
+properties:
+- requires_labeled_examples
+- learns_input_output_mapping
+- generalizes_to_new_data
+- performance_measurable
+- foundation_for_many_applications
+common_misconceptions:
+- more_data_always_better
+- perfect_accuracy_achievable
+- works_without_good_features
+- simpler_always_worse
+prerequisite_concepts:
+- machine_learning
+- probability_and_statistics
+related_concepts:
+- unsupervised_learning
+- classification
+- regression
+- neural_networks

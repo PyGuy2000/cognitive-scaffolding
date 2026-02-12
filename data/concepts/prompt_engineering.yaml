@@ -1,0 +1,31 @@
+concept_id: "prompt_engineering"
+name: "Prompt Engineering"
+category: "ai_applications"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "very_fast"
+description: "Crafting effective instructions for AI language models"
+key_components:
+  - instruction_design
+  - context_setting
+  - example_provision
+  - output_formatting
+  - iterative_refinement
+properties:
+  - instruction_optimization
+  - context_dependent
+  - iterative_process
+  - creativity_required
+  - domain_specific
+common_misconceptions:
+  - just_asking_questions
+  - one_size_fits_all
+  - always_works_same_way
+  - no_skill_required
+prerequisite_concepts:
+  - large_language_models
+  - natural_language_processing
+related_concepts:
+  - few_shot_learning
+  - chain_of_thought
+  - fine_tuning

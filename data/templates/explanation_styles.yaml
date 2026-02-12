@@ -1,0 +1,214 @@
+explanation_styles:
+  # Option 1
+  extended_metaphor:
+    description: "Full metaphor with setup, explanation, and technical bridge"
+    structure:
+      - metaphor_introduction
+      - detailed_analogy
+      - key_insights
+      - technical_bridge
+      - limitations
+      - validation_questions
+    estimated_length: "300-500 words"
+  # Option 2
+  comparative_metaphor:
+    description: "Uses multiple metaphors to highlight different aspects"
+    structure:
+      - concept_overview
+      - metaphor_1_aspect_a
+      - metaphor_2_aspect_b
+      - metaphor_3_aspect_c
+      - synthesis_and_integration
+      - when_to_use_each_metaphor
+    estimated_length: "350-450 words"
+    best_for: ["multi_faceted_concepts", "audience_with_varied_backgrounds", "comprehensive_understanding"]
+ 
+  # Option 3
+  quick_analogy:
+    description: "Brief metaphor for rapid understanding"
+    structure:
+      - direct_comparison
+      - key_insight
+      - limitation_note
+    estimated_length: "50-100 words"
+    
+  # Option 4
+  progressive_revelation:
+    description: "Builds understanding step by step"
+    structure:
+      - simple_starting_point
+      - add_complexity_layer_1
+      - add_complexity_layer_2
+      - full_technical_picture
+    estimated_length: "400-600 words"
+ 
+  # Option 5
+  interactive_dialogue:
+    description: "Q&A style explanation"
+    structure:
+      - opening_question
+      - metaphor_response
+      - follow_up_questions
+      - deeper_explanations
+      - validation_check
+    estimated_length: "200-400 words"
+
+  # Option 6
+  narrative_journey:
+    description: "Story-driven explanation with character development"
+    structure:
+      - character_introduction
+      - problem_setup
+      - journey_begins
+      - obstacles_and_learning
+      - resolution_and_insight
+      - real_world_application
+    estimated_length: "400-600 words"
+    best_for: ["memorable_learning", "creative_audiences", "complex_processes"]
+  
+  # Option 7
+  visual_construction:
+    description: "Builds mental models through visual metaphor progression"
+    structure:
+      - empty_canvas_setup
+      - first_visual_element
+      - adding_components_iteratively
+      - showing_interactions
+      - completed_system_view
+      - real_world_mapping
+    estimated_length: "250-400 words"
+    best_for: ["visual_learners", "system_architecture", "manim_animations"]
+  
+  # Option 8
+  problem_solution_cycle:
+    description: "Follows a problem-solving narrative arc"
+    structure:
+      - problem_identification
+      - initial_attempts_and_failures
+      - breakthrough_insight
+      - solution_implementation
+      - results_and_validation
+      - broader_applications
+    estimated_length: "300-500 words"
+    best_for: ["innovation_concepts", "algorithm_explanations", "business_applications"]
+  
+  # Option 9
+  misconception_decoder:
+    description: "Explicitly addresses and corrects common misunderstandings"
+    structure:
+      - common_misconception_1
+      - why_it_seems_reasonable
+      - corrective_metaphor
+      - common_misconception_2
+      - reality_vs_perception
+      - accurate_mental_model
+    estimated_length: "300-450 words"
+    best_for: ["controversial_topics", "frequently_misunderstood_concepts", "educational_contexts"]
+  
+  # Option 10
+  ecosystem_perspective:
+    description: "Shows how concept fits into larger systems and contexts"
+    structure:
+      - zoom_out_to_ecosystem
+      - identify_concept_role
+      - show_dependencies
+      - demonstrate_interactions
+      - explore_emergent_properties
+      - system_level_insights
+    estimated_length: "350-500 words"
+    best_for: ["system_thinking", "enterprise_architecture", "interdisciplinary_topics"]
+
+  # Option 11
+  hands_on_workshop:
+    description: "Metaphor combined with actionable steps and exercises"
+    structure:
+      - metaphor_introduction
+      - hands_on_activity_1
+      - reflection_on_experience
+      - hands_on_activity_2
+      - pattern_recognition
+      - real_world_application_exercise
+    estimated_length: "400-600 words"
+    best_for: ["practical_learning", "skill_development", "workshop_materials"]
+
+  # Option 12
+  temporal_evolution:
+    description: "Shows how understanding evolves over time or experience"
+    structure:
+      - historical_context
+      - early_understanding_stage
+      - intermediate_discoveries
+      - current_sophisticated_view
+      - future_implications
+      - personal_learning_journey
+    estimated_length: "350-500 words"
+    best_for: ["evolving_fields", "maturity_models", "research_contexts"]
+
+  # Option 13
+  multi_perspective_lens:
+    description: "Same concept through different stakeholder viewpoints"
+    structure:
+      - stakeholder_1_perspective
+      - stakeholder_2_perspective  
+      - stakeholder_3_perspective
+      - common_ground_identification
+      - perspective_synthesis
+      - unified_understanding
+    estimated_length: "400-550 words"
+    best_for: ["cross_functional_teams", "business_alignment", "policy_discussions"]
+
+  # Option 14
+  failure_recovery_cycle:
+    description: "Learning through failure scenarios and recovery"
+    structure:
+      - normal_operation_baseline
+      - failure_scenario_introduction
+      - cascade_effects
+      - recovery_mechanisms
+      - lessons_learned
+      - resilience_insights
+    estimated_length: "300-450 words"
+    best_for: ["reliability_concepts", "risk_management", "system_resilience"]
+
+# Style selection matrix
+style_selection_criteria:
+  audience_expertise:
+    novice: ["progressive_revelation", "narrative_journey", "hands_on_workshop"]
+    intermediate: ["extended_metaphor", "comparative_metaphor", "problem_solution_cycle"] 
+    expert: ["misconception_decoder", "ecosystem_perspective", "multi_perspective_lens"]
+    
+  time_availability:
+    very_short: ["quick_analogy"]
+    short: ["interactive_dialogue", "visual_construction"]
+    medium: ["extended_metaphor", "comparative_metaphor", "problem_solution_cycle"]
+    long: ["progressive_revelation", "narrative_journey", "hands_on_workshop"]
+    
+  learning_objective:
+    basic_understanding: ["quick_analogy", "progressive_revelation"]
+    deep_comprehension: ["extended_metaphor", "ecosystem_perspective"]
+    practical_application: ["hands_on_workshop", "problem_solution_cycle"]
+    misconception_correction: ["misconception_decoder", "failure_recovery_cycle"]
+    system_thinking: ["ecosystem_perspective", "temporal_evolution"]
+    
+  concept_characteristics:
+    abstract: ["narrative_journey", "comparative_metaphor"]
+    technical: ["visual_construction", "problem_solution_cycle"]
+    controversial: ["misconception_decoder", "multi_perspective_lens"]
+    evolving: ["temporal_evolution", "failure_recovery_cycle"]
+
+# Enhanced template variables
+template_variables:
+  concept_name: "Name of the concept being explained"
+  audience_type: "Target audience (business, technical, general)"
+  metaphor_domain: "Selected metaphor domain"
+  key_components: "List of concept components"
+  misconceptions: "Common misconceptions to avoid"
+  stakeholder_perspectives: "Different viewpoints on the concept"
+  failure_modes: "Common ways the concept can fail or be misunderstood"
+  success_indicators: "How to know the concept is working correctly"
+  complexity_layers: "Ordered list from simple to complex aspects"
+  real_world_examples: "Concrete instances where concept applies"
+  prerequisite_knowledge: "What learner should know beforehand"
+  follow_up_concepts: "What to learn next"
+  visual_elements: "Key visual metaphors to emphasize"
+  interaction_patterns: "How components relate and interact"

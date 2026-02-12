@@ -1,0 +1,31 @@
+concept_id: probability_and_statistics
+name: Probability and Statistics
+category: core_math
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Mathematical framework for reasoning about uncertainty and data analysis
+key_components:
+- probability_distributions
+- statistical_inference
+- hypothesis_testing
+- confidence_intervals
+- bayesian_thinking
+- descriptive_statistics
+properties:
+- handles_uncertainty
+- enables_data_interpretation
+- foundation_for_learning
+- quantifies_confidence
+- supports_decision_making
+common_misconceptions:
+- correlation_implies_causation
+- larger_samples_always_better
+- statistical_significance_practical
+- probability_deterministic
+prerequisite_concepts: []
+related_concepts:
+- bayesian_networks
+- statistical_learning
+- hypothesis_testing
+- machine_learning

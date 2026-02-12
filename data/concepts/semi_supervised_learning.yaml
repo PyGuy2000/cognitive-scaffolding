@@ -1,0 +1,28 @@
+concept_id: semi_supervised_learning
+name: Semi-Supervised Learning
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Learning from both labeled and unlabeled data
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- multi_task_learning
+- self_supervised_learning
+- naive_bayes
+- support_vector_machines

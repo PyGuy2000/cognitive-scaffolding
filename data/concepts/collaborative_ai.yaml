@@ -1,0 +1,28 @@
+concept_id: collaborative_ai
+name: Collaborative AI
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Collaborative AI - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- bias_in_ai
+- ai_auditing
+- differential_privacy
+- ai_for_accessibility

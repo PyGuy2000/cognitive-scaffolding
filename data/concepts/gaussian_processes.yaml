@@ -1,0 +1,29 @@
+concept_id: gaussian_processes
+name: Gaussian Processes
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Probabilistic approach for regression and classification
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- decision_trees
+- causal_inference
+- linear_regression
+- zero_shot_learning

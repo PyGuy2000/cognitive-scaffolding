@@ -1,0 +1,14 @@
+audience_id: technical
+name: Technical Professionals
+description: All technical professionals with coding/engineering background
+age_range: 22-65
+expertise_level: advanced
+technical_background: expert
+communication_style: precise_detailed
+complexity_preference: high
+attention_span: long
+show_formulas: true
+preferred_analogies:
+- systems
+- engineering
+- mechanical_processes

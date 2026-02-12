@@ -1,0 +1,32 @@
+concept_id: linear_algebra_for_ml
+name: Linear Algebra for ML
+category: core_math
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Mathematical foundation involving vectors, matrices, and operations for
+  machine learning
+key_components:
+- vectors_and_matrices
+- matrix_operations
+- eigenvalues_eigenvectors
+- matrix_decomposition
+- vector_spaces
+- linear_transformations
+properties:
+- fundamental_to_ml_algorithms
+- enables_high_dimensional_data
+- computational_efficiency
+- geometric_intuition
+- optimization_foundation
+common_misconceptions:
+- just_memorizing_formulas
+- not_needed_for_practical_ml
+- too_abstract_for_applications
+- only_for_researchers
+prerequisite_concepts: []
+related_concepts:
+- neural_networks
+- principal_component_analysis
+- singular_value_decomposition
+- optimization_methods

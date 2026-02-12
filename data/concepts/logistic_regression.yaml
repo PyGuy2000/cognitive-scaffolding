@@ -1,0 +1,27 @@
+concept_id: logistic_regression
+name: Logistic Regression
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Classification using logistic function for probabilities
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- multi_task_learning
+- self_supervised_learning
+- active_learning
+- continual_learning

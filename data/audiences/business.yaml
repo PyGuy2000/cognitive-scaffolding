@@ -1,0 +1,30 @@
+age_range: 25-55
+attention_span: short
+audience_id: business
+avoid_domains:
+- academic_theory
+- low_level_technical
+- abstract_mathematics
+communication_style: concise_executive
+complexity_preference: medium
+description: C-level executives, managers, decision makers
+expertise_level: intermediate
+name: Business Leaders
+preferred_analogies:
+- business_processes
+- organizational_structures
+- market_dynamics
+preferred_complexity: medium
+preferred_domains:
+- business_operations
+- service_coordination
+- team_management
+- process_optimization
+primary_concerns:
+- practical_applications
+- roi_impact
+- risk_assessment
+- competitive_advantage
+- implementation_costs
+- time_to_value
+technical_background: basic

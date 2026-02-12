@@ -1,0 +1,37 @@
+domain_id: restaurant
+name: Restaurant and Food Service
+description: Explains concepts using restaurant operations and dining metaphors
+metaphors:
+  input: customer orders
+  processing: kitchen preparation
+  output: served dishes
+  parallel_processing: multiple chefs working simultaneously
+  queue: order tickets waiting
+  cache: pre-prepared ingredients
+  error_handling: dealing with wrong orders
+  optimization: streamlining kitchen operations
+  feedback_loop: customer reviews and adjustments
+  scaling: handling rush hour
+  load_balancing: distributing orders among chefs
+  api: menu (what the restaurant offers)
+  authentication: reservation system
+  data_flow: order to kitchen to table
+example_mappings:
+  neural_network:
+    neurons: individual chefs
+    layers: kitchen stations (prep, cooking, plating)
+    weights: chef expertise levels
+    training: improving recipes based on feedback
+  database:
+    tables: different menu sections
+    queries: taking customer orders
+    indexes: quick-reference recipe cards
+    joins: combining dishes for a complete meal
+strengths:
+  - Highly relatable to everyday experience
+  - Clear input-process-output flow
+  - Natural hierarchy and organization
+  - Easy to visualize
+limitations:
+  - May oversimplify complex parallel operations
+  - Limited for very abstract concepts

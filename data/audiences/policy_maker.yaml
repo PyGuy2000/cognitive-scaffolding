@@ -1,0 +1,25 @@
+audience_id: policy_maker
+name: Policymakers and Regulators
+parent: general
+description: Government or institutional figures guiding AI governance, regulation,
+  and ethics.
+age_range: 30-70
+communication_style: formal_balanced
+complexity_preference: medium
+show_proofs: required
+show_citations: 'true'
+benchmark_focus: ethical_compliance
+preferred_domains:
+- ai_governance
+- privacy_laws
+- impact_assessment
+learning_assets:
+- whitepapers
+- policy_briefs
+- testimony_reports
+expertise_level: intermediate
+preferred_analogies:
+- traffic_rules_for_ai
+- balancing_scales
+attention_span: long
+technical_background: law_policy

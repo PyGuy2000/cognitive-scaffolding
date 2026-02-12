@@ -1,0 +1,55 @@
+avoid_for_audiences: []
+cultural_accessibility: universal
+description: Metaphors based on physical navigation and movement through space
+domain_id: navigation_movement
+examples:
+- hiking_in_fog
+- mountain_climbing
+- GPS_navigation
+- pathfinding
+limitations:
+- oversimplifies_high_dimensions
+- implies_physical_space
+- may_suggest_visual_navigation
+manim_components:
+  characters:
+    hiker:
+      class: SVGMobject
+      file: hiker_icon.svg
+  effects:
+    fog:
+      class: Rectangle
+      color: GRAY
+      opacity: 0.7
+  environments:
+    landscape:
+      class: Surface
+      elements:
+      - hills
+      - valleys
+      - paths
+metaphor_types:
+- analogy
+- comparison
+- similarity
+name: Navigation and Movement
+properties:
+- iterative_optimization
+- local_information
+- step_size_tradeoffs
+- landscape_exploration
+- path_finding
+strengths:
+- optimization_algorithms
+- search_processes
+- parameter_spaces
+- gradient_based_methods
+suitable_for:
+- all
+vocabulary:
+- like
+- similar to
+- think of
+- imagine
+- as if
+- just as

@@ -1,0 +1,29 @@
+concept_id: emergent_behaviors
+name: Emergent Behaviors
+category: ai_fundamentals
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Complex behaviors arising from simple rules in AI systems
+key_components:
+- theory
+- applications
+- limitations
+- future_directions
+properties:
+- foundational
+- broadly_applicable
+- evolving
+- interdisciplinary
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- history_of_ai
+- artificial_intelligence_overview
+- philosophy_of_ai
+- turing_test

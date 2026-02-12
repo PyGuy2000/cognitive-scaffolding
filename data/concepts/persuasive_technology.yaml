@@ -1,0 +1,28 @@
+concept_id: persuasive_technology
+name: Persuasive Technology
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Persuasive Technology - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ethics_in_ai
+- collaborative_ai
+- interpretability_methods
+- differential_privacy

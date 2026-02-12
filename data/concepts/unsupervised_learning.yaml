@@ -1,0 +1,34 @@
+concept_id: unsupervised_learning
+name: Unsupervised Learning
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Machine learning approach that finds patterns in data without labeled
+  examples
+key_components:
+- unlabeled_data
+- pattern_discovery
+- hidden_structure
+- clustering_algorithms
+- dimensionality_reduction
+- anomaly_detection
+properties:
+- no_target_labels_needed
+- discovers_hidden_patterns
+- exploratory_data_analysis
+- harder_to_evaluate
+- foundation_for_insights
+common_misconceptions:
+- always_finds_meaningful_patterns
+- easier_than_supervised_learning
+- doesnt_need_domain_knowledge
+- results_always_interpretable
+prerequisite_concepts:
+- machine_learning
+- probability_and_statistics
+related_concepts:
+- supervised_learning
+- clustering
+- dimensionality_reduction
+- embeddings

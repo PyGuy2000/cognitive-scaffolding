@@ -1,0 +1,28 @@
+concept_id: responsible_ai
+name: Responsible AI
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Responsible AI - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ethics_in_ai
+- fairness_in_ai
+- ai_for_accessibility
+- ai_policy_and_regulation

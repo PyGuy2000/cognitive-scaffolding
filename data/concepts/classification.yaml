@@ -1,0 +1,34 @@
+concept_id: classification
+name: Classification
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Supervised learning task that assigns discrete categories or labels to
+  input data
+key_components:
+- labeled_training_data
+- decision_boundaries
+- class_predictions
+- probability_estimates
+- multiclass_handling
+- performance_metrics
+properties:
+- discrete_output_categories
+- probabilistic_predictions
+- widely_applicable
+- measurable_performance
+- interpretable_results
+common_misconceptions:
+- always_better_than_regression
+- perfect_classification_possible
+- balanced_datasets_required
+- single_algorithm_best
+prerequisite_concepts:
+- supervised_learning
+- probability_and_statistics
+related_concepts:
+- regression
+- logistic_regression
+- decision_trees
+- neural_networks

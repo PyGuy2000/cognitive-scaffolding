@@ -1,0 +1,28 @@
+concept_id: data_quality
+name: Data Quality
+category: data_engineering
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Ensuring accuracy, completeness, and reliability of data
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- data_governance
+- data_lineage
+- feature_engineering
+- data_labeling

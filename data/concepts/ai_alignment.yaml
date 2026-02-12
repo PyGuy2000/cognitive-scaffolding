@@ -1,0 +1,32 @@
+concept_id: "ai_alignment"
+name: "AI Alignment"
+category: "ai_safety"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "very_fast"
+description: "Ensuring AI systems pursue intended goals and human values"
+key_components:
+  - value_alignment
+  - goal_specification
+  - reward_modeling
+  - safety_constraints
+  - human_feedback
+properties:
+  - value_preservation
+  - goal_robustness
+  - safety_critical
+  - interpretability_dependent
+  - iterative_refinement
+common_misconceptions:
+  - simple_rule_following
+  - one_time_solution
+  - purely_technical_problem
+  - only_for_agi
+prerequisite_concepts:
+  - machine_learning
+  - reinforcement_learning
+  - ai_safety
+related_concepts:
+  - reward_hacking
+  - value_learning
+  - ai_safety

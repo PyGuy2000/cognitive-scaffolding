@@ -1,0 +1,25 @@
+audience_id: financial_analyst
+name: Financial Analysts
+parent: business
+description: Professionals evaluating financial performance, market trends, and investment
+  potential.
+age_range: 25-60
+communication_style: concise_evidence_based
+complexity_preference: medium
+show_proofs: recommended
+show_citations: optional
+benchmark_focus: roi_kpi
+preferred_domains:
+- forecasting
+- cost_benefit_analysis
+- risk_models
+learning_assets:
+- executive_summaries
+- dashboards
+- financial_models
+expertise_level: intermediate
+preferred_analogies:
+- market_dynamics
+- portfolio_management
+attention_span: medium
+technical_background: economics_finance

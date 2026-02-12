@@ -1,0 +1,28 @@
+concept_id: optimization_methods
+name: Optimization Methods
+category: core_math
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Techniques for finding optimal solutions in machine learning
+key_components:
+- definitions
+- theorems
+- algorithms
+- applications
+properties:
+- rigorous
+- foundational
+- precise
+- universal
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- linear_algebra_for_ml
+- calculus_for_ml
+- probability_and_statistics
+- information_theory

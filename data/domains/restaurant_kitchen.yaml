@@ -1,0 +1,37 @@
+description: Metaphors based on restaurant kitchens for concurrency and threading concepts
+domain_id: restaurant_kitchen
+examples:
+- multithreading
+- multiprocessing
+- task_scheduling
+- resource_management
+- concurrent_execution
+metaphor_types:
+- parallel_processing
+- resource_allocation
+- task_coordination
+- concurrent_operations
+name: Restaurant Kitchen
+properties:
+- parallel_execution
+- resource_sharing
+- task_prioritization
+- coordination_systems
+- throughput_management
+strengths:
+- concurrency_concepts
+- threading_models
+- resource_management
+- performance_optimization
+suitable_for:
+- software_engineers
+- system_architects
+- technical_professionals
+- performance_engineers
+vocabulary:
+- like a kitchen
+- similar to chefs
+- think of orders
+- imagine coordination
+- as if cooking
+- just like parallel tasks

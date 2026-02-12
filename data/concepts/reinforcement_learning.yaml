@@ -1,0 +1,32 @@
+concept_id: "reinforcement_learning"
+name: "Reinforcement Learning"
+category: "ai_fundamentals"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Learning through interaction with environment via rewards and penalties"
+key_components:
+  - agent_environment_interaction
+  - reward_signals
+  - policy_learning
+  - value_functions
+  - exploration_exploitation
+properties:
+  - trial_and_error_learning
+  - delayed_rewards
+  - sequential_decision_making
+  - goal_oriented
+  - environment_dependent
+common_misconceptions:
+  - learns_like_animals
+  - always_finds_optimal_solution
+  - works_without_good_rewards
+  - simple_reward_punishment
+prerequisite_concepts:
+  - machine_learning
+  - probability_theory
+  - optimization
+related_concepts:
+  - deep_reinforcement_learning
+  - policy_gradient
+  - q_learning

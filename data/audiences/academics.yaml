@@ -1,0 +1,24 @@
+audience_id: academics
+name: Academic Researchers
+parent: technical
+description: Researchers, professors, and graduate students advancing theory
+age_range: 22-70
+communication_style: formal_rigorous
+complexity_preference: very_high
+show_proofs: required
+show_citations: true
+benchmark_focus: academic_metrics
+preferred_domains:
+- theoretical_frameworks
+- mathematical_models
+- formal_proofs
+learning_assets:
+- research_papers
+- mathematical_derivations
+- peer_reviewed_references
+expertise_level: advanced
+preferred_analogies:
+- theoretical_frameworks
+- mathematical_models
+attention_span: long
+technical_background: research

@@ -1,0 +1,37 @@
+description: Metaphors based on signal conversion and data transformation using audio equipment
+domain_id: signal_transformation
+examples:
+- analog_to_digital_conversion
+- data_encoding_decoding
+- signal_processing
+- format_transformation
+- information_preservation
+metaphor_types:
+- signal_conversion
+- data_transformation
+- format_adaptation
+- information_preservation
+name: Signal Transformation
+properties:
+- bidirectional_conversion
+- information_preservation
+- shape_transformation
+- lossless_transmission
+- format_adaptation
+strengths:
+- data_transformation_concepts
+- encoding_decoding_processes
+- information_theory
+- conversion_pipelines
+suitable_for:
+- data_engineers
+- signal_processing_engineers
+- technical_professionals
+- software_developers
+vocabulary:
+- like a microphone
+- similar to audio conversion
+- think of signal transformation
+- imagine encoding
+- as if converting
+- just like speakers

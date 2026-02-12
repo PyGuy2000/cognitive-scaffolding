@@ -1,0 +1,35 @@
+concept_id: regression
+name: Regression
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Supervised learning task that predicts continuous numerical values from
+  input features
+key_components:
+- continuous_predictions
+- feature_relationships
+- error_minimization
+- model_assumptions
+- residual_analysis
+- prediction_intervals
+properties:
+- continuous_output_values
+- quantifies_relationships
+- foundational_technique
+- interpretable_coefficients
+- assumption_dependent
+common_misconceptions:
+- linear_relationships_only
+- correlation_implies_prediction
+- more_features_always_better
+- extrapolation_always_valid
+prerequisite_concepts:
+- supervised_learning
+- linear_algebra_for_ml
+- probability_and_statistics
+related_concepts:
+- classification
+- linear_regression
+- feature_engineering
+- model_evaluation

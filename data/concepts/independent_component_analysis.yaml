@@ -1,0 +1,29 @@
+concept_id: independent_component_analysis
+name: Independent Component Analysis
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Separating multivariate signals into independent components
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- transfer_learning
+- online_learning
+- neurosymbolic_ai
+- federated_learning

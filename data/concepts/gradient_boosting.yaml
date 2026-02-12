@@ -1,0 +1,29 @@
+concept_id: gradient_boosting
+name: Gradient Boosting
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Sequential ensemble method optimizing loss functions
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- decision_trees
+- gradient_descent
+related_concepts:
+- causal_inference
+- federated_learning
+- knowledge_graphs
+- supervised_learning

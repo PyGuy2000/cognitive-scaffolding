@@ -1,0 +1,37 @@
+description: Metaphors based on building and architectural design
+domain_id: construction_architecture
+examples:
+- foundation_laying
+- blueprint_design
+- structural_engineering
+- building_phases
+- architectural_planning
+metaphor_types:
+- structural_design
+- building_processes
+- architectural_planning
+- foundation_concepts
+name: Construction Architecture
+properties:
+- foundational_concepts
+- structural_integrity
+- planned_construction
+- hierarchical_building
+- modular_design
+strengths:
+- visual_construction_style
+- system_architecture
+- foundational_learning
+- modular_concepts
+suitable_for:
+- technical_architects
+- system_designers
+- engineers
+- planners
+vocabulary:
+- like building
+- similar to construction
+- think of foundations
+- imagine blueprints
+- as if architecting
+- just like engineering

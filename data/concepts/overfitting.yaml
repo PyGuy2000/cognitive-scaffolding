@@ -1,0 +1,32 @@
+concept_id: "overfitting"
+name: "Overfitting"
+category: "ml_problems"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "slow"
+description: "When a model learns training data too specifically and fails to generalize"
+key_components:
+  - training_performance
+  - validation_performance
+  - model_complexity
+  - data_size
+  - regularization
+properties:
+  - memorization_over_learning
+  - poor_generalization
+  - high_variance
+  - training_validation_gap
+  - complexity_dependent
+common_misconceptions:
+  - always_bad
+  - only_happens_with_small_data
+  - easy_to_detect
+  - more_data_always_fixes
+prerequisite_concepts:
+  - machine_learning
+  - training_validation_split
+  - bias_variance_tradeoff
+related_concepts:
+  - regularization
+  - cross_validation
+  - model_selection

@@ -1,0 +1,28 @@
+concept_id: ai_and_environment
+name: AI and Environment
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI and Environment - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- interpretability_methods
+- ai_alignment
+- ai_for_accessibility
+- explainable_ai

@@ -1,0 +1,32 @@
+concept_id: artificial_intelligence_overview
+name: Artificial Intelligence Overview
+category: ai_fundamentals
+complexity: beginner
+last_updated: '2025-06-13'
+evolution_rate: moderate
+description: Broad field of computer science focused on creating systems that can
+  perform intelligent tasks
+key_components:
+- intelligent_behavior_simulation
+- problem_solving_capabilities
+- learning_from_experience
+- reasoning_and_inference
+- perception_and_understanding
+- decision_making_automation
+properties:
+- interdisciplinary_field
+- rapidly_evolving_technology
+- broad_application_potential
+- transformative_business_impact
+- raises_ethical_questions
+common_misconceptions:
+- ai_equals_human_intelligence
+- ai_will_replace_all_jobs
+- ai_is_always_accurate
+- ai_understands_like_humans
+prerequisite_concepts: []
+related_concepts:
+- machine_learning
+- deep_learning
+- natural_language_processing
+- computer_vision

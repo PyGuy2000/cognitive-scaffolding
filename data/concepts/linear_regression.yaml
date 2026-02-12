@@ -1,0 +1,27 @@
+concept_id: linear_regression
+name: Linear Regression
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Predicting continuous values using linear relationships
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- independent_component_analysis
+- naive_bayes
+- online_learning
+- planning_and_reasoning

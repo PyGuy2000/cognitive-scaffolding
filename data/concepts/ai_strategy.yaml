@@ -1,0 +1,33 @@
+concept_id: ai_strategy
+name: AI Strategy
+category: business_strategy
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: fast
+description: Framework for aligning AI initiatives with business objectives and organizational
+  capabilities
+key_components:
+- business_alignment
+- use_case_identification
+- roi_assessment
+- capability_building
+- risk_management
+- competitive_advantage
+properties:
+- drives_business_value
+- requires_leadership_buy_in
+- iterative_development
+- cross_functional_collaboration
+- long_term_perspective
+common_misconceptions:
+- ai_solves_everything
+- immediate_roi_expected
+- technology_first_approach
+- one_size_fits_all_strategy
+prerequisite_concepts:
+- artificial_intelligence_overview
+related_concepts:
+- ai_transformation
+- roi_of_ai
+- ai_governance
+- digital_transformation

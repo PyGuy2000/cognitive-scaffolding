@@ -1,0 +1,40 @@
+# ETL Explain Profile
+# Structure + grading focused, metadata-heavy, batch-friendly
+name: etl_explain
+description: Structured output for ETL data pipelines
+
+layers:
+  activation:
+    enabled: false
+    required: false
+    weight: 0.3
+  metaphor:
+    enabled: true
+    required: false
+    weight: 1.0
+  structure:
+    enabled: true
+    required: true
+    weight: 2.0
+  interrogation:
+    enabled: false
+    required: false
+    weight: 0.3
+  encoding:
+    enabled: false
+    required: false
+    weight: 0.3
+  transfer:
+    enabled: true
+    required: false
+    weight: 0.8
+  reflection:
+    enabled: true
+    required: false
+    weight: 1.0
+
+settings:
+  max_tokens_per_layer: 800
+  progressive_disclosure: false
+  include_evaluation: true
+  batch_mode: true

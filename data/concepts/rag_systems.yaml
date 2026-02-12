@@ -1,0 +1,38 @@
+concept_id: "rag_systems"
+name: "RAG Systems"
+category: "ai_architecture"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+
+description: "Retrieval-Augmented Generation combining external knowledge with language models"
+
+key_components:
+  - external_retrieval
+  - semantic_search
+  - context_augmentation
+  - generation
+  - knowledge_base
+
+properties:
+  - two_stage_process
+  - external_knowledge
+  - context_dependent
+  - current_information
+  - modular_design
+
+common_misconceptions:
+  - just_google_plus_ai
+  - perfect_memory
+  - always_accurate
+  - replaces_training
+
+prerequisite_concepts:
+  - language_models
+  - information_retrieval
+  - embeddings
+
+related_concepts:
+  - vector_databases
+  - semantic_search
+  - knowledge_graphs

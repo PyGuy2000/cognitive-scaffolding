@@ -1,0 +1,29 @@
+concept_id: feature_stores
+name: Feature Stores
+category: data_engineering
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Centralized repository for sharing and serving ML features
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- data_lineage
+- missing_data_handling
+- data_labeling
+- data_quality

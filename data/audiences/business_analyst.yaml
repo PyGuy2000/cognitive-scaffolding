@@ -1,0 +1,33 @@
+audience_id: business_analyst
+name: Business Analyst
+parent: technical_workers
+description: Professionals who analyze business processes and requirements
+age_range: 25-55
+show_formulas: business_calculations_only
+show_code: false
+show_proofs: false
+benchmark_focus: business_value
+complexity_preference: medium
+technical_background: business_technical
+role: Analyze and document business processes to identify scalability and requirements
+core_skills:
+- Business_Process_Modeling
+- Requirements_Gathering
+- Data_Analysis
+- Excel
+primary_tools:
+- Microsoft_Office
+- Visio
+- JIRA
+- Confluence
+preferred_domains:
+- business_operations
+- process_optimization
+- workflow_analysis
+expertise_level: intermediate
+preferred_analogies:
+- business_processes
+- organizational_structures
+- market_dynamics
+attention_span: medium
+communication_style: concise_executive

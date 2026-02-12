@@ -1,0 +1,29 @@
+template_id: basic_explanation
+name: Basic Concept Explanation
+description: A simple template for explaining concepts without heavy metaphors
+prompt: |
+  Explain {concept_name} to a {audience_name}.
+  
+  Concept Description: {concept_description}
+  
+  Audience Characteristics:
+  {audience_characteristics}
+  
+  Guidelines:
+  1. Start with a simple, one-sentence definition
+  2. Break down the key components
+  3. Explain how it works in simple terms
+  4. Provide a concrete example
+  5. Address common misconceptions if any
+  6. Keep the language appropriate for the audience
+  
+  Make the explanation engaging and easy to understand.
+
+variables:
+  - concept_name: The name of the concept
+  - concept_description: Detailed description from concept file
+  - audience_name: Target audience name
+  - audience_characteristics: List of audience traits
+
+output_format: text
+max_length: 500_words

@@ -1,0 +1,29 @@
+concept_id: self_replicating_ai
+name: Self-Replicating AI
+category: cutting_edge
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Self-Replicating AI - key AI/ML concept
+key_components:
+- research
+- experimentation
+- validation
+- applications
+properties:
+- innovative
+- experimental
+- promising
+- challenging
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- foundation_models
+- autonomous_systems
+- multi_modal_agents
+- agentic_workflows

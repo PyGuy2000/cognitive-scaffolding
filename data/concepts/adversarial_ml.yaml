@@ -1,0 +1,29 @@
+concept_id: adversarial_ml
+name: Adversarial ML
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Adversarial ML - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- ai_literacy
+- ethics_in_ai
+- eu_ai_act
+- ai_auditing

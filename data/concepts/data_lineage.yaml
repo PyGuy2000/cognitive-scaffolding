@@ -1,0 +1,29 @@
+concept_id: data_lineage
+name: Data Lineage
+category: data_engineering
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Tracking data origin and transformations throughout its lifecycle
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- feature_engineering
+- data_quality
+- synthetic_data
+- data_versioning

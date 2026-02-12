@@ -1,0 +1,29 @@
+concept_id: generative_models
+name: Generative Models
+category: deep_learning_architectures
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Generative Models - key AI/ML concept
+key_components:
+- layers
+- activation
+- backpropagation
+- optimization
+properties:
+- hierarchical
+- end_to_end
+- representation_learning
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- neural_networks
+related_concepts:
+- diffusion_models
+- graph_neural_networks
+- sparse_models
+- autoencoders

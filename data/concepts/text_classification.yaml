@@ -1,0 +1,27 @@
+concept_id: text_classification
+name: Text Classification
+category: nlp
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Text Classification - key AI/ML concept
+key_components:
+- preprocessing
+- modeling
+- evaluation
+- deployment
+properties:
+- language_aware
+- contextual
+- semantic
+- multilingual
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- question_answering
+- large_language_models
+- few_shot_learning
+- speech_recognition

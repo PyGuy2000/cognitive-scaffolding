@@ -1,0 +1,36 @@
+audience_id: genai_engineer
+name: GenAI Engineer
+parent: technical_workers
+description: Professionals who build generative AI applications
+age_range: 23-45
+show_formulas: loss_functions_attention
+show_code: model_implementations
+show_proofs: architecture_explanations
+benchmark_focus: generation_quality
+role: Develop and build generative AI models and applications
+core_skills:
+- Python
+- Machine_Learning
+- Deep_Learning
+- LLMs
+- Transformers
+- Prompt_Engineering
+primary_tools:
+- Python
+- Hugging_Face
+- Transformers
+- OpenAI_API
+- Langchain
+preferred_domains:
+- neural_architectures
+- language_modeling
+- generative_systems
+expertise_level: intermediate
+preferred_analogies:
+- systems
+- engineering
+- mechanical_processes
+complexity_preference: medium
+attention_span: medium
+technical_background: expert
+communication_style: accessible_friendly

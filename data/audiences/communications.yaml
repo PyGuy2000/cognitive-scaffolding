@@ -1,0 +1,25 @@
+audience_id: communications
+name: Corporate Communications Teams
+parent: business
+description: Teams responsible for shaping internal and external narratives around
+  AI and innovation.
+age_range: 25-60
+communication_style: clear_strategic
+complexity_preference: low_to_medium
+show_proofs: selectively
+show_citations: optional
+benchmark_focus: clarity_alignment
+preferred_domains:
+- messaging
+- PR_risk_management
+- change_communication
+learning_assets:
+- messaging_toolkits
+- press_briefs
+- stakeholder_faqs
+expertise_level: intermediate
+preferred_analogies:
+- brand_voice
+- perception_management
+attention_span: medium
+technical_background: communications_pr

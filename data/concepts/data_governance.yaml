@@ -1,0 +1,29 @@
+concept_id: data_governance
+name: Data Governance
+category: data_engineering
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Framework for managing data availability, usability, and security
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- missing_data_handling
+- synthetic_data
+- data_preprocessing
+- feature_stores

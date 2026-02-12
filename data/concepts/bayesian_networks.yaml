@@ -1,0 +1,29 @@
+concept_id: bayesian_networks
+name: Bayesian Networks
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Graphical models representing probabilistic relationships
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Works exactly like the human brain
+- Always needs massive datasets
+- Black box with no interpretability
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- support_vector_machines
+- gaussian_processes
+- principal_component_analysis
+- causal_machine_learning

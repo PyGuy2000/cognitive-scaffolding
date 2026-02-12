@@ -1,0 +1,29 @@
+concept_id: fpga_for_ai
+name: FPGA for AI
+category: mlops
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: FPGA for AI - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- huggingface_transformers
+- cross_validation
+- model_evaluation
+- keras

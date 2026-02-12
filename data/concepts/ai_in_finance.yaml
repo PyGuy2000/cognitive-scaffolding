@@ -1,0 +1,28 @@
+concept_id: ai_in_finance
+name: AI in Finance
+category: business_strategy
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Artificial intelligence applications in finance
+key_components:
+- planning
+- implementation
+- measurement
+- optimization
+properties:
+- strategic
+- value_driven
+- measurable
+- transformative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ai_transformation
+- roi_of_ai
+- ai_in_government
+- ai_governance

@@ -1,0 +1,37 @@
+description: Metaphors based on filing cabinets for vector embeddings and similarity search
+domain_id: filing_cabinet
+examples:
+- vector_embeddings
+- semantic_search
+- rag_systems
+- similarity_matching
+- nearest_neighbor_search
+metaphor_types:
+- spatial_organization
+- similarity_clustering
+- distance_based_retrieval
+- semantic_proximity
+name: Filing Cabinet
+properties:
+- proximity_based_organization
+- similarity_grouping
+- distance_measurement
+- efficient_retrieval
+- semantic_relationships
+strengths:
+- embedding_concepts
+- similarity_search
+- rag_architectures
+- semantic_analysis
+suitable_for:
+- ml_engineers
+- ai_developers
+- data_scientists
+- software_engineers
+vocabulary:
+- like a filing cabinet
+- similar to organization
+- think of proximity
+- imagine nearby files
+- as if clustering
+- just like semantic search

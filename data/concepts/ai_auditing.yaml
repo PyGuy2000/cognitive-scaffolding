@@ -1,0 +1,28 @@
+concept_id: ai_auditing
+name: AI Auditing
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI Auditing - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ethics_in_ai
+- eu_ai_act
+- collaborative_ai
+- persuasive_technology

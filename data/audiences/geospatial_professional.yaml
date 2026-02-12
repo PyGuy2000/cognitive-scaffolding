@@ -1,0 +1,26 @@
+audience_id: geospatial_professional
+name: Geospatial Professionals
+parent: technical
+description: Specialists in GIS, remote sensing, and spatial data modeling using geospatial technologies.
+age_range: 25-60
+communication_style: technical_visual
+complexity_preference: medium_to_high
+show_proofs: required
+show_citations: optional
+benchmark_focus: spatial_accuracy
+preferred_domains:
+- geospatial_modeling
+- remote_sensing
+- spatial_analytics
+- urban_planning
+learning_assets:
+- map_visualizations
+- spatial_data_workflows
+- tool_documentation
+- applied_case_studies
+expertise_level: advanced
+preferred_analogies:
+- terrain_navigation
+- mapping_coordinates
+attention_span: medium
+technical_background: gis_remote_sensing

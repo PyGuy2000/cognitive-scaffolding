@@ -1,0 +1,26 @@
+concept_id: "machine_learning"
+name: "Machine Learning"
+category: "ai_fundamentals"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Systems that improve performance through experience"
+key_components:
+  - training_data
+  - algorithms
+  - model_training
+  - prediction_inference
+properties:
+  - learns_from_examples
+  - pattern_detection
+  - generalization
+  - prediction_capability
+common_misconceptions:
+  - learns_like_humans
+  - always_gets_better
+  - works_without_data
+prerequisite_concepts:
+  - statistics
+related_concepts:
+  - neural_networks
+  - deep_learning

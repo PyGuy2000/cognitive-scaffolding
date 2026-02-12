@@ -1,0 +1,29 @@
+concept_id: agentic_workflows
+name: Agentic Workflows
+category: cutting_edge
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Agentic Workflows - key AI/ML concept
+key_components:
+- research
+- experimentation
+- validation
+- applications
+properties:
+- innovative
+- experimental
+- promising
+- challenging
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- open_ended_learning
+- lifelong_learning
+- self_replicating_ai
+- multi_modal_agents

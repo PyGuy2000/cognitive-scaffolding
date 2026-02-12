@@ -1,0 +1,27 @@
+concept_id: k_nearest_neighbors
+name: K-Nearest Neighbors
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Classification based on nearest training examples
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- zero_shot_learning
+- continual_learning
+- independent_component_analysis
+- federated_learning

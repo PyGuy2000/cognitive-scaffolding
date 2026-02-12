@@ -1,0 +1,359 @@
+diagram_templates:
+  
+  service_coordination:
+    mermaid:
+      primary_type: "flowchart"
+      alternatives: ["sequence", "graph"]
+      templates:
+        flowchart: |
+          flowchart TD
+              A[User Request] --> B[{concept_name} Coordinator]
+              B --> C[Service A]
+              B --> D[Service B] 
+              B --> E[Service C]
+              
+              C --> F[Result A]
+              D --> G[Result B]
+              E --> H[Result C]
+              
+              F --> I[Coordinated Response]
+              G --> I
+              H --> I
+              
+              I --> J[User Receives Complete Answer]
+              
+              style B fill:#f9f,stroke:#333,stroke-width:4px
+              style I fill:#bbf,stroke:#333,stroke-width:2px
+        
+        sequence: |
+          sequenceDiagram
+              participant U as User
+              participant C as {concept_name}
+              participant SA as Service A
+              participant SB as Service B
+              participant SC as Service C
+              
+              U->>C: Request
+              par Parallel Processing
+                  C->>SA: Sub-request A
+                  C->>SB: Sub-request B
+                  C->>SC: Sub-request C
+              end
+              
+              SA-->>C: Response A
+              SB-->>C: Response B
+              SC-->>C: Response C
+              
+              C->>U: Coordinated Result
+
+    plantuml:
+      templates:
+        sequence: |
+          @startuml {concept_id}
+          !theme aws-orange
+          title {concept_name} - Service Coordination
+          
+          actor User
+          participant "Main Coordinator" as MC
+          participant "Service A" as SA
+          participant "Service B" as SB  
+          participant "Service C" as SC
+          
+          User -> MC: Request
+          activate MC
+          
+          par Parallel Processing
+              MC -> SA: Sub-request A
+              activate SA
+              MC -> SB: Sub-request B
+              activate SB
+              MC -> SC: Sub-request C
+              activate SC
+          end
+          
+          SA -> MC: Response A
+          deactivate SA
+          SB -> MC: Response B
+          deactivate SB
+          SC -> MC: Response C
+          deactivate SC
+          
+          MC -> User: Coordinated Response
+          deactivate MC
+          @enduml
+
+    d3:
+      visualization_type: "network"
+      data_structure:
+        nodes:
+          - id: "coordinator"
+            type: "coordinator"
+            label: "{concept_name}"
+            size: 20
+            color: "#ff6b6b"
+          - id: "service1"
+            type: "service" 
+            label: "Service A"
+            size: 15
+            color: "#4ecdc4"
+          - id: "service2"
+            type: "service"
+            label: "Service B" 
+            size: 15
+            color: "#4ecdc4"
+          - id: "service3"
+            type: "service"
+            label: "Service C"
+            size: 15
+            color: "#4ecdc4"
+          - id: "user"
+            type: "user"
+            label: "User"
+            size: 15
+            color: "#95e1d3"
+        links:
+          - source: "user"
+            target: "coordinator"
+            type: "request"
+          - source: "coordinator"
+            target: "service1"
+            type: "delegation"
+          - source: "coordinator"
+            target: "service2"
+            type: "delegation"
+          - source: "coordinator"
+            target: "service3" 
+            type: "delegation"
+
+    manim:
+      scene_structure:
+        - title: "Problem Setup"
+          duration: 20
+          elements: ["overwhelmed_user", "multiple_requests", "bottleneck"]
+        - title: "Coordinator Introduction"
+          duration: 25
+          elements: ["coordinator_appearance", "service_connections"]
+        - title: "Parallel Processing Demo" 
+          duration: 30
+          elements: ["simultaneous_requests", "parallel_arrows", "coordination"]
+        - title: "Results Integration"
+          duration: 20
+          elements: ["result_gathering", "final_response"]
+
+  navigation_movement:
+    mermaid:
+      primary_type: "journey"
+      alternatives: ["flowchart", "gitgraph"]
+      templates:
+        journey: |
+          journey
+              title {concept_name} Learning Journey
+              section Understanding
+                Basic Concept: 3: Learner
+                Key Components: 4: Learner  
+                Simple Examples: 5: Learner
+              section Application
+                Practice Problems: 4: Learner
+                Real Examples: 5: Learner
+                Edge Cases: 3: Learner
+              section Mastery
+                Complex Scenarios: 4: Learner
+                Teaching Others: 5: Learner
+                Innovation: 5: Learner
+        
+        flowchart: |
+          flowchart TD
+              A[Start: Current Understanding] --> B{Evaluate Options}
+              B --> C[Path A: Direct Approach]
+              B --> D[Path B: Alternative Route]
+              B --> E[Path C: Exploratory Path]
+              
+              C --> F{Good Progress?}
+              D --> G{Good Progress?}
+              E --> H{Good Progress?}
+              
+              F -->|Yes| I[Continue Forward]
+              F -->|No| J[Backtrack]
+              G -->|Yes| I
+              G -->|No| J
+              H -->|Yes| I
+              H -->|No| J
+              
+              J --> B
+              I --> K[Goal Achieved]
+              
+              style A fill:#e1f5fe
+              style K fill:#c8e6c9
+              style J fill:#ffcdd2
+
+    d3:
+      visualization_type: "path_visualization"
+      data_structure:
+        terrain:
+          - x: 0, y: 100, type: "start", label: "Starting Point"
+          - x: 200, y: 80, type: "checkpoint", label: "Milestone 1"
+          - x: 400, y: 120, type: "obstacle", label: "Challenge"
+          - x: 600, y: 60, type: "checkpoint", label: "Milestone 2"
+          - x: 800, y: 40, type: "goal", label: "Destination"
+        paths:
+          - id: "direct", points: [[0,100], [200,80], [400,120], [600,60], [800,40]]
+          - id: "scenic", points: [[0,100], [150,120], [350,140], [550,80], [800,40]]
+          - id: "difficult", points: [[0,100], [250,60], [450,100], [650,40], [800,40]]
+
+  social_interaction:
+    mermaid:
+      primary_type: "mindmap"
+      alternatives: ["graph", "flowchart"]
+      templates:
+        mindmap: |
+          mindmap
+            root(({concept_name}))
+              Understanding
+                Context Awareness
+                Multiple Perspectives
+                Relationship Mapping
+              Communication
+                Active Listening
+                Clear Expression
+                Feedback Loops
+              Coordination
+                Resource Allocation
+                Timeline Management
+                Conflict Resolution
+              Outcomes
+                Shared Understanding
+                Collaborative Success
+                Mutual Growth
+
+        graph: |
+          graph TD
+              A[{concept_name}] --> B[Person A]
+              A --> C[Person B]
+              A --> D[Person C]
+              A --> E[Person D]
+              
+              B -.-> F[Context A]
+              C -.-> G[Context B]
+              D -.-> H[Context C]
+              E -.-> I[Context D]
+              
+              F --> J[Shared Understanding]
+              G --> J
+              H --> J
+              I --> J
+              
+              J --> K[Coordinated Action]
+              
+              style A fill:#ff9999
+              style J fill:#99ccff
+              style K fill:#99ff99
+
+    d3:
+      visualization_type: "force_directed"
+      data_structure:
+        nodes:
+          - id: "central", type: "attention_mechanism", label: "{concept_name}"
+          - id: "person1", type: "participant", label: "Alice"
+          - id: "person2", type: "participant", label: "Bob"
+          - id: "person3", type: "participant", label: "Charlie"
+          - id: "person4", type: "participant", label: "Diana"
+        links:
+          - source: "person1", target: "central", weight: 0.8
+          - source: "person2", target: "central", weight: 0.9
+          - source: "person3", target: "central", weight: 0.7
+          - source: "person4", target: "central", weight: 0.6
+          - source: "person1", target: "person2", weight: 0.3
+          - source: "person2", target: "person3", weight: 0.4
+
+  general:
+    mermaid:
+      primary_type: "graph"
+      templates:
+        graph: |
+          graph TD
+              A[{concept_name}] --> B[Key Components]
+              A --> C[Applications]
+              A --> D[Related Concepts]
+              
+              B --> B1[Component 1]
+              B --> B2[Component 2]
+              
+              C --> C1[Use Case 1]
+              C --> C2[Use Case 2]
+              
+              D --> D1[Related Concept 1]
+              D --> D2[Related Concept 2]
+
+    d3:
+      visualization_type: "hierarchy"
+      data_structure:
+        root:
+          name: "{concept_name}"
+          children:
+            - name: "Key Components"
+              children:
+                - name: "Component 1"
+                - name: "Component 2"
+            - name: "Applications"
+              children:
+                - name: "Use Case 1"
+                - name: "Use Case 2"
+            - name: "Related Concepts"
+              children:
+                - name: "Related 1"
+                - name: "Related 2"
+
+# Template Variables and Substitution Rules
+template_variables:
+  concept_name: "The full name of the concept"
+  concept_id: "Concept identifier (snake_case)"
+  domain_name: "Metaphor domain name"
+  audience_name: "Target audience name"
+  key_components: "List of concept components"
+  
+substitution_rules:
+  - pattern: "{concept_name}"
+    replacement: "concept.name"
+  - pattern: "{concept_id}"
+    replacement: "concept.concept_id"
+  - pattern: "{domain_name}"
+    replacement: "domain.name"
+
+# Quality and Complexity Guidelines
+quality_guidelines:
+  mermaid:
+    simple: "Use basic shapes and minimal text"
+    moderate: "Include styling and multiple diagram types"
+    complex: "Advanced styling, subgraphs, and animations"
+  
+  d3:
+    simple: "Basic static visualization"
+    moderate: "Interactive elements and transitions"
+    complex: "Advanced interactions, real-time updates"
+  
+  manim:
+    simple: "2-3 scenes, basic animations"
+    moderate: "4-5 scenes, coordinated animations"
+    complex: "6+ scenes, advanced effects and timing"
+
+# Integration Patterns
+integration_patterns:
+  documentation:
+    primary: "mermaid"
+    fallback: "plantuml"
+    export_formats: ["svg", "png", "pdf"]
+  
+  presentations:
+    primary: "manim"
+    interactive_fallback: "d3"
+    static_fallback: "mermaid"
+  
+  web_applications:
+    primary: "d3"
+    static_fallback: "mermaid"
+    lightweight: "css_animations"
+  
+  educational_content:
+    primary: "manim"
+    interactive: "d3"
+    reference: "mermaid"

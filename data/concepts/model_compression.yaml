@@ -1,0 +1,29 @@
+concept_id: model_compression
+name: Model Compression
+category: mlops
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Model Compression - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- model_evaluation_metrics
+- pinecone_vector_search
+- hyperparameter_tuning
+- apache_spark_ml

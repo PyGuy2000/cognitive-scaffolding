@@ -1,0 +1,27 @@
+concept_id: naive_bayes
+name: Naive Bayes
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Probabilistic classifier based on Bayes' theorem
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts: []
+related_concepts:
+- federated_learning
+- causal_inference
+- transfer_learning
+- gaussian_processes

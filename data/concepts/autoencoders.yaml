@@ -1,0 +1,29 @@
+concept_id: autoencoders
+name: Autoencoders
+category: deep_learning_architectures
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Autoencoders - key AI/ML concept
+key_components:
+- layers
+- activation
+- backpropagation
+- optimization
+properties:
+- hierarchical
+- end_to_end
+- representation_learning
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- neural_networks
+related_concepts:
+- long_short_term_memory
+- sparse_models
+- gated_recurrent_units
+- graph_neural_networks

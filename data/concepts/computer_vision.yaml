@@ -1,0 +1,32 @@
+concept_id: "computer_vision"
+name: "Computer Vision"
+category: "ai_applications"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "AI systems that interpret and understand visual information"
+key_components:
+  - image_processing
+  - feature_extraction
+  - pattern_recognition
+  - object_detection
+  - image_classification
+properties:
+  - visual_understanding
+  - spatial_reasoning
+  - hierarchical_features
+  - translation_invariant
+  - computationally_intensive
+common_misconceptions:
+  - sees_like_humans
+  - perfect_recognition
+  - works_without_training
+  - understands_context
+prerequisite_concepts:
+  - neural_networks
+  - deep_learning
+  - image_processing
+related_concepts:
+  - convolutional_networks
+  - object_detection
+  - image_segmentation

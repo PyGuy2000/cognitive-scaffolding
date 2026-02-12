@@ -1,0 +1,28 @@
+concept_id: calculus_for_ml
+name: Calculus for ML
+category: core_math
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Derivatives and optimization techniques essential for machine learning
+key_components:
+- definitions
+- theorems
+- algorithms
+- applications
+properties:
+- rigorous
+- foundational
+- precise
+- universal
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- linear_algebra_for_ml
+- probability_and_statistics
+- information_theory
+- optimization_methods

@@ -1,0 +1,32 @@
+concept_id: "chain_of_thought"
+name: "Chain of Thought"
+category: "ai_techniques"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "very_fast"
+description: "Prompting technique that encourages step-by-step reasoning"
+key_components:
+  - step_by_step_reasoning
+  - intermediate_steps
+  - explicit_thinking
+  - problem_decomposition
+  - reasoning_chain
+properties:
+  - improves_complex_reasoning
+  - increases_interpretability
+  - requires_good_examples
+  - works_with_large_models
+  - generalizable_approach
+common_misconceptions:
+  - ai_actually_thinks
+  - always_improves_performance
+  - works_with_any_model
+  - replaces_fine_tuning
+prerequisite_concepts:
+  - large_language_models
+  - prompt_engineering
+  - reasoning_tasks
+related_concepts:
+  - few_shot_learning
+  - prompt_engineering
+  - reasoning_enhancement

@@ -1,0 +1,37 @@
+description: Metaphors based on factory assembly lines for pipeline and workflow concepts
+domain_id: factory_assembly_line
+examples:
+- etl_pipelines
+- data_workflows
+- ml_training_pipelines
+- software_build_systems
+- processing_chains
+metaphor_types:
+- sequential_processing
+- transformation_stages
+- workflow_automation
+- pipeline_design
+name: Factory Assembly Line
+properties:
+- sequential_operations
+- predictable_transformations
+- ordered_processing
+- staged_workflows
+- quality_control_checkpoints
+strengths:
+- pipeline_architectures
+- workflow_design
+- data_transformation
+- process_automation
+suitable_for:
+- data_engineers
+- software_engineers
+- operations_managers
+- technical_professionals
+vocabulary:
+- like an assembly line
+- similar to factory processing
+- think of production stages
+- imagine sequential steps
+- as if manufacturing
+- just like workflows

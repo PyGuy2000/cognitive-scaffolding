@@ -1,0 +1,96 @@
+avoid_for_audiences: []
+cultural_accessibility: universal
+description: Metaphors based on coordinating multiple services or specialists
+domain_id: service_coordination
+examples:
+- hotel_concierge
+- project_coordinator
+- orchestra_conductor
+- air_traffic_control
+limitations:
+- may_imply_human_intelligence
+- oversimplifies_technical_complexity
+- suggests_centralized_control
+manim_components:
+  characters:
+    concierge:
+      animations:
+      - Indicate
+      - Transform
+      - Flash
+      class: SVGMobject
+      file: concierge_icon.svg
+    guest:
+      animations:
+      - FadeIn
+      - Move
+      class: SVGMobject
+      file: guest_icon.svg
+  environments:
+    hotel_lobby:
+      class: Group
+      elements:
+      - reception_desk
+      - service_counters
+      - communication_lines
+  interactions:
+    coordination:
+      pattern: parallel_processing
+      visual: multiple_arrows
+    service_request:
+      pattern: communication_flow
+      visual: arrow_with_text
+metaphor_types:
+- process
+- workflow
+- coordination
+- system_management
+name: Service Coordination
+properties:
+- bidirectional_communication
+- stateful_sessions
+- tool_orchestration
+- error_handling
+- concurrent_processing
+- relationship_management
+scene_templates:
+  request_processing: '# Show request being processed
+
+    request_arrow = Arrow(guest.get_center(), concierge.get_center())
+
+    self.play(Create(request_arrow))
+
+    '
+  service_coordination_setup: '# Create service coordination environment
+
+    lobby = Rectangle(width=12, height=8).set_color(BLUE)
+
+    concierge_desk = Rectangle(width=2, height=1).set_color(BROWN)
+
+    service_areas = [Rectangle(width=1.5, height=1) for _ in range(4)]
+
+    '
+  tool_orchestration: "# Show coordination with multiple services\nservice_arrows\
+    \ = [Arrow(concierge.get_center(), service.get_center()) \n                 for\
+    \ service in services]\nself.play(AnimationGroup(*[Create(arrow) for arrow in\
+    \ service_arrows]))"
+strengths:
+- software_architecture
+- system_integration
+- workflow_management
+- api_design
+suitable_for:
+- business
+- technical
+- management
+- operations
+- project_managers
+vocabulary:
+- like an orchestra
+- similar to logistics
+- think of management
+- imagine coordination
+- as if orchestrating
+- just like operations
+- picture a system
+- consider workflow

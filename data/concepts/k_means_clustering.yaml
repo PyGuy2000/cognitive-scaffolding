@@ -1,0 +1,27 @@
+concept_id: k_means_clustering
+name: K-Means Clustering
+category: machine_learning_algorithms
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Partitioning data into K distinct clusters
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- supervised_learning
+- k_nearest_neighbors
+- planning_and_reasoning
+- unsupervised_learning

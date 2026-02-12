@@ -1,0 +1,40 @@
+audience_id: data_analyst
+name: Data Analyst
+parent: technical_workers
+description: Professionals who analyze data to generate business insights
+age_range: 25-50
+expertise_level: intermediate
+show_formulas: basic_stats_only
+show_code: sql_python_only
+show_proofs: false
+benchmark_focus: business_metrics
+complexity_preference: medium
+attention_span: medium
+role: Analyze existing data to generate insights and support data-driven decision
+  making
+core_skills:
+- SQL
+- Excel
+- Statistics
+- Data_Visualization
+- Python
+- VBA
+primary_tools:
+- SQL
+- Excel
+- Tableau
+- PowerBI
+- JIRA
+preferred_domains:
+- data_analysis_workflows
+- business_intelligence
+- statistical_interpretation
+learning_assets:
+- sql_queries
+- excel_templates
+- dashboard_examples
+preferred_analogies:
+- data_workflows
+- analytical_processes
+technical_background: none
+communication_style: accessible_friendly

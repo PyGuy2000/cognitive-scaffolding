@@ -1,0 +1,28 @@
+concept_id: ai_in_supply_chain
+name: AI in Supply Chain
+category: business_strategy
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Artificial intelligence applications in supply chain
+key_components:
+- planning
+- implementation
+- measurement
+- optimization
+properties:
+- strategic
+- value_driven
+- measurable
+- transformative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- roi_of_ai
+- ai_in_manufacturing
+- ai_in_retail
+- ai_in_healthcare

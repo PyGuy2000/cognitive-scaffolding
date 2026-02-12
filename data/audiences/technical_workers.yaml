@@ -1,0 +1,21 @@
+audience_id: technical_workers
+name: Technical Workers
+parent: technical
+description: Practitioners who build and deploy technical systems
+communication_style: implementation_focused
+show_code: true
+show_proofs: optional
+benchmark_focus: performance_metrics
+preferred_domains:
+- system_architecture
+- algorithmic_processes
+- engineering_principles
+age_range: 18-65
+expertise_level: intermediate
+preferred_analogies:
+- systems
+- engineering
+- mechanical_processes
+complexity_preference: medium
+attention_span: long
+technical_background: expert

@@ -1,0 +1,25 @@
+audience_id: investor_relations
+name: Investor Relations Professionals
+parent: business
+description: Professionals communicating company performance and strategic initiatives
+  to shareholders.
+age_range: 30-65
+communication_style: polished_confident
+complexity_preference: low_to_medium
+show_proofs: selectively
+show_citations: 'no'
+benchmark_focus: shareholder_value
+preferred_domains:
+- strategic_narratives
+- quarterly_guidance
+- competitive_positioning
+learning_assets:
+- earnings_calls
+- investor_decks
+- press_releases
+expertise_level: intermediate
+preferred_analogies:
+- storytelling_with_metrics
+- growth_flywheels
+attention_span: short
+technical_background: finance_communications

@@ -1,0 +1,28 @@
+concept_id: ai_and_future_of_work
+name: AI and Future of Work
+category: business_strategy
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI and Future of Work - key AI/ML concept
+key_components:
+- planning
+- implementation
+- measurement
+- optimization
+properties:
+- strategic
+- value_driven
+- measurable
+- transformative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ai_in_retail
+- ai_product_management
+- ai_in_finance
+- ai_in_government

@@ -1,0 +1,29 @@
+concept_id: language_modeling
+name: Language Modeling
+category: nlp
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Language Modeling - key AI/ML concept
+key_components:
+- preprocessing
+- modeling
+- evaluation
+- deployment
+properties:
+- language_aware
+- contextual
+- semantic
+- multilingual
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- natural_language_processing
+related_concepts:
+- large_language_models
+- few_shot_learning
+- text_classification
+- rag_systems

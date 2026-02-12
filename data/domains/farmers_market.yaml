@@ -1,0 +1,37 @@
+description: Metaphors based on farmers markets for commodity pricing and market dynamics
+domain_id: farmers_market
+examples:
+- spot_price_formation
+- electricity_markets
+- commodity_trading
+- supply_demand_dynamics
+- market_clearing
+metaphor_types:
+- price_discovery
+- market_mechanisms
+- supply_demand_balance
+- dynamic_pricing
+name: Farmers Market
+properties:
+- dynamic_pricing
+- supply_demand_interaction
+- market_clearing_mechanisms
+- price_signals
+- competitive_bidding
+strengths:
+- market_economics
+- pricing_mechanisms
+- supply_demand_analysis
+- electricity_markets
+suitable_for:
+- energy_traders
+- market_analysts
+- economists
+- business_leaders
+vocabulary:
+- like a market
+- similar to trading
+- think of pricing
+- imagine supply and demand
+- as if bidding
+- just like market clearing

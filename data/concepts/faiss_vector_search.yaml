@@ -1,0 +1,29 @@
+concept_id: faiss_vector_search
+name: FAISS
+category: mlops
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: FAISS - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- keras
+- kubernetes_for_ml
+- mlops
+- edge_ai

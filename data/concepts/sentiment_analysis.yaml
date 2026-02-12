@@ -1,0 +1,27 @@
+concept_id: sentiment_analysis
+name: Sentiment Analysis
+category: nlp
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Sentiment Analysis - key AI/ML concept
+key_components:
+- preprocessing
+- modeling
+- evaluation
+- deployment
+properties:
+- language_aware
+- contextual
+- semantic
+- multilingual
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- conversational_ai
+- text_generation
+- text_classification
+- prompt_engineering

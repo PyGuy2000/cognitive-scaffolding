@@ -1,0 +1,29 @@
+concept_id: continual_learning
+name: Continual Learning
+category: machine_learning_algorithms
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Learning new tasks without forgetting previous ones
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- bayesian_networks
+- gradient_boosting
+- transfer_learning
+- logistic_regression

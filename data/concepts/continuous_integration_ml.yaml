@@ -1,0 +1,28 @@
+concept_id: continuous_integration_ml
+name: CI/CD for ML
+category: mlops
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: CI/CD for ML - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- llama_index
+- quantization
+- apache_spark_ml
+- ray

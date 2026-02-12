@@ -1,0 +1,29 @@
+concept_id: affective_computing
+name: Affective Computing
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Affective Computing - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- fairness_in_ai
+- ai_and_law
+- ai_for_accessibility
+- bias_in_ai

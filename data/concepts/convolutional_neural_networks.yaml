@@ -1,0 +1,34 @@
+concept_id: convolutional_neural_networks
+name: Convolutional Neural Networks
+category: deep_learning_architectures
+complexity: advanced
+last_updated: '2025-06-13'
+evolution_rate: moderate
+description: Deep learning architecture designed to process grid-like data such as
+  images
+key_components:
+- convolutional_layers
+- pooling_layers
+- feature_maps
+- filters_kernels
+- stride_and_padding
+- fully_connected_layers
+properties:
+- translation_invariant
+- parameter_sharing
+- hierarchical_features
+- spatial_locality
+- computationally_efficient
+common_misconceptions:
+- only_for_images
+- bigger_filters_always_better
+- more_layers_always_better
+- understand_images_like_humans
+prerequisite_concepts:
+- neural_networks
+- linear_algebra_for_ml
+related_concepts:
+- computer_vision
+- image_classification
+- deep_learning
+- transformers

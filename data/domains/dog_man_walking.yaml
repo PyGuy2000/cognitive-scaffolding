@@ -1,0 +1,37 @@
+description: Metaphors based on dog and man walking for random walk and mean reversion concepts
+domain_id: dog_man_walking
+examples:
+- random_walk_processes
+- mean_reversion
+- price_movements
+- stochastic_processes
+- correlation_analysis
+metaphor_types:
+- stochastic_behavior
+- mean_reversion_patterns
+- correlation_dynamics
+- random_movements
+name: Dog and Man Walking
+properties:
+- correlated_movement
+- mean_reversion_tendency
+- short_term_deviation
+- long_term_relationship
+- bounded_randomness
+strengths:
+- financial_modeling
+- stochastic_processes
+- mean_reversion_concepts
+- correlation_analysis
+suitable_for:
+- quantitative_analysts
+- financial_engineers
+- data_scientists
+- traders
+vocabulary:
+- like a dog on a leash
+- similar to wandering
+- think of correlation
+- imagine mean reversion
+- as if tethered
+- just like random walks

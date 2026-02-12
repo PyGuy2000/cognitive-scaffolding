@@ -1,0 +1,23 @@
+audience_id: general
+name: General Audience
+description: A broad audience with varied backgrounds and knowledge levels
+characteristics:
+  - Mixed technical proficiency
+  - Diverse age groups
+  - Various educational backgrounds
+  - Prefer clear, simple explanations
+preferred_metaphors:
+  - everyday_life
+  - cooking
+  - transportation
+  - building
+  - nature
+language_style:
+  - Clear and concise
+  - Avoid jargon
+  - Use common examples
+  - Step-by-step explanations
+example_concepts:
+  - Basic technology concepts
+  - Scientific principles
+  - Mathematical ideas

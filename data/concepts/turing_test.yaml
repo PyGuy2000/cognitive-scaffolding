@@ -1,0 +1,27 @@
+concept_id: turing_test
+name: Turing Test
+category: ai_fundamentals
+complexity: beginner
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Classic test of machine intelligence through natural conversation
+key_components:
+- theory
+- applications
+- limitations
+- future_directions
+properties:
+- foundational
+- broadly_applicable
+- evolving
+- interdisciplinary
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts: []
+related_concepts:
+- emergent_behaviors
+- artificial_intelligence_overview
+- philosophy_of_ai
+- history_of_ai

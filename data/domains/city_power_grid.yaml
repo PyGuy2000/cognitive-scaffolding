@@ -1,0 +1,37 @@
+description: Metaphors based on city power grids for electricity market operating reserves
+domain_id: city_power_grid
+examples:
+- operating_reserves
+- ancillary_services
+- frequency_regulation
+- spinning_reserves
+- grid_stability
+metaphor_types:
+- reserve_management
+- real_time_balancing
+- emergency_response
+- stability_mechanisms
+name: City Power Grid
+properties:
+- real_time_balancing
+- reserve_capacity
+- rapid_response_systems
+- stability_maintenance
+- layered_reserves
+strengths:
+- electricity_markets
+- ancillary_services
+- grid_operations
+- reserve_management
+suitable_for:
+- energy_traders
+- grid_operators
+- market_analysts
+- power_engineers
+vocabulary:
+- like a power grid
+- similar to reserves
+- think of balancing
+- imagine frequency control
+- as if dispatching
+- just like ancillary services

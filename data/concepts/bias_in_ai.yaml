@@ -1,0 +1,32 @@
+concept_id: "bias_in_ai"
+name: "Bias in AI"
+category: "ai_ethics"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Unfair or discriminatory patterns in AI system outputs"
+key_components:
+  - training_data_bias
+  - algorithmic_bias
+  - representation_bias
+  - evaluation_bias
+  - deployment_bias
+properties:
+  - systematic_unfairness
+  - data_dependent
+  - context_sensitive
+  - measurable
+  - socially_impactful
+common_misconceptions:
+  - only_explicit_bias
+  - easily_fixed
+  - purely_technical_issue
+  - ai_is_objective
+prerequisite_concepts:
+  - machine_learning
+  - data_science
+  - statistics
+related_concepts:
+  - fairness_metrics
+  - algorithmic_auditing
+  - responsible_ai

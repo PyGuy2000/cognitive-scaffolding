@@ -1,0 +1,33 @@
+concept_id: model_evaluation
+name: Model Evaluation
+category: mlops
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: moderate
+description: Methods and metrics for assessing machine learning model performance
+key_components:
+- performance_metrics
+- validation_strategies
+- train_test_split
+- cross_validation
+- confusion_matrix
+- bias_variance_tradeoff
+properties:
+- prevents_overfitting
+- enables_model_comparison
+- guides_hyperparameter_tuning
+- ensures_generalization
+- critical_for_deployment
+common_misconceptions:
+- single_metric_sufficient
+- training_accuracy_matters_most
+- more_data_always_helps
+- perfect_scores_achievable
+prerequisite_concepts:
+- supervised_learning
+- probability_and_statistics
+related_concepts:
+- overfitting
+- cross_validation
+- hyperparameter_tuning
+- mlops

@@ -1,0 +1,29 @@
+concept_id: information_theory
+name: Information Theory
+category: core_math
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: slow
+description: Mathematical framework for quantifying information and uncertainty
+key_components:
+- definitions
+- theorems
+- algorithms
+- applications
+properties:
+- rigorous
+- foundational
+- precise
+- universal
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- linear_algebra_for_ml
+- calculus_for_ml
+- probability_and_statistics
+- optimization_methods

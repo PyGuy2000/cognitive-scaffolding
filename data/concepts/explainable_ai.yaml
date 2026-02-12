@@ -1,0 +1,33 @@
+concept_id: explainable_ai
+name: Explainable AI
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-06-13'
+evolution_rate: fast
+description: Methods and techniques to make AI decision-making transparent and interpretable
+key_components:
+- model_interpretability
+- feature_importance
+- decision_explanations
+- visualization_techniques
+- local_explanations
+- global_explanations
+properties:
+- increases_trust
+- enables_debugging
+- supports_compliance
+- improves_fairness
+- facilitates_adoption
+common_misconceptions:
+- accuracy_must_be_sacrificed
+- only_simple_models_explainable
+- one_explanation_fits_all
+- explanations_always_correct
+prerequisite_concepts:
+- machine_learning
+- probability_and_statistics
+related_concepts:
+- bias_in_ai
+- model_evaluation
+- responsible_ai
+- fairness_in_ai

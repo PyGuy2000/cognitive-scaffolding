@@ -1,0 +1,28 @@
+concept_id: synthetic_data
+name: Synthetic Data
+category: data_engineering
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Artificially generated data for training and testing
+key_components:
+- collection
+- processing
+- storage
+- serving
+properties:
+- scalable
+- reliable
+- efficient
+- maintainable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- data_augmentation
+- data_governance
+- data_versioning
+- feature_stores

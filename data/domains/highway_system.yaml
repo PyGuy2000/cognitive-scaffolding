@@ -1,0 +1,37 @@
+description: Metaphors based on highway systems for network and bandwidth concepts
+domain_id: highway_system
+examples:
+- network_bandwidth
+- internet_traffic
+- data_center_interconnects
+- routing_protocols
+- network_congestion
+metaphor_types:
+- network_infrastructure
+- traffic_management
+- bandwidth_allocation
+- routing_optimization
+name: Highway System
+properties:
+- traffic_flow
+- capacity_management
+- routing_efficiency
+- congestion_handling
+- throughput_optimization
+strengths:
+- networking_concepts
+- bandwidth_management
+- traffic_analysis
+- performance_optimization
+suitable_for:
+- network_engineers
+- system_architects
+- technical_professionals
+- business_analysts
+vocabulary:
+- like highways
+- similar to traffic
+- think of lanes
+- imagine congestion
+- as if routing
+- just like throughput

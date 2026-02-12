@@ -1,0 +1,32 @@
+concept_id: "embeddings"
+name: "Embeddings"
+category: "ai_techniques"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Dense vector representations of words, images, or other data"
+key_components:
+  - vector_representations
+  - semantic_similarity
+  - dimensionality_reduction
+  - learned_features
+  - similarity_metrics
+properties:
+  - captures_semantic_meaning
+  - enables_similarity_search
+  - reduces_dimensionality
+  - transfers_across_tasks
+  - mathematically_manipulable
+common_misconceptions:
+  - understands_true_meaning
+  - always_captures_context
+  - one_size_fits_all
+  - eliminates_bias
+prerequisite_concepts:
+  - vector_spaces
+  - machine_learning
+  - natural_language_processing
+related_concepts:
+  - word2vec
+  - sentence_transformers
+  - vector_databases

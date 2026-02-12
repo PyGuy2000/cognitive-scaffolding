@@ -1,0 +1,39 @@
+# RAG Explainer Profile
+# Focused on metaphor + structure + transfer for document enrichment
+name: rag_explainer
+description: Optimized for RAG pipeline document enrichment
+
+layers:
+  activation:
+    enabled: false
+    required: false
+    weight: 0.5
+  metaphor:
+    enabled: true
+    required: true
+    weight: 1.5
+  structure:
+    enabled: true
+    required: true
+    weight: 1.5
+  interrogation:
+    enabled: false
+    required: false
+    weight: 0.5
+  encoding:
+    enabled: false
+    required: false
+    weight: 0.5
+  transfer:
+    enabled: true
+    required: false
+    weight: 1.2
+  reflection:
+    enabled: false
+    required: false
+    weight: 0.3
+
+settings:
+  max_tokens_per_layer: 1000
+  progressive_disclosure: false
+  include_evaluation: true

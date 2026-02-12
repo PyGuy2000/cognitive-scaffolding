@@ -1,0 +1,28 @@
+concept_id: ai_transformation
+name: AI Transformation
+category: business_strategy
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI Transformation - key AI/ML concept
+key_components:
+- planning
+- implementation
+- measurement
+- optimization
+properties:
+- strategic
+- value_driven
+- measurable
+- transformative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ai_in_supply_chain
+- ai_strategy
+- ai_in_healthcare
+- ai_economics

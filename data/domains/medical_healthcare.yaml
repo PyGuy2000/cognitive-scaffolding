@@ -1,0 +1,37 @@
+description: Metaphors based on medical and healthcare systems
+domain_id: medical_healthcare
+examples:
+- diagnostic_processes
+- treatment_protocols
+- immune_systems
+- patient_care
+- medical_procedures
+metaphor_types:
+- diagnostic_processes
+- treatment_systems
+- healthcare_delivery
+- medical_procedures
+name: Medical Healthcare
+properties:
+- diagnostic_accuracy
+- treatment_effectiveness
+- systematic_care
+- evidence_based
+- patient_focused
+strengths:
+- problem_diagnosis
+- systematic_analysis
+- evidence_based_thinking
+- care_processes
+suitable_for:
+- healthcare_professionals
+- analytical_thinkers
+- problem_solvers
+- quality_focused
+vocabulary:
+- like diagnosis
+- similar to treatment
+- think of symptoms
+- imagine healing
+- as if examining
+- just like medicine

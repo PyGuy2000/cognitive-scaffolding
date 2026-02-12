@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cognitive-scaffolding"
+version = "0.1.0"
+description = "Universal understanding middleware - a cognitive scaffolding layer for structured knowledge generation"
+readme = {text = "Universal understanding middleware", content-type = "text/plain"}
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "pydantic>=2.0.0",
+    "PyYAML>=6.0",
+    "anthropic>=0.8.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cognitive_scaffolding"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

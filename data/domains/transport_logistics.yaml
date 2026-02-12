@@ -1,0 +1,37 @@
+description: Metaphors based on transportation systems and logistics
+domain_id: transportation_logistics
+examples:
+- traffic_management
+- route_optimization
+- cargo_handling
+- delivery_systems
+- transportation_networks
+metaphor_types:
+- logistics_processes
+- network_management
+- flow_optimization
+- system_coordination
+name: Transportation Logistics
+properties:
+- network_efficiency
+- flow_management
+- optimization_processes
+- coordination_systems
+- scalable_networks
+strengths:
+- system_coordination
+- optimization_algorithms
+- network_analysis
+- efficiency_focused
+suitable_for:
+- operations_managers
+- system_engineers
+- business_analysts
+- logistics_professionals
+vocabulary:
+- like transportation
+- similar to logistics
+- think of networks
+- imagine flow
+- as if routing
+- just like delivery

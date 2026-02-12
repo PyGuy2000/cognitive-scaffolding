@@ -1,0 +1,40 @@
+concept_id: "mcp_server_implementation"
+name: "MCP Server Implementation"
+category: "software_architecture"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "medium"
+
+description: "Implementation of Model Context Protocol server for tool orchestration"
+
+key_components:
+  - server_process
+  - tool_functions
+  - client_communication
+  - protocol_compliance
+  - state_management
+  - error_handling
+
+properties:
+  - bidirectional_communication
+  - stateful_sessions
+  - tool_orchestration
+  - error_handling
+  - extensible_architecture
+  - concurrent_processing
+
+common_misconceptions:
+  - mcp_server_contains_ai
+  - just_a_web_server
+  - stateless_like_http
+  - tools_run_inside_server
+
+prerequisite_concepts:
+  - client_server_architecture
+  - json_rpc_protocol
+  - asyncio_programming
+
+related_concepts:
+  - api_design
+  - microservices
+  - tool_integration

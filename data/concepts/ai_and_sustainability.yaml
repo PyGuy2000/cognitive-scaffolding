@@ -1,0 +1,28 @@
+concept_id: ai_and_sustainability
+name: AI and Sustainability
+category: fairness_ethics_safety
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI and Sustainability - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- human_in_the_loop
+- privacy_preserving_ai
+- ai_policy_and_regulation
+- persuasive_technology

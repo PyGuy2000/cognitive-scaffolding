@@ -1,0 +1,37 @@
+description: Metaphors based on manufacturing and production processes
+domain_id: manufacturing_production
+examples:
+- assembly_line
+- quality_control
+- batch_processing
+- factory_automation
+- supply_chain
+metaphor_types:
+- industrial_processes
+- production_workflows
+- quality_systems
+- automation
+name: Manufacturing Production
+properties:
+- standardized_processes
+- quality_control
+- efficiency_optimization
+- scalable_production
+- systematic_workflows
+strengths:
+- problem_solution_cycle_style
+- process_optimization
+- systematic_approaches
+- quality_assurance
+suitable_for:
+- engineers
+- business_analysts
+- process_managers
+- technical_workers
+vocabulary:
+- like a factory
+- similar to assembly
+- think of production
+- imagine manufacturing
+- as if processing
+- just like automation

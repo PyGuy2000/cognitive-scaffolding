@@ -1,0 +1,28 @@
+concept_id: ai_in_retail
+name: AI in Retail
+category: business_strategy
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Artificial intelligence applications in retail
+key_components:
+- planning
+- implementation
+- measurement
+- optimization
+properties:
+- strategic
+- value_driven
+- measurable
+- transformative
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- ai_strategy
+- ai_in_finance
+- ai_in_energy
+- roi_of_ai

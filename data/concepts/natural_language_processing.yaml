@@ -1,0 +1,32 @@
+concept_id: "natural_language_processing"
+name: "Natural Language Processing"
+category: "ai_applications"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "very_fast"
+description: "AI systems that understand and generate human language"
+key_components:
+  - text_processing
+  - language_understanding
+  - text_generation
+  - linguistic_analysis
+  - semantic_parsing
+properties:
+  - language_understanding
+  - context_awareness
+  - ambiguity_handling
+  - multilingual_capability
+  - domain_adaptable
+common_misconceptions:
+  - truly_understands_language
+  - perfect_translation
+  - culturally_neutral
+  - always_grammatically_correct
+prerequisite_concepts:
+  - linguistics
+  - machine_learning
+  - statistics
+related_concepts:
+  - large_language_models
+  - transformers
+  - embeddings

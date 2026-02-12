@@ -1,0 +1,34 @@
+concept_id: feature_engineering
+name: Feature Engineering
+category: data_engineering
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Process of selecting and transforming variables for machine learning
+  models
+key_components:
+- feature_selection
+- feature_transformation
+- feature_creation
+- data_preprocessing
+- domain_knowledge
+- feature_scaling
+properties:
+- critical_for_model_performance
+- requires_domain_expertise
+- iterative_process
+- data_type_dependent
+- impacts_interpretability
+common_misconceptions:
+- automated_tools_sufficient
+- more_features_always_better
+- deep_learning_eliminates_need
+- one_size_fits_all
+prerequisite_concepts:
+- machine_learning
+- probability_and_statistics
+related_concepts:
+- data_preprocessing
+- supervised_learning
+- model_evaluation
+- embeddings

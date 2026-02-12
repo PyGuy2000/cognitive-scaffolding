@@ -1,0 +1,30 @@
+concept_id: in_context_learning
+name: In-Context Learning
+category: nlp
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: ML technique for in-context
+key_components:
+- preprocessing
+- modeling
+- evaluation
+- deployment
+properties:
+- language_aware
+- contextual
+- semantic
+- multilingual
+common_misconceptions:
+- Learns like humans do
+- Works perfectly with any data
+- No hyperparameter tuning needed
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+- natural_language_processing
+related_concepts:
+- chain_of_thought
+- natural_language_processing
+- information_retrieval
+- rag_systems

@@ -1,0 +1,29 @@
+concept_id: interpretability_methods
+name: Interpretability Methods
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Interpretability Methods - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- eu_ai_act
+- ai_literacy
+- ethics_in_ai
+- responsible_ai

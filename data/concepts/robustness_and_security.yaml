@@ -1,0 +1,29 @@
+concept_id: robustness_and_security
+name: AI Robustness and Security
+category: fairness_ethics_safety
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: AI Robustness and Security - key AI/ML concept
+key_components:
+- principles
+- metrics
+- mitigation
+- evaluation
+properties:
+- principled
+- measurable
+- actionable
+- transparent
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- persuasive_technology
+- eu_ai_act
+- ai_and_sustainability
+- accountability_in_ai

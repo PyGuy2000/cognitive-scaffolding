@@ -1,0 +1,52 @@
+avoid_for_audiences: []
+cultural_accessibility: universal
+description: Metaphors based on research processes and academic collaboration
+domain_id: research_collaboration
+examples:
+- research_assistant
+- library_collaboration
+- peer_review_process
+- expert_consultation
+limitations:
+- implies_human_intelligence
+- oversimplifies_automation
+- suggests_conscious_understanding
+manim_components:
+  characters:
+    assistant:
+      class: SVGMobject
+      file: assistant_icon.svg
+    researcher:
+      class: SVGMobject
+      file: researcher_icon.svg
+  environments:
+    library:
+      elements:
+      - bookshelves
+      - research_desk
+      - databases
+metaphor_types:
+- analogy
+- comparison
+- similarity
+name: Research Collaboration
+properties:
+- two_stage_process
+- expertise_combination
+- external_knowledge
+- quality_dependent
+- iterative_refinement
+strengths:
+- multi_component_systems
+- information_retrieval
+- expert_systems
+- knowledge_integration
+suitable_for:
+- all
+vocabulary:
+- like
+- similar to
+- think of
+- imagine
+- as if
+- just as

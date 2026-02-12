@@ -1,0 +1,28 @@
+concept_id: huggingface_transformers
+name: Hugging Face Transformers
+category: mlops
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Hugging Face Transformers - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- tpu_computing
+- gpu_computing
+- tensorflow
+- model_evaluation_metrics

@@ -1,0 +1,28 @@
+concept_id: knowledge_graphs
+name: Knowledge Graphs
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Knowledge Graphs - key AI/ML concept
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- logistic_regression
+- transfer_learning
+- semi_supervised_learning
+- k_means_clustering

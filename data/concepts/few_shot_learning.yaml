@@ -1,0 +1,32 @@
+concept_id: "few_shot_learning"
+name: "Few Shot Learning"
+category: "ai_techniques"
+complexity: "medium"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Learning to perform tasks with only a few examples"
+key_components:
+  - minimal_examples
+  - rapid_adaptation
+  - meta_learning
+  - example_selection
+  - context_learning
+properties:
+  - sample_efficient
+  - generalizes_quickly
+  - context_dependent
+  - requires_good_examples
+  - model_size_dependent
+common_misconceptions:
+  - learns_like_humans
+  - always_works_better
+  - no_training_needed
+  - understands_concepts
+prerequisite_concepts:
+  - machine_learning
+  - transfer_learning
+  - meta_learning
+related_concepts:
+  - prompt_engineering
+  - in_context_learning
+  - transfer_learning

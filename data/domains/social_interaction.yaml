@@ -1,0 +1,46 @@
+avoid_for_audiences:
+- highly_technical
+cultural_accessibility: universal
+description: Metaphors based on human social interactions and communication
+domain_id: social_interaction
+examples:
+- cocktail_party_attention
+- project_manager_coordination
+- conversation_understanding
+- meeting_facilitation
+limitations:
+- can_imply_consciousness
+- anthropomorphizes_computation
+- oversimplifies_technical_aspects
+metaphor_types:
+- social_dynamics
+- relationships
+- group_behavior
+- communication
+name: Social Interaction
+properties:
+- parallel_processing
+- context_awareness
+- selective_attention
+- coordination
+- communication
+strengths:
+- attention_mechanisms
+- multi_agent_systems
+- context_understanding
+- ai_architecture
+suitable_for:
+- general
+- business
+- students
+- team_leaders
+- social_workers
+vocabulary:
+- like a conversation
+- similar to teamwork
+- think of networking
+- imagine a gathering
+- as if coordinating
+- just like collaboration
+- picture a community
+- consider relationships

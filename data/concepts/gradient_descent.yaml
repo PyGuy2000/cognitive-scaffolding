@@ -1,0 +1,38 @@
+concept_id: "gradient_descent"
+name: "Gradient Descent"
+category: "optimization"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "slow"
+
+description: "Iterative optimization algorithm for finding function minima"
+
+key_components:
+  - loss_landscape
+  - iterative_steps
+  - learning_rate
+  - gradient_computation
+  - parameter_updates
+
+properties:
+  - iterative_optimization
+  - local_information
+  - step_size_tradeoffs
+  - can_get_stuck
+  - scalable
+
+common_misconceptions:
+  - always_finds_global_optimum
+  - bigger_steps_always_better
+  - simple_trial_error
+  - works_for_all_functions
+
+prerequisite_concepts:
+  - calculus
+  - derivatives
+  - function_optimization
+
+related_concepts:
+  - backpropagation
+  - adam_optimizer
+  - stochastic_gradient_descent

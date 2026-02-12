@@ -1,0 +1,33 @@
+concept_id: clustering
+name: Clustering
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-06-13'
+evolution_rate: slow
+description: Unsupervised learning technique that groups similar data points together
+key_components:
+- similarity_measures
+- cluster_formation
+- centroid_calculation
+- cluster_validation
+- optimal_cluster_number
+- hierarchical_structure
+properties:
+- discovers_natural_groupings
+- no_labeled_data_needed
+- exploratory_data_analysis
+- subjective_interpretation
+- algorithm_dependent_results
+common_misconceptions:
+- always_finds_meaningful_clusters
+- one_correct_clustering_exists
+- more_clusters_always_better
+- works_with_any_distance_metric
+prerequisite_concepts:
+- unsupervised_learning
+- probability_and_statistics
+related_concepts:
+- k_means_clustering
+- hierarchical_clustering
+- dimensionality_reduction
+- anomaly_detection

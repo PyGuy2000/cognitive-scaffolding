@@ -1,0 +1,28 @@
+concept_id: support_vector_machines
+name: Support Vector Machines
+category: machine_learning_algorithms
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: moderate
+description: Finding optimal hyperplanes for classification
+key_components:
+- training
+- inference
+- evaluation
+- optimization
+properties:
+- data_driven
+- statistical
+- adaptive
+- scalable
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+related_concepts:
+- decision_trees
+- reinforcement_learning_from_human_feedback
+- meta_learning
+- k_nearest_neighbors

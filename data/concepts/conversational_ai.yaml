@@ -1,0 +1,29 @@
+concept_id: conversational_ai
+name: Conversational AI
+category: nlp
+complexity: medium
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Conversational AI - key AI/ML concept
+key_components:
+- preprocessing
+- modeling
+- evaluation
+- deployment
+properties:
+- language_aware
+- contextual
+- semantic
+- multilingual
+common_misconceptions:
+- Is conscious or sentient
+- Will replace all human jobs
+- Understands like humans
+prerequisite_concepts:
+- machine_learning
+- natural_language_processing
+related_concepts:
+- sentiment_analysis
+- named_entity_recognition
+- prompt_engineering
+- machine_translation

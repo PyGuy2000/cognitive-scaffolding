@@ -1,0 +1,29 @@
+concept_id: interpretability_metrics
+name: Interpretability Metrics
+category: mlops
+complexity: advanced
+last_updated: '2025-07-06'
+evolution_rate: fast
+description: Interpretability Metrics - key AI/ML concept
+key_components:
+- development
+- deployment
+- monitoring
+- maintenance
+properties:
+- automated
+- reproducible
+- monitored
+- collaborative
+common_misconceptions:
+- Easy to implement
+- Works perfectly out of the box
+- No expertise required
+prerequisite_concepts:
+- machine_learning
+- deep_learning
+related_concepts:
+- gpu_computing
+- pinecone_vector_search
+- model_compression
+- tensorflow

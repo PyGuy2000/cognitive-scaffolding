@@ -1,0 +1,32 @@
+concept_id: "deep_learning"
+name: "Deep Learning"
+category: "ai_fundamentals"
+complexity: "high"
+last_updated: "2025-06-12"
+evolution_rate: "fast"
+description: "Neural networks with many layers for complex pattern recognition"
+key_components:
+  - multiple_layers
+  - feature_extraction
+  - backpropagation
+  - large_datasets
+  - computational_power
+properties:
+  - hierarchical_learning
+  - automatic_feature_extraction
+  - complex_pattern_recognition
+  - scalable_architecture
+  - data_hungry
+common_misconceptions:
+  - just_more_layers
+  - always_better_than_shallow
+  - understands_like_humans
+  - works_with_small_data
+prerequisite_concepts:
+  - neural_networks
+  - machine_learning
+  - linear_algebra
+related_concepts:
+  - transformers
+  - computer_vision
+  - natural_language_processing

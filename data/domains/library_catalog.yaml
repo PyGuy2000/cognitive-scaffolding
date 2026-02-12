@@ -1,0 +1,37 @@
+description: Metaphors based on library systems for database and indexing concepts
+domain_id: library_catalog
+examples:
+- database_indexing
+- search_optimization
+- query_engines
+- data_retrieval
+- caching_strategies
+metaphor_types:
+- information_organization
+- search_systems
+- index_structures
+- retrieval_optimization
+name: Library Catalog
+properties:
+- organized_storage
+- efficient_retrieval
+- index_based_search
+- catalog_systems
+- performance_optimization
+strengths:
+- database_concepts
+- indexing_strategies
+- query_optimization
+- search_algorithms
+suitable_for:
+- database_administrators
+- data_engineers
+- software_developers
+- business_analysts
+vocabulary:
+- like a library
+- similar to catalogs
+- think of indexing
+- imagine card catalogs
+- as if searching shelves
+- just like librarians
