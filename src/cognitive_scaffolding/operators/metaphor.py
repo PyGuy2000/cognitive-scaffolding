@@ -131,6 +131,18 @@ Return ONLY valid JSON, no markdown."""
         context: Dict[str, Any],
         config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            components = concept.get("key_components", [])
+            desc = concept.get("description", topic)
+            mapping = {c.replace("_", " "): f"part of the system that handles {c.replace('_', ' ')}" for c in components} if components else {"input": "ingredients", "process": "cooking", "output": "dish"}
+            return json.dumps({
+                "metaphor": f"Think of {topic} as a system where {desc}. Each part plays a role, much like a well-organized team.",
+                "source_domain": "organized_team",
+                "mapping": mapping,
+                "limitations": ["Real systems are more complex", "Scale differs significantly"],
+                "extension": f"To understand {topic} more deeply, consider how these components interact under pressure.",
+            })
         return json.dumps({
             "metaphor": f"Think of {topic} like a well-organized kitchen - each component has a specific role and they work together to produce a final result.",
             "source_domain": "restaurant_kitchen",

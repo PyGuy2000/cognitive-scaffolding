@@ -12,12 +12,12 @@ import time
 import uuid
 from typing import Any, Dict, Optional
 
+from cognitive_scaffolding.core.data_loader import DataLoader
 from cognitive_scaffolding.core.models import (
     ArtifactRecord,
     AudienceControlVector,
     AudienceProfile,
     CognitiveArtifact,
-    LayerName,
 )
 from cognitive_scaffolding.core.scoring import score_artifact
 from cognitive_scaffolding.orchestrator.call_plan import CallPlan
@@ -108,6 +108,13 @@ class CognitiveConductor:
         # Create artifact
         artifact = CognitiveArtifact(topic=topic, audience=audience)
 
+        # Load concept data for topic-aware fallbacks
+        if not hasattr(self, "_data_loader"):
+            self._data_loader = DataLoader(self.data_dir)
+        concept_id = topic.lower().replace(" ", "_")
+        concept = self._data_loader.get_concept(concept_id)
+        concept_dict = concept.model_dump() if concept else None
+
         # Execute operators
         provenance = ProvenanceTracker(run_id=run_id)
         context: Dict[str, Any] = {}
@@ -116,7 +123,10 @@ class CognitiveConductor:
             start = time.time()
             try:
                 operator = self._get_operator(step.operator_class)
-                output = operator.execute(topic, audience, context, step.config)
+                step_config = dict(step.config)
+                if concept_dict:
+                    step_config["concept"] = concept_dict
+                output = operator.execute(topic, audience, context, step_config)
                 artifact.set_layer(step.layer, output)
                 context[step.layer.value] = output.content
                 provenance.record(

@@ -47,6 +47,27 @@ Return ONLY valid JSON, no markdown."""
     def generate_fallback(
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            components = concept.get("key_components", [])
+            name = concept.get("name", topic)
+            properties = concept.get("properties", [])
+            chunks = [{"label": c.replace("_", " ").title(), "summary": f"A key aspect of {topic}"} for c in components] if components else [
+                {"label": "What", "summary": f"What {topic} is"},
+                {"label": "Why", "summary": f"Why {topic} matters"},
+                {"label": "How", "summary": f"How {topic} works"},
+            ]
+            # First-letter acronym from the concept name words
+            words = name.split()
+            mnemonic = "".join(w[0].upper() for w in words) if len(words) > 1 else f"Remember {name} by its key components."
+            retrieval_cues = [f"When you think of {p.replace('_', ' ')}, recall {topic}." for p in properties[:3]] if properties else [f"When you hear '{topic}', think of..."]
+            return json.dumps({
+                "mnemonic": mnemonic,
+                "chunks": chunks,
+                "retrieval_cues": retrieval_cues,
+                "spaced_repetition": [{"question": f"What is {topic}?", "answer": concept.get("description", "A concept involving...")}],
+                "visual_anchor": f"Picture a diagram of {topic}'s main components.",
+            })
         return json.dumps({
             "mnemonic": f"Remember {topic} by its key components.",
             "chunks": [
@@ -55,6 +76,6 @@ Return ONLY valid JSON, no markdown."""
                 {"label": "How", "summary": f"How {topic} works"},
             ],
             "retrieval_cues": [f"When you hear '{topic}', think of...", f"The key insight about {topic} is..."],
-            "spaced_repetition": [{"question": f"What is {topic}?", "answer": f"A concept involving..."}],
+            "spaced_repetition": [{"question": f"What is {topic}?", "answer": "A concept involving..."}],
             "visual_anchor": f"Picture a diagram of {topic}'s main components.",
         })

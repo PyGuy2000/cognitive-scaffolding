@@ -48,10 +48,26 @@ Return ONLY valid JSON, no markdown."""
     def generate_fallback(
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            desc = concept.get("description", f"{topic} is a concept involving structured processes and components.")
+            category = concept.get("category", "general").replace("_", " ")
+            components = concept.get("key_components", [])
+            related = concept.get("related_concepts", [])
+            key_terms = {c.replace("_", " "): f"A key component of {topic}" for c in components} if components else {topic.lower(): "The primary concept under study"}
+            relationships = [{"from": topic, "to": r.replace("_", " "), "type": "related_to"} for r in related] if related else [{"from": "input", "to": "output", "type": "transforms"}]
+            return json.dumps({
+                "definition": f"{topic} — {desc}.",
+                "taxonomy": {"category": category, "subcategories": [c.replace("_", " ") for c in components[:3]]},
+                "key_terms": key_terms,
+                "relationships": relationships,
+                "diagram_description": f"A flowchart showing the main components of {topic} and their connections.",
+                "formal_notation": "",
+            })
         return json.dumps({
             "definition": f"{topic} is a concept involving structured processes and components.",
             "taxonomy": {"category": "general", "subcategories": ["core", "supporting"]},
-            "key_terms": {topic.lower(): f"The primary concept under study"},
+            "key_terms": {topic.lower(): "The primary concept under study"},
             "relationships": [{"from": "input", "to": "output", "type": "transforms"}],
             "diagram_description": f"A flowchart showing the main components of {topic} and their connections.",
             "formal_notation": "",

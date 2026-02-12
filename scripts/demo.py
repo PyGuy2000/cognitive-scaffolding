@@ -30,6 +30,7 @@ from cognitive_scaffolding.orchestrator.experiment_runner import (
     ExperimentConfig,
     ExperimentRunner,
 )
+from cognitive_scaffolding.orchestrator.regeneration import regenerate_weak_layers
 from utils.ai_client import AIClient
 
 SEPARATOR = "=" * 60
@@ -144,6 +145,17 @@ def cmd_compile(args: argparse.Namespace) -> None:
     conductor = _build_conductor(args)
     record = conductor.compile(args.topic, args.audience, profile)
 
+    if args.regenerate:
+        layer_configs = conductor.toggle_manager.load_profile(profile)
+        score_before = record.artifact.evaluation.overall_score if record.artifact.evaluation else 0.0
+        record = regenerate_weak_layers(record, layer_configs, conductor, args.regen_threshold)
+        score_after = record.artifact.evaluation.overall_score if record.artifact.evaluation else 0.0
+        rev_count = record.current_revision
+        _header("Regeneration Summary")
+        print(f"  Score before : {score_before:.4f}")
+        print(f"  Score after  : {score_after:.4f}")
+        print(f"  Revisions    : {rev_count}")
+
     adapters = {"chatbot": ChatbotAdapter, "rag": RAGAdapter, "etl": ETLAdapter}
     output = adapters[fmt]().format(record)
 
@@ -219,6 +231,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_compile.add_argument(
         "--format", choices=["chatbot", "rag", "etl"], default="chatbot",
         help="Output format (default: chatbot)",
+    )
+    p_compile.add_argument(
+        "--regenerate", action="store_true",
+        help="Re-run weak layers after initial compilation",
+    )
+    p_compile.add_argument(
+        "--regen-threshold", type=float, default=0.5,
+        help="Confidence threshold for regeneration (default: 0.5)",
     )
 
     # experiment

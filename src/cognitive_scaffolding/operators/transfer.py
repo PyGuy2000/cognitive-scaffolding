@@ -47,6 +47,25 @@ Return ONLY valid JSON, no markdown."""
     def generate_fallback(
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            related = concept.get("related_concepts", [])
+            components = concept.get("key_components", [])
+            steps = [f"Understand {c.replace('_', ' ')}" for c in components] if components else ["Identify the components", "Apply the principle", "Verify the result"]
+            cross_domain = f"{topic} connects to {', '.join(r.replace('_', ' ') for r in related)}." if related else f"{topic} has parallels in natural systems."
+            return json.dumps({
+                "worked_example": {
+                    "problem": f"Apply {topic} to a simple scenario",
+                    "steps": steps,
+                    "solution": "The result demonstrates the core principle.",
+                },
+                "practice_problems": [
+                    {"problem": f"Given a basic scenario, apply {topic}", "hint": "Start with the definition", "difficulty": "easy"},
+                ],
+                "real_world_applications": [f"{topic} is used in industry for optimization."],
+                "simulation_prompt": f"Imagine a system where {topic} is the key mechanism. What happens when you change one variable?",
+                "cross_domain_transfer": cross_domain,
+            })
         return json.dumps({
             "worked_example": {
                 "problem": f"Apply {topic} to a simple scenario",

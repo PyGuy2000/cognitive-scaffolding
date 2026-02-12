@@ -54,6 +54,25 @@ Return ONLY valid JSON, no markdown."""
     def generate_fallback(
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            misconceptions = concept.get("common_misconceptions", [])
+            prereqs = concept.get("prerequisite_concepts", [])
+            related = concept.get("related_concepts", [])
+            alerts = [f"Watch out: '{m.replace('_', ' ')}' is a common misconception." for m in misconceptions] if misconceptions else [f"Don't confuse {topic} with similar-sounding concepts."]
+            connections = [f"How does {topic} build on {p.replace('_', ' ')}?" for p in prereqs] if prereqs else [f"How does {topic} relate to what you already know?"]
+            next_steps = [f"Explore {r.replace('_', ' ')}" for r in related] if related else [f"Explore advanced aspects of {topic}", "Try applying it to a real problem"]
+            return json.dumps({
+                "calibration_questions": [
+                    f"Can you explain {topic} in your own words?",
+                    f"What's the most important aspect of {topic}?",
+                    f"How would you teach {topic} to someone else?",
+                ],
+                "confidence_check": f"On a scale of 1-10, how confident are you in your understanding of {topic}?",
+                "misconception_alerts": alerts,
+                "connection_prompts": connections,
+                "next_steps": next_steps,
+            })
         return json.dumps({
             "calibration_questions": [
                 f"Can you explain {topic} in your own words?",

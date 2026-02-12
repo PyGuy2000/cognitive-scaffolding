@@ -44,6 +44,22 @@ Return ONLY valid JSON, no markdown."""
         context: Dict[str, Any],
         config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            desc = concept.get("description", topic)
+            misconceptions = concept.get("common_misconceptions", [])
+            related = concept.get("related_concepts", [])
+            prereqs = concept.get("prerequisite_concepts", [])
+            gap = f"Most people think '{misconceptions[0].replace('_', ' ')}' — but the truth is more nuanced." if misconceptions else f"Most people misunderstand the key principle behind {topic}."
+            stakes = f"Understanding {topic} connects to {', '.join(r.replace('_', ' ') for r in related)}." if related else f"Understanding {topic} is critical in today's world."
+            bridge = f"You already know about {', '.join(p.replace('_', ' ') for p in prereqs)} — that's your foundation." if prereqs else f"You already understand the basics that lead to {topic}."
+            return json.dumps({
+                "hook": f"Have you ever wondered how {desc}?",
+                "curiosity_gap": gap,
+                "stakes": stakes,
+                "emotional_trigger": f"Imagine being able to explain {topic} to anyone.",
+                "prior_knowledge_bridge": bridge,
+            })
         return json.dumps({
             "hook": f"Have you ever wondered how {topic} actually works?",
             "curiosity_gap": f"Most people misunderstand the key principle behind {topic}.",

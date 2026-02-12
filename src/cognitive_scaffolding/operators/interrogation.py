@@ -53,6 +53,21 @@ Return ONLY valid JSON, no markdown."""
     def generate_fallback(
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
+        concept = config.get("concept")
+        if concept:
+            misconceptions = concept.get("common_misconceptions", [])
+            components = concept.get("key_components", [])
+            properties = concept.get("properties", [])
+            misconception_probes = [f"Is it true that '{m.replace('_', ' ')}'?" for m in misconceptions] if misconceptions else [f"Is it true that {topic} always works the same way?"]
+            edge_cases = [f"What happens when {c.replace('_', ' ')} reaches its limits?" for c in components] if components else [f"What happens at the boundary conditions of {topic}?"]
+            socratic = [f"Why is {p.replace('_', ' ')} important for {topic}?" for p in properties[:3]] if properties else [f"What is the fundamental purpose of {topic}?"]
+            return json.dumps({
+                "socratic_questions": socratic,
+                "counterexamples": [f"Consider a scenario where {topic} produces unexpected results."],
+                "edge_cases": edge_cases,
+                "misconception_probes": misconception_probes,
+                "synthesis_prompt": f"How do all the components of {topic} work together as a system?",
+            })
         return json.dumps({
             "socratic_questions": [
                 f"What is the fundamental purpose of {topic}?",
