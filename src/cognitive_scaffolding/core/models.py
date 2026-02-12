@@ -1,7 +1,7 @@
 """Core data models for the Cognitive Scaffolding Layer."""
 
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -50,7 +50,7 @@ class LayerOutput(BaseModel):
     content: Dict[str, Any] = Field(default_factory=dict)
     confidence: float = Field(0.0, ge=0.0, le=1.0)
     provenance: Dict[str, Any] = Field(default_factory=dict)
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class EvaluationResult(BaseModel):
@@ -84,15 +84,15 @@ class CognitiveArtifact(BaseModel):
 
     evaluation: Optional[EvaluationResult] = None
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     def get_layer(self, name: LayerName) -> Optional[LayerOutput]:
         return getattr(self, name.value, None)
 
     def set_layer(self, name: LayerName, output: LayerOutput) -> None:
         setattr(self, name.value, output)
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now(timezone.utc)
 
     def populated_layers(self) -> Dict[str, LayerOutput]:
         result = {}
@@ -113,7 +113,7 @@ class CognitiveArtifact(BaseModel):
 class ArtifactRevision(BaseModel):
     """A single revision in an artifact's history."""
     revision_id: int
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     changed_layers: List[str] = Field(default_factory=list)
     reason: str = ""
     score_before: Optional[float] = None

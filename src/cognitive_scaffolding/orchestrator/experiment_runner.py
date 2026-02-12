@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
@@ -67,7 +67,7 @@ class ExperimentReport(BaseModel):
     baseline_score: float
     baseline_record: ArtifactRecord
     layer_results: List[LayerExperimentResult]
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     total_duration_ms: float = 0.0
 
 

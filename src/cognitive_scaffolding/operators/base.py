@@ -6,7 +6,7 @@ import json
 import logging
 import re
 from abc import ABC, abstractmethod
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
 from cognitive_scaffolding.core.models import AudienceProfile, LayerName, LayerOutput
@@ -60,7 +60,7 @@ class BaseOperator(ABC):
             provenance={
                 "operator": self.__class__.__name__,
                 "ai_available": bool(self.ai_client and self.ai_client.is_available()),
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "config": config,
             },
         )

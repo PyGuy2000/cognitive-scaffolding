@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 from pydantic import BaseModel, Field
@@ -12,7 +12,7 @@ class ProvenanceEntry(BaseModel):
     """A single provenance record."""
     layer: str
     operator: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     duration_ms: float = 0.0
     ai_available: bool = False
     config: Dict[str, Any] = Field(default_factory=dict)
@@ -24,7 +24,7 @@ class ProvenanceTracker(BaseModel):
     """Tracks provenance for all operators in a compilation run."""
     entries: List[ProvenanceEntry] = Field(default_factory=list)
     run_id: str = ""
-    started_at: datetime = Field(default_factory=datetime.utcnow)
+    started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     completed_at: datetime | None = None
 
     def record(
@@ -48,7 +48,7 @@ class ProvenanceTracker(BaseModel):
         ))
 
     def complete(self) -> None:
-        self.completed_at = datetime.utcnow()
+        self.completed_at = datetime.now(timezone.utc)
 
     def total_duration_ms(self) -> float:
         return sum(e.duration_ms for e in self.entries)

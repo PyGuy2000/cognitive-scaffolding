@@ -64,7 +64,7 @@ class MetaphorOperator(BaseOperator):
     ) -> "LayerOutput":
         """Execute using the existing MetaphorEngine."""
         from cognitive_scaffolding.core.models import LayerOutput
-        from datetime import datetime
+        from datetime import datetime, timezone
 
         concept_id = config.get("concept_id", topic.lower().replace(" ", "_"))
         domain_id = config.get("domain_id")
@@ -90,7 +90,7 @@ class MetaphorOperator(BaseOperator):
                 "operator": "MetaphorOperator",
                 "engine": "MetaphorEngine",
                 "ai_available": True,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "config": config,
             },
         )
