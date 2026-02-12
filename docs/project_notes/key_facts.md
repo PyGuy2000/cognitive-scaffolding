@@ -7,14 +7,15 @@
 - **Package path**: `src/cognitive_scaffolding/`
 - **Tests**: `tests/unit/`, `tests/integration/`
 - **Profiles**: `profiles/` (chatbot_tutor, rag_explainer, etl_explain)
-- **Data**: `data/` (218 concepts, 29 domains, 16 audiences, 4 templates)
+- **Data**: `data/` (216 concepts, 29 domains, 16 audiences, 4 templates)
 - **GitHub**: https://github.com/PyGuy2000/cognitive-scaffolding
 
 ## Implementation Status
-- **Phases 0-4**: Complete (all core code, operators, orchestrator, adapters)
-- **Phase 5**: Partial (ADRs done, experiment runner done, README pending)
-- **Tests**: 39/39 passing (35 unit + 4 integration)
+- **Phases 0-5**: Complete (core code, operators, orchestrator, adapters, CI, README)
+- **CI**: GitHub Actions — ruff + pytest on Python 3.12 (`.github/workflows/ci.yml`)
+- **Tests**: 98 passing (94 unit + 4 integration)
 - **Build**: Installed in `.venv/` via `pip install -e ".[dev]"`
+- **Topic-aware fallbacks**: Operators use concept YAML data when available, generic templates otherwise
 
 ## Architecture
 - **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 7 optional LayerOutput slots
@@ -26,9 +27,12 @@
 ## Key Files
 - `src/cognitive_scaffolding/core/models.py` — All Pydantic data models
 - `src/cognitive_scaffolding/core/scoring.py` — Weighted scoring formula
+- `src/cognitive_scaffolding/core/data_loader.py` — YAML data loader for concepts, audiences, domains
 - `src/cognitive_scaffolding/operators/base.py` — BaseOperator ABC
-- `src/cognitive_scaffolding/orchestrator/conductor.py` — Main compilation loop
+- `src/cognitive_scaffolding/orchestrator/conductor.py` — Main compilation loop (loads concept data, injects into operators)
 - `src/cognitive_scaffolding/orchestrator/toggle_manager.py` — Feature toggle system
+- `src/cognitive_scaffolding/orchestrator/regeneration.py` — Targeted re-run of weak layers
+- `scripts/demo.py` — CLI demo (compile, experiment, --regenerate)
 
 ## Dependencies
 - pydantic>=2.0.0
@@ -54,6 +58,6 @@
 - DEFAULT_VECTORS in conductor.py: child, general, data_scientist, phd
 
 ## Build Notes
-- pyproject.toml uses inline readme text (not README.md file) to avoid build errors
+- pyproject.toml readme now points to README.md
 - hatchling build backend, wheel packages = ["src/cognitive_scaffolding"]
 - pytest configured with testpaths=["tests"], pythonpath=["src"]

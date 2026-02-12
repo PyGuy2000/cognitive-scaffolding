@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "cognitive-scaffolding"
 version = "0.1.0"
 description = "Universal understanding middleware - a cognitive scaffolding layer for structured knowledge generation"
-readme = {text = "Universal understanding middleware", content-type = "text/plain"}
+readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 dependencies = [

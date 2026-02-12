@@ -19,3 +19,12 @@ Track completed work, in-progress tasks, and ticket references.
 - **Status**: Completed
 - **Description**: Initialized git repo, created `.gitignore`, made initial commit (324 files, 16,671 insertions), created public GitHub repo, pushed.
 - **URL**: https://github.com/PyGuy2000/cognitive-scaffolding
+
+### 2026-02-12 - CI, Adapter Tests, Regeneration CLI, Topic-Aware Fallbacks
+- **Status**: Completed
+- **Description**: Added GitHub Actions CI (ruff + pytest), adapter unit tests (22 tests for ChatbotAdapter/RAGAdapter/ETLAdapter), regeneration tests (5 tests) + `--regenerate`/`--regen-threshold` CLI flags, and topic-aware fallback templates (all 7 operators use concept YAML data when available, 28 tests). Fixed all pre-existing ruff lint errors. Test count: 43 → 98.
+- **URL**: https://github.com/PyGuy2000/cognitive-scaffolding
+
+### 2026-02-12 - README and Project Notes Update
+- **Status**: Completed
+- **Description**: Created README.md with architecture overview, quickstart, CLI usage, and project structure. Updated key_facts.md and issues.md to reflect current state (98 tests, CI green, Phase 5 complete).
