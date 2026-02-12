@@ -18,9 +18,12 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
+from dotenv import load_dotenv
+
 # Ensure project root is on sys.path so imports resolve
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from cognitive_scaffolding.orchestrator.conductor import CognitiveConductor
 from cognitive_scaffolding.adapters.chatbot_adapter import ChatbotAdapter
@@ -30,6 +33,7 @@ from cognitive_scaffolding.orchestrator.experiment_runner import (
     ExperimentConfig,
     ExperimentRunner,
 )
+from utils.ai_client import AIClient
 
 SEPARATOR = "=" * 60
 
@@ -41,9 +45,27 @@ def _header(title: str) -> None:
     print(SEPARATOR)
 
 
-def _build_conductor() -> CognitiveConductor:
+def _build_conductor(args: argparse.Namespace) -> CognitiveConductor:
     """Build a CognitiveConductor pointed at project dirs."""
+    ai_client = None
+    if not args.no_ai:
+        ai_client = AIClient(provider=args.provider, model=args.model)
+        if not ai_client.is_available():
+            print("  [warn] AI client failed to initialize — falling back to templates")
+            ai_client = None
+
+    status = ai_client.get_status() if ai_client else None
+    _header("AI Status")
+    if status:
+        print(f"  Provider  : {status['provider']}")
+        print(f"  Model     : {status['model']}")
+        print(f"  Available : yes")
+    else:
+        reason = "disabled (--no-ai)" if args.no_ai else "no valid credentials"
+        print(f"  Available : no ({reason})")
+
     return CognitiveConductor(
+        ai_client=ai_client,
         profiles_dir=str(PROJECT_ROOT / "profiles"),
         data_dir=str(PROJECT_ROOT / "data"),
     )
@@ -55,7 +77,7 @@ def cmd_chatbot(args: argparse.Namespace) -> None:
     profile = args.profile or "chatbot_tutor"
     _header(f"Chatbot  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
 
-    conductor = _build_conductor()
+    conductor = _build_conductor(args)
     record = conductor.compile(args.topic, args.audience, profile)
     messages = ChatbotAdapter().format(record)
 
@@ -77,7 +99,7 @@ def cmd_rag(args: argparse.Namespace) -> None:
     profile = args.profile or "rag_explainer"
     _header(f"RAG  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
 
-    conductor = _build_conductor()
+    conductor = _build_conductor(args)
     record = conductor.compile(args.topic, args.audience, profile)
     chunks = RAGAdapter().format(record)
 
@@ -105,7 +127,7 @@ def cmd_etl(args: argparse.Namespace) -> None:
     profile = args.profile or "etl_explain"
     _header(f"ETL  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
 
-    conductor = _build_conductor()
+    conductor = _build_conductor(args)
     record = conductor.compile(args.topic, args.audience, profile)
     flat = ETLAdapter().format(record)
 
@@ -144,7 +166,7 @@ def cmd_experiment(args: argparse.Namespace) -> None:
         f"  profile={profile!r}  layers={args.layers}"
     )
 
-    conductor = _build_conductor()
+    conductor = _build_conductor(args)
     runner = ExperimentRunner(conductor)
 
     config = ExperimentConfig(
@@ -195,6 +217,9 @@ def build_parser() -> argparse.ArgumentParser:
         p.add_argument("--topic", required=True, help="Concept to explain")
         p.add_argument("--audience", default="general", help="Audience ID (default: general)")
         p.add_argument("--profile", default=None, help="Override the default profile")
+        p.add_argument("--no-ai", action="store_true", help="Disable AI, use template fallbacks")
+        p.add_argument("--provider", default=None, help="AI provider (anthropic or openai)")
+        p.add_argument("--model", default=None, help="Override the default model")
 
     # chatbot
     p_chat = sub.add_parser("chatbot", help="Compile and format as chat messages")
@@ -220,6 +245,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    load_dotenv(PROJECT_ROOT / ".env")
     parser = build_parser()
     args = parser.parse_args()
 

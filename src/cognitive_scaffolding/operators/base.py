@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Dict, Optional
@@ -81,8 +82,13 @@ class BaseOperator(ABC):
         Default: try JSON parse, fall back to wrapping as text.
         Subclasses can override for custom parsing.
         """
+        text = raw.strip()
+        # Strip markdown code fences that LLMs often wrap JSON in
+        match = re.match(r"^```\w*\n(.*?)```\s*$", text, re.DOTALL)
+        if match:
+            text = match.group(1).strip()
         try:
-            parsed = json.loads(raw)
+            parsed = json.loads(text)
             if isinstance(parsed, dict):
                 return parsed
         except (json.JSONDecodeError, TypeError):
