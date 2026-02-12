@@ -12,8 +12,8 @@
 
 ## Implementation Status
 - **Phases 0-4**: Complete (all core code, operators, orchestrator, adapters)
-- **Phase 5**: Partial (ADRs done, experiment runner and README pending)
-- **Tests**: 34/34 passing (30 unit + 4 integration)
+- **Phase 5**: Partial (ADRs done, experiment runner done, README pending)
+- **Tests**: 39/39 passing (35 unit + 4 integration)
 - **Build**: Installed in `.venv/` via `pip install -e ".[dev]"`
 
 ## Architecture

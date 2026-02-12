@@ -75,7 +75,7 @@
 
 ## Phase 5: Toggle Experiments + Documentation 🔲 (Partial)
 
-- [ ] Experiment runner: compare scores with different toggle combinations
+- [x] Experiment runner: compare scores with different toggle combinations
   - Same topic, same audience, different enabled layers → measure score delta
 - [x] Log ADRs in `docs/project_notes/decisions.md` (ADR-001 through ADR-004)
 - [x] Update `docs/project_notes/key_facts.md`
@@ -95,8 +95,8 @@
 | 2 - Remaining Operators | ✅ Complete | 9 operator tests |
 | 3 - Conductor Pipeline | ✅ Complete | 4 integration tests |
 | 4 - Adapters | ✅ Complete | (included in integration tests) |
-| 5 - Experiments & Docs | 🔲 Partial | — |
-| **Total** | **Phases 0-4 complete** | **34 tests passing** |
+| 5 - Experiments & Docs | 🔲 Partial (runner done) | 5 experiment tests |
+| **Total** | **Phases 0-4 complete, Phase 5 runner done** | **39 tests passing** |
 
 ---
 
