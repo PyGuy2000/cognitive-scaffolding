@@ -1,7 +1,7 @@
 # Product Requirements Document: Cognitive Scaffolding Layer
 
 **Version:** 0.1.0
-**Status:** Draft
+**Status:** Implemented
 **Last Updated:** 2026-02-12
 
 ---
@@ -11,18 +11,17 @@
 1. [Vision and Purpose](#1-vision-and-purpose)
 2. [System Architecture](#2-system-architecture)
 3. [Core Intermediate Representation: CognitiveArtifact](#3-core-intermediate-representation-cognitiveartifact)
-4. [Operators (8)](#4-operators)
-5. [Orchestrator (Conductor)](#5-orchestrator-conductor)
+4. [Operators](#4-operators)
+5. [Orchestrator](#5-orchestrator)
 6. [Feature Toggle System](#6-feature-toggle-system)
 7. [Audience Control Vector](#7-audience-control-vector)
 8. [Scoring Model](#8-scoring-model)
 9. [Integration Profiles](#9-integration-profiles)
 10. [Adapters](#10-adapters)
 11. [Migration Strategy](#11-migration-strategy)
-12. [Non-Goals (v0.1)](#12-non-goals-v01)
-13. [Data Assets](#13-data-assets)
-14. [Key Interfaces and Types](#14-key-interfaces-and-types)
-15. [Testing Strategy](#15-testing-strategy)
+12. [Data Assets](#12-data-assets)
+13. [Non-Goals (v0.1)](#13-non-goals-v01)
+14. [Testing Strategy](#14-testing-strategy)
 
 ---
 
@@ -44,14 +43,12 @@ Most "understanding" interactions across systems reduce to the same underlying j
 The 7-layer engine formalizes this job. The system operates as middleware that **plugs into** existing infrastructure:
 
 - **Chatbots** -- interactive tutoring and progressive disclosure
-- **RAG pipelines** -- retrieval + explanation + grounding with citation
-- **ETL systems** -- explain transformations, anomalies, schema semantics, KPIs
-- **Knowledge graphs** -- concept maps, causal relations, taxonomy enforcement
-- **Decision support** -- explain recommendations, sensitivity, tradeoffs
+- **RAG pipelines** -- retrieval + explanation + grounding
+- **ETL systems** -- explain transformations, anomalies, schema semantics
 
 ### What This Builds On
 
-The project extends an existing **metaphor MCP server** with:
+The project extends an existing **metaphor MCP server** (`/home/robkacz/python/projects/metaphor-mcp-server/`) with:
 
 - 16 tools
 - 200+ concept YAMLs
@@ -59,11 +56,11 @@ The project extends an existing **metaphor MCP server** with:
 - 25+ metaphor domains
 - 14 explanation styles
 
-The metaphor server becomes one operator within a larger cognitive architecture.
+The metaphor server becomes one operator (MetaphorOperator) within the larger cognitive architecture.
 
 ### Naming Convention
 
-The central artifact is called `CognitiveArtifact`, **not** `LessonArtifact`. This is a deliberate choice -- the system produces more than lessons. It produces anomaly explanations, regulatory interpretations, model justifications, debugging runbooks, and RAG-grounded syntheses. The name must reflect this breadth.
+The central artifact is called `CognitiveArtifact`, **not** `LessonArtifact`. This is a deliberate choice -- the system produces more than lessons. It produces anomaly explanations, regulatory interpretations, model justifications, and RAG-grounded syntheses. The name must reflect this breadth.
 
 ---
 
@@ -79,7 +76,7 @@ The central artifact is called `CognitiveArtifact`, **not** `LessonArtifact`. Th
                               |
 +--------------------------------------------------------------+
 |                    ORCHESTRATOR (Cognitive Compiler)           |
-|  Conductor  |  Toggle Manager  |  Call Planner  |  Provenance |
+|  Conductor  |  Toggle Manager  |  Call Plan  |  Provenance    |
 +--------------------------------------------------------------+
                               |
 +--------------------------------------------------------------+
@@ -101,77 +98,72 @@ cognitive_scaffolding/
 |
 +-- src/cognitive_scaffolding/
 |   +-- __init__.py
-|   +-- core/                    # Core models, scoring, data loading
-|   |   +-- __init__.py
-|   |   +-- artifact.py          # CognitiveArtifact, LayerOutput
-|   |   +-- audience.py          # AudienceProfile, control vector
-|   |   +-- scoring.py           # Weighted scoring engine
-|   |   +-- data_loader.py       # YAML loading utilities
+|   +-- core/
+|   |   +-- models.py              # CognitiveArtifact, LayerOutput, ArtifactRecord
+|   |   +-- scoring.py             # LayerConfig, score_artifact()
+|   |   +-- data_loader.py         # DataLoader for YAML concepts/audiences/domains
+|   |   +-- audience.py            # Audience model (from metaphor MCP)
+|   |   +-- concept.py             # Concept model (from metaphor MCP)
+|   |   +-- domain.py              # Domain model (from metaphor MCP)
+|   |   +-- audience_inheritance.py # 3-level audience inheritance tree
 |   |
-|   +-- orchestrator/            # Conductor (compilation loop)
-|   |   +-- __init__.py
-|   |   +-- conductor.py         # Main compilation loop
-|   |   +-- toggle_manager.py    # Feature toggle resolution
-|   |   +-- call_planner.py      # Operator call sequencing
-|   |   +-- provenance.py        # Input hashing, audit trail
+|   +-- orchestrator/
+|   |   +-- conductor.py           # CognitiveConductor.compile() main loop
+|   |   +-- toggle_manager.py      # ToggleManager: profile + runtime + experiment
+|   |   +-- call_plan.py           # CallPlan, OperatorStep
+|   |   +-- provenance.py          # ProvenanceTracker, ProvenanceEntry
+|   |   +-- regeneration.py        # regenerate_weak_layers()
 |   |
-|   +-- operators/               # 8 operators, one per cognitive layer
-|   |   +-- __init__.py
-|   |   +-- base.py              # BaseOperator ABC
-|   |   +-- activation.py        # ActivationOperator
-|   |   +-- metaphor.py          # MetaphorOperator (wraps MetaphorEngine)
-|   |   +-- structure.py         # StructureOperator
-|   |   +-- interrogation.py     # InterrogationOperator
-|   |   +-- encoding.py          # EncodingOperator
-|   |   +-- transfer.py          # TransferOperator
-|   |   +-- reflection.py        # ReflectionOperator
-|   |   +-- grading.py           # GradingOperator
+|   +-- operators/
+|   |   +-- base.py                # BaseOperator ABC
+|   |   +-- activation.py          # ActivationOperator
+|   |   +-- metaphor.py            # MetaphorOperator (wraps MetaphorEngine)
+|   |   +-- structure.py           # StructureOperator
+|   |   +-- interrogation.py       # InterrogationOperator
+|   |   +-- encoding.py            # EncodingOperator
+|   |   +-- transfer.py            # TransferOperator
+|   |   +-- reflection.py          # ReflectionOperator
+|   |   +-- grading.py             # GradingOperator (rule-based, no LLM)
 |   |
-|   +-- schemas/                 # JSON schemas for operator I/O validation
-|   |   +-- __init__.py
-|   |   +-- cognitive_artifact.schema.json
-|   |   +-- operator_contracts/
-|   |   +-- integration_profiles/
+|   +-- schemas/                   # JSON schemas (future)
 |   |
-|   +-- adapters/                # Integration adapters
-|       +-- __init__.py
-|       +-- chatbot.py           # ChatbotAdapter
-|       +-- rag.py               # RAGAdapter
-|       +-- etl.py               # ETLAdapter
+|   +-- adapters/
+|       +-- base.py                # BaseAdapter ABC
+|       +-- chatbot_adapter.py     # ChatbotAdapter
+|       +-- rag_adapter.py         # RAGAdapter
+|       +-- etl_adapter.py         # ETLAdapter
 |
-+-- profiles/                    # YAML integration profiles
++-- profiles/
 |   +-- chatbot_tutor.yaml
 |   +-- rag_explainer.yaml
 |   +-- etl_explain.yaml
 |
-+-- data/                        # Copied YAML data from metaphor-mcp-server
-|   +-- audiences/               # 18 audience profile YAMLs
-|   +-- concepts/                # 200+ concept YAMLs
-|   +-- domains/                 # 25+ metaphor domain YAMLs
-|   +-- templates/               # Explanation styles, diagram templates, etc.
++-- data/
+|   +-- audiences/                 # 16 audience YAMLs
+|   +-- concepts/                  # 218 concept YAMLs
+|   +-- domains/                   # 29 metaphor domain YAMLs
+|   +-- templates/                 # Explanation styles, diagram templates
 |
-+-- utils/                       # Shared utilities
-|   +-- __init__.py
-|   +-- ai_client.py             # LLM client abstraction
-|   +-- cache.py                 # Caching layer
-|   +-- yaml_utils.py            # YAML loading/validation helpers
++-- utils/
+|   +-- ai_client.py               # AIClient (Anthropic + OpenAI)
+|   +-- cache.py                   # ContentCache (TTL-based)
+|   +-- yaml_utils.py              # safe_load_yaml, load_yaml_as_model
 |
 +-- tests/
-|   +-- unit/
-|   +-- integration/
+|   +-- unit/                      # 30 tests
+|   +-- integration/               # 4 tests
 |
 +-- pyproject.toml
 ```
 
 ### Design Principle
 
-The orchestrator must **never generate content directly**. It only:
+The orchestrator **never generates content directly**. It only:
 
-- Plans (builds call sequences)
-- Calls (dispatches to operators)
-- Validates (checks operator output against schemas)
-- Scores (evaluates artifact quality)
-- Regenerates (re-runs weak layers)
+- Plans (builds call sequences via CallPlan)
+- Calls (dispatches to operators via dynamic import)
+- Scores (evaluates artifact quality via score_artifact)
+- Regenerates (re-runs weak layers via regenerate_weak_layers)
 
 Content generation lives exclusively in operators.
 
@@ -179,381 +171,255 @@ Content generation lives exclusively in operators.
 
 ## 3. Core Intermediate Representation: CognitiveArtifact
 
-`CognitiveArtifact` is the system's Intermediate Representation (IR) -- analogous to an AST in compilers or a DAG in ETL. It represents a structured representation of understanding generated by the Cognitive Scaffolding Layer.
+`CognitiveArtifact` is the system's Intermediate Representation (IR) -- analogous to an AST in compilers or a DAG in ETL.
 
 ### Properties
 
 - **Channel-agnostic** -- does not assume chatbot, RAG, or ETL
-- **Host-system-agnostic** -- no coupling to any specific platform
-- **Audience-conditioned** -- parameterized by a control vector
+- **Audience-conditioned** -- parameterized by a 7D control vector
 - **Modular** -- layers are independently populated
 - **Evaluatable** -- can be scored and diagnosed
 - **Regenerable** -- weak layers can be individually re-run
 
 ### Structure
 
-```python
-@dataclass
-class LayerOutput:
-    """Output from a single operator."""
-    content: dict[str, Any]        # Operator-specific structured output
-    confidence: float              # 0.0 to 1.0 self-assessed quality
-    provenance: ProvenanceRecord   # Inputs hash, timestamp, model version
+All models use Pydantic v2 `BaseModel`:
 
-@dataclass
-class CognitiveArtifact:
-    """Core intermediate representation for the scaffolding layer."""
+```python
+class LayerOutput(BaseModel):
+    """Output from a single cognitive operator."""
+    layer: LayerName
+    content: Dict[str, Any] = Field(default_factory=dict)
+    confidence: float = Field(0.0, ge=0.0, le=1.0)
+    provenance: Dict[str, Any] = Field(default_factory=dict)
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+class CognitiveArtifact(BaseModel):
+    """Core IR -- a multi-layer understanding artifact."""
+    artifact_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     topic: str
-    audience_profile: AudienceProfile
+    audience: AudienceProfile
 
-    # 7 optional layer slots (populated by operators)
-    activation: LayerOutput | None = None
-    metaphor: LayerOutput | None = None
-    structure: LayerOutput | None = None
-    interrogation: LayerOutput | None = None
-    encoding: LayerOutput | None = None
-    transfer: LayerOutput | None = None
-    reflection: LayerOutput | None = None
+    # 7 optional layer slots
+    activation: Optional[LayerOutput] = None
+    metaphor: Optional[LayerOutput] = None
+    structure: Optional[LayerOutput] = None
+    interrogation: Optional[LayerOutput] = None
+    encoding: Optional[LayerOutput] = None
+    transfer: Optional[LayerOutput] = None
+    reflection: Optional[LayerOutput] = None
 
-    # Evaluation (populated by GradingOperator)
-    evaluation: EvaluationResult | None = None
-
-    # Metadata
-    metadata: dict[str, Any] = field(default_factory=dict)
-    revision_history: list[RevisionRecord] = field(default_factory=list)
+    evaluation: Optional[EvaluationResult] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
 ```
 
-### Versioning Strategy: Mutable with Linear Revision History (Option 2)
+Key methods on `CognitiveArtifact`:
 
-The artifact is mutable. Each time an operator writes to a layer slot, a `RevisionRecord` is appended to `revision_history`:
+- `get_layer(name: LayerName) -> Optional[LayerOutput]`
+- `set_layer(name: LayerName, output: LayerOutput)` -- also updates `updated_at`
+- `populated_layers() -> Dict[str, LayerOutput]` -- returns only non-None slots
+- `context_dict() -> Dict[str, Any]` -- accumulated content from all populated layers
+
+### Versioning: Mutable with Linear Revision History
+
+The artifact is wrapped in an `ArtifactRecord` that tracks mutations:
 
 ```python
-@dataclass
-class RevisionRecord:
-    """Tracks a single mutation to the artifact."""
-    timestamp_utc: str
-    layer: str                     # Which layer was written
-    operator: str                  # Which operator wrote it
-    reason: str                    # "initial" | "regeneration" | "override"
-    previous_confidence: float | None
-    new_confidence: float
+class ArtifactRevision(BaseModel):
+    revision_id: int
+    timestamp: datetime
+    changed_layers: List[str]
+    reason: str = ""
+    score_before: Optional[float] = None
+    score_after: Optional[float] = None
+
+class ArtifactRecord(BaseModel):
+    record_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    artifact: CognitiveArtifact
+    revision_history: List[ArtifactRevision] = Field(default_factory=list)
+    current_revision: int = 0
+    profile_name: str = ""
 ```
 
-This provides a full audit trail without the complexity of immutable snapshots or branching histories.
+Each call to `record.add_revision(changed_layers, reason, score_before, score_after)` appends to the history. This provides a full audit trail without immutable snapshots.
 
 ---
 
 ## 4. Operators
 
-The system defines **8 operators**, each implementing one cognitive layer. Each operator extends a common abstract base class.
+The system defines **8 operators**. Seven implement cognitive layers; one (GradingOperator) evaluates the completed artifact.
 
 ### BaseOperator ABC
 
 ```python
-from abc import ABC, abstractmethod
-
 class BaseOperator(ABC):
-    """Abstract base for all cognitive operators."""
+    layer_name: LayerName  # Subclasses must set this
+
+    def __init__(self, ai_client=None):
+        self.ai_client = ai_client
+
+    def execute(self, topic, audience, context, config=None) -> LayerOutput:
+        """Template method: build prompt -> call LLM or fallback -> parse -> score."""
+        prompt = self.build_prompt(topic, audience, context, config or {})
+        if self.ai_client and self.ai_client.is_available():
+            raw = self.ai_client.generate(prompt)
+        else:
+            raw = self.generate_fallback(topic, audience, context, config or {})
+        content = self.parse_output(raw)
+        confidence = self.estimate_confidence(content)
+        return LayerOutput(layer=self.layer_name, content=content, confidence=confidence, ...)
 
     @abstractmethod
-    def execute(
-        self,
-        topic: str,
-        audience: AudienceProfile,
-        context: dict[str, Any],
-        config: dict[str, Any] | None = None,
-    ) -> LayerOutput:
-        """Run the operator and return a LayerOutput."""
-        ...
+    def build_prompt(self, topic, audience, context, config) -> str: ...
 
-    @abstractmethod
-    def build_prompt(
-        self,
-        topic: str,
-        audience: AudienceProfile,
-        context: dict[str, Any],
-    ) -> str:
-        """Construct the LLM prompt for this operator."""
-        ...
+    def parse_output(self, raw: str) -> Dict[str, Any]:
+        """Try JSON parse, fall back to {"text": raw}."""
 
-    @abstractmethod
-    def validate_output(self, output: dict[str, Any]) -> bool:
-        """Validate operator output against its JSON schema contract."""
-        ...
+    def estimate_confidence(self, content: Dict[str, Any]) -> float:
+        """Heuristic: <50 chars=0.3, <200=0.5, <500=0.7, else 0.8."""
+
+    def generate_fallback(self, topic, audience, context, config) -> str:
+        """Deterministic fallback when AI unavailable. Subclasses override."""
 ```
 
 ### Communication Rule
 
-Operators **never communicate directly** with each other. The conductor passes a `context` dict to each operator that accumulates all prior `LayerOutput.content` dicts. This maintains clean separation of concerns.
+Operators **never communicate directly**. The conductor passes a `context` dict that accumulates all prior `LayerOutput.content` dicts. Each operator reads from context but only writes its own `LayerOutput`.
 
 ### Operator Specifications
 
-#### 1. ActivationOperator
-
-Captures attention before any learning occurs. Without activation, nothing downstream matters.
+#### 1. ActivationOperator (Layer 1)
 
 | Field | Description |
 |---|---|
-| **Layer** | Activation (Layer 1) |
-| **Cognitive Function** | Activate the salience network; allocate cognitive resources |
-| **Outputs** | Attention hooks, curiosity gaps, stakes framing, emotional triggers |
-| **Failure Mode** | No learning occurs -- audience never engages |
-| **Scaling by Audience** | Child: story hooks. PhD: open research problems. Executive: dollar stakes. |
+| **Cognitive Function** | Capture attention; allocate cognitive resources |
+| **Outputs** | `hook`, `curiosity_gap`, `stakes`, `emotional_trigger`, `prior_knowledge_bridge` |
+| **Failure Mode** | No engagement -- audience never invests attention |
+| **Audience Scaling** | Uses `language_level` and `cognitive_load` from control vector |
 
-**Output schema (key fields):**
+#### 2. MetaphorOperator (Layer 2 -- Fat Operator)
 
-```json
-{
-  "hook": "string",
-  "curiosity_question": "string",
-  "stakes": "string",
-  "emotional_trigger": "string | null"
-}
-```
-
-#### 2. MetaphorOperator (Fat Operator)
-
-Wraps the existing `MetaphorEngine` from the metaphor-mcp-server via import (not copy). This is the "fat operator" pattern -- it carries significant internal logic.
+Wraps the existing `MetaphorEngine` from metaphor-mcp-server via `sys.path` import. Falls back to LLM-based generation if the engine is unavailable.
 
 | Field | Description |
 |---|---|
-| **Layer** | Metaphor / Anchoring (Layer 2) |
-| **Cognitive Function** | Reduce cognitive load by mapping unfamiliar structure onto familiar structure |
-| **Outputs** | Analogies, schema mappings, boundary conditions ("where it breaks") |
-| **Failure Mode** | Cognitive overload if metaphor is missing; misconception if boundaries are missing |
-| **Critical Rule** | Must always return boundary conditions |
+| **Cognitive Function** | Reduce cognitive load by mapping unfamiliar onto familiar |
+| **Outputs** | `metaphor`, `source_domain`, `mapping`, `limitations`, `extension` |
+| **Failure Mode** | Cognitive overload (no anchor) or misconception (no boundary conditions) |
+| **Engine Path** | `metaphor-mcp-server/src/core/engines/metaphor_engine.py` |
 
-**Output schema (key fields):**
-
-```json
-{
-  "metaphors": [
-    {
-      "name": "string",
-      "source_domain": "string",
-      "target_domain": "string",
-      "correspondences": ["string"],
-      "where_it_breaks": ["string"],
-      "audience_fit": { "label": "number 0-1" }
-    }
-  ],
-  "selection": {
-    "recommended_name": "string",
-    "rationale": "string"
-  }
-}
-```
-
-#### 3. StructureOperator
-
-Replaces fuzzy intuitive grasp with structured representation.
+#### 3. StructureOperator (Layer 3)
 
 | Field | Description |
 |---|---|
-| **Layer** | Structure (Layer 3) |
 | **Cognitive Function** | Replace intuition with precision |
-| **Outputs** | Definitions, taxonomies, hierarchies, diagram descriptions, formal notation |
-| **Failure Mode** | Illusion of understanding -- feels correct but structurally hollow |
-| **Scaling by Audience** | Plain-English definitions at low rigor; formal notation + equations at high rigor |
+| **Outputs** | `definition`, `taxonomy`, `key_terms`, `relationships`, `diagram_description`, `formal_notation` |
+| **Failure Mode** | Illusion of understanding -- structurally hollow |
+| **Context Use** | Builds on metaphor `mapping` from prior context |
 
-**Output schema (key fields):**
-
-```json
-{
-  "definition": "string",
-  "taxonomy": "object | array",
-  "diagram_description": "string | null",
-  "formal_notation": "string | null",
-  "key_claims": ["string"]
-}
-```
-
-#### 4. InterrogationOperator
-
-Moves from passive understanding to active reasoning.
+#### 4. InterrogationOperator (Layer 4)
 
 | Field | Description |
 |---|---|
-| **Layer** | Interrogation (Layer 4) |
 | **Cognitive Function** | Strengthen encoding via retrieval and elaboration |
-| **Outputs** | Socratic questions, counterexamples, edge cases, misconception probes |
-| **Failure Mode** | Shallow familiarity -- recognizes concept but cannot reason about it |
-| **Scaling by Audience** | Simple "why?" chains at low abstraction; causal probes at high abstraction |
+| **Outputs** | `socratic_questions`, `counterexamples`, `edge_cases`, `misconception_probes`, `synthesis_prompt` |
+| **Failure Mode** | Shallow familiarity -- recognizes but cannot reason |
+| **Context Use** | Probes metaphor `limitations` and structure `key_terms` |
 
-**Output schema (key fields):**
-
-```json
-{
-  "socratic_questions": ["string"],
-  "counterexamples": ["string"],
-  "edge_cases": ["string"],
-  "misconception_probes": ["string"]
-}
-```
-
-#### 5. EncodingOperator
-
-Memory consolidation -- transfer from working memory to long-term storage.
+#### 5. EncodingOperator (Layer 5)
 
 | Field | Description |
 |---|---|
-| **Layer** | Encoding (Layer 5) |
 | **Cognitive Function** | Durable memory formation |
-| **Outputs** | Mnemonics, spaced repetition prompts, chunking strategies, retrieval cues |
+| **Outputs** | `mnemonic`, `chunks` (label+summary), `retrieval_cues`, `spaced_repetition` (Q&A), `visual_anchor` |
 | **Failure Mode** | Rapid forgetting |
-| **Scaling by Audience** | Rhymes and mnemonics at low complexity; compact heuristics + retrieval problems at high |
+| **Context Use** | Encodes structure `key_terms` |
 
-**Output schema (key fields):**
-
-```json
-{
-  "mnemonic": "string | null",
-  "spaced_repetition_prompts": ["string"],
-  "chunking_strategy": "string | null",
-  "retrieval_cues": ["string"]
-}
-```
-
-#### 6. TransferOperator
-
-Tests whether a concept is internalized or merely recognized.
+#### 6. TransferOperator (Layer 6)
 
 | Field | Description |
 |---|---|
-| **Layer** | Transfer (Layer 6) |
 | **Cognitive Function** | Validate model portability across contexts |
-| **Outputs** | Worked examples, problem sets, simulations, real-world applications |
-| **Failure Mode** | Context-bound knowledge -- cannot apply in new situations |
-| **Scaling by Audience** | Toy examples at low transfer distance; real-world cases + quantitative scenarios at high |
+| **Outputs** | `worked_example` (problem+steps+solution), `practice_problems`, `real_world_applications`, `simulation_prompt`, `cross_domain_transfer` |
+| **Failure Mode** | Context-bound knowledge |
+| **Context Use** | Builds on structure `definition` |
 
-**Output schema (key fields):**
-
-```json
-{
-  "worked_example": "string",
-  "problem_set": ["string"],
-  "simulation_prompt": "string | null",
-  "real_world_application": "string | null"
-}
-```
-
-#### 7. ReflectionOperator
-
-The highest cognitive level: awareness of how one is learning.
+#### 7. ReflectionOperator (Layer 7)
 
 | Field | Description |
 |---|---|
-| **Layer** | Reflection / Meta-Cognition (Layer 7) |
-| **Cognitive Function** | Improve learning efficiency over time |
-| **Outputs** | Calibration prompts, metacognitive checks, misconception detection, confidence assessment |
+| **Cognitive Function** | Metacognitive calibration |
+| **Outputs** | `calibration_questions`, `confidence_check`, `misconception_alerts`, `connection_prompts`, `next_steps` |
 | **Failure Mode** | Persistent misconceptions go undetected |
-| **Scaling by Audience** | Simple teach-back at low abstraction; calibration + error decomposition at high |
+| **Context Use** | References interrogation `misconception_probes` and encoding `chunks` |
 
-**Output schema (key fields):**
+#### 8. GradingOperator (Evaluation -- Rule-Based)
 
-```json
-{
-  "calibration_prompt": "string",
-  "metacognitive_check": "string",
-  "misconception_flags": ["string"],
-  "confidence_assessment": "string"
-}
-```
-
-#### 8. GradingOperator
-
-Evaluates the complete artifact and produces actionable diagnostics.
+Operates on the accumulated context dict. Does **not** call an LLM -- entirely rule-based.
 
 | Field | Description |
 |---|---|
-| **Layer** | Evaluation (post-pipeline) |
 | **Cognitive Function** | Quality assurance and revision planning |
-| **Outputs** | Rubric-based scores, diagnostic flags, gap analysis, revision plan |
-| **Critical Diagnostic Rules** | See table below |
-
-**Diagnostic Risk Rules:**
-
-| Condition | Flag |
-|---|---|
-| Metaphor present without Structure | High misconception risk |
-| Structure present without Transfer | Likely inert knowledge |
-| Encoding present without Interrogation | Memorization without understanding |
-| No Activation at all | Attention/engagement risk |
-
-**Output schema (key fields):**
-
-```json
-{
-  "layer_scores": { "activation": 0.85, "metaphor": 0.92, "...": "..." },
-  "overall_score": 0.87,
-  "diagnostics": ["string"],
-  "missing_critical": ["string"],
-  "revision_plan": {
-    "layers_to_regenerate": ["string"],
-    "reason": "string"
-  }
-}
-```
+| **Outputs** | `layer_grades`, `gaps` (missing/empty layers), `revision_plan`, `overall_quality` |
+| **Grading Logic** | Scores each layer by field count and content length |
 
 ---
 
-## 5. Orchestrator (Conductor)
+## 5. Orchestrator
 
-The orchestrator is the only component that knows all operators. It is the "cognitive compiler."
+### Components
 
-### Responsibilities
+| Component | File | Responsibility |
+|---|---|---|
+| **CognitiveConductor** | `conductor.py` | Main compilation loop |
+| **ToggleManager** | `toggle_manager.py` | Resolve toggle state from profile + overrides |
+| **CallPlan** | `call_plan.py` | Ordered operator step sequence |
+| **ProvenanceTracker** | `provenance.py` | Record operator timing, success/failure |
+| **regenerate_weak_layers** | `regeneration.py` | Re-run layers below confidence threshold |
 
-| Component | Responsibility |
-|---|---|
-| **Conductor** (`conductor.py`) | Main compilation loop: load profile, resolve toggles, call operators in sequence, run grading, trigger regeneration |
-| **Toggle Manager** (`toggle_manager.py`) | Resolve effective toggle state from profile defaults + runtime overrides + A/B experiments |
-| **Call Planner** (`call_planner.py`) | Build ordered operator call sequence from resolved toggles, respecting dependencies |
-| **Provenance Tracker** (`provenance.py`) | Record input hashes, timestamps, and model versions for every operator call |
-
-### Compilation Loop (Pseudocode)
+### Compilation Loop
 
 ```python
-def compile(topic: str, audience: AudienceProfile, profile: str, overrides: dict = None):
-    # 1. Load profile YAML
-    profile_config = load_profile(profile)
+class CognitiveConductor:
+    def compile(self, topic, audience_id, profile_name="chatbot_tutor",
+                overrides=None, audience_vector=None) -> ArtifactRecord:
+        # 1. Build AudienceProfile from audience_id + control vector
+        vector = audience_vector or DEFAULT_VECTORS.get(audience_id, AudienceControlVector())
+        audience = AudienceProfile(audience_id=audience_id, ...)
 
-    # 2. Resolve toggles (profile defaults + runtime overrides)
-    toggles = toggle_manager.resolve(profile_config, overrides)
+        # 2. Load profile and apply runtime overrides
+        layer_configs = self.toggle_manager.load_profile(profile_name)
+        if overrides:
+            layer_configs = self.toggle_manager.apply_overrides(layer_configs, overrides)
 
-    # 3. Build call plan
-    call_plan = call_planner.build(toggles)
+        # 3. Build call plan from resolved configs
+        call_plan = CallPlan.from_layer_configs(layer_configs, profile_name)
 
-    # 4. Initialize artifact
-    artifact = CognitiveArtifact(topic=topic, audience_profile=audience)
+        # 4. Execute enabled operators in sequence, accumulating context
+        artifact = CognitiveArtifact(topic=topic, audience=audience)
+        context = {}
+        for step in call_plan.enabled_steps():
+            operator = self._get_operator(step.operator_class)  # dynamic import
+            output = operator.execute(topic, audience, context, step.config)
+            artifact.set_layer(step.layer, output)
+            context[step.layer.value] = output.content
 
-    # 5. Execute operators in sequence
-    context = {}
-    for step in call_plan:
-        if step.layer == "grading":
-            continue  # grading runs after all content operators
-        operator = registry.get(step.operator_name)
-        output = operator.execute(topic, audience, context, step.config)
-        setattr(artifact, step.layer, output)
-        context[step.layer] = output.content
+        # 5. Score the artifact
+        artifact.evaluation = score_artifact(artifact, layer_configs)
 
-    # 6. Run GradingOperator
-    artifact.evaluation = grading_operator.execute(topic, audience, context)
-
-    # 7. Regeneration loop (if needed)
-    if artifact.evaluation and artifact.evaluation.content.get("revision_plan"):
-        for layer in artifact.evaluation.content["revision_plan"]["layers_to_regenerate"]:
-            operator = registry.get(layer)
-            output = operator.execute(topic, audience, context)
-            setattr(artifact, layer, output)
-            context[layer] = output.content
-            artifact.revision_history.append(...)
-
-    return artifact
+        # 6. Return ArtifactRecord with revision history
+        record = ArtifactRecord(artifact=artifact, profile_name=profile_name)
+        record.add_revision(changed_layers=list(context.keys()), reason="Initial compilation")
+        return record
 ```
 
-### Regeneration Policy
+Operators are resolved via dynamic import (`importlib.import_module`) and cached per session.
 
-Regeneration is **targeted**, not full-rewrite. If the grader identifies weak layers or misconception risk exceeds a threshold, only the specific layers are re-run. The regeneration threshold and target layers are configurable per profile.
+### Regeneration
+
+`regenerate_weak_layers(record, layer_configs, conductor, threshold=0.5)` identifies layers with confidence below the threshold, re-runs those operators with enriched context, re-scores, and appends a revision entry.
 
 ---
 
@@ -563,7 +429,7 @@ Toggles operate at **three levels**, with later levels overriding earlier ones.
 
 ### Level 1: Profile YAML Defaults
 
-Each integration profile specifies per-layer configuration:
+Each profile specifies per-layer `enabled`, `required`, and `weight`:
 
 ```yaml
 # profiles/chatbot_tutor.yaml (excerpt)
@@ -571,100 +437,95 @@ layers:
   activation:
     enabled: true
     required: true
-    weight: 1.0
+    weight: 1.2
   metaphor:
     enabled: true
     required: false
-    weight: 2.0
-  structure:
-    enabled: true
-    required: true
-    weight: 2.0
-  # ...
+    weight: 1.5
 ```
 
 ### Level 2: Runtime Overrides
 
-The API caller can override any toggle at call time:
+The API caller can override any toggle at call time. Overrides are a flat dict keyed by layer name:
 
 ```python
-artifact = compile(
+record = conductor.compile(
     topic="gradient descent",
-    audience=audience,
-    profile="chatbot_tutor",
+    audience_id="data_scientist",
+    profile_name="chatbot_tutor",
     overrides={
-        "layers": {
-            "encoding": {"enabled": False},
-            "metaphor": {"weight": 3.0}
-        }
+        "encoding": {"enabled": False},
+        "metaphor": {"weight": 3.0},
     }
 )
 ```
 
 ### Level 3: A/B Experiments
 
-Compare artifact scores with different toggle combinations:
+`ToggleManager.create_experiment_variants(base_configs, toggle_layer)` returns two config variants -- one with the layer enabled, one disabled -- for comparing scores:
 
 ```python
-experiment = ABExperiment(
-    base_profile="chatbot_tutor",
-    variants={
-        "control": {},
-        "no_encoding": {"layers": {"encoding": {"enabled": False}}},
-        "heavy_metaphor": {"layers": {"metaphor": {"weight": 4.0}}},
-    }
-)
-results = experiment.run(topic, audience, n_trials=50)
+variant_a, variant_b = toggle_manager.create_experiment_variants(configs, "activation")
+# variant_a: activation enabled
+# variant_b: activation disabled
+# Compile with each, compare scores
 ```
 
-### Toggle Resolution Order
+### Resolution Order
 
 ```
-Profile YAML  --->  Runtime Overrides  --->  A/B Variant  =  Effective Toggles
+Profile YAML  -->  Runtime Overrides  =  Effective LayerConfig per layer
 ```
 
 ---
 
 ## 7. Audience Control Vector
 
-The audience is modeled as a 7-dimensional control vector that parameterizes every operator's output:
+The audience is modeled as a 7-dimensional `AudienceControlVector` (Pydantic model) that parameterizes every operator's output:
 
-$$
-\mathbf{a} = (\ell,\ \alpha,\ \rho,\ \mu,\ \delta,\ \kappa,\ \tau)
-$$
+```python
+class AudienceControlVector(BaseModel):
+    language_level: float = Field(0.5, ge=0.0, le=1.0)
+    abstraction: float = Field(0.5, ge=0.0, le=1.0)
+    rigor: float = Field(0.5, ge=0.0, le=1.0)
+    math_density: float = Field(0.0, ge=0.0, le=1.0)
+    domain_specificity: float = Field(0.5, ge=0.0, le=1.0)
+    cognitive_load: float = Field(0.5, ge=0.0, le=1.0)
+    transfer_distance: float = Field(0.5, ge=0.0, le=1.0)
+```
 
 ### Dimensions
 
-| Symbol | Name | Range | Low End | High End |
-|---|---|---|---|---|
-| `l` | `language_level` | 0.0 -- 1.0 | Simple vocabulary, short sentences | Advanced vocabulary, complex syntax |
-| `a` | `abstraction` | 0.0 -- 1.0 | Concrete, tangible examples | Abstract, formal representations |
-| `r` | `rigor` | 0.0 -- 1.0 | Informal, conversational | Formal, precise, theorem-style |
-| `m` | `math_density` | 0.0 -- 1.0 | No math at all | Heavy notation, derivations |
-| `d` | `domain_specificity` | 0.0 -- 1.0 | General, cross-domain language | Deep field-specific jargon |
-| `k` | `cognitive_load` | 0.0 -- 1.0 | Minimal, low branching | Heavy, multi-branch, deep |
-| `t` | `transfer_distance` | 0.0 -- 1.0 | Near transfer (same domain) | Far/novel transfer (cross-domain) |
+| Field | Range | Low End | High End |
+|---|---|---|---|
+| `language_level` | 0.0 -- 1.0 | Simple vocabulary, short sentences | Advanced vocabulary, complex syntax |
+| `abstraction` | 0.0 -- 1.0 | Concrete, tangible examples | Abstract, formal representations |
+| `rigor` | 0.0 -- 1.0 | Informal, conversational | Formal, precise, theorem-style |
+| `math_density` | 0.0 -- 1.0 | No math at all | Heavy notation, derivations |
+| `domain_specificity` | 0.0 -- 1.0 | General, cross-domain language | Deep field-specific jargon |
+| `cognitive_load` | 0.0 -- 1.0 | Minimal, low branching | Heavy, multi-branch, deep |
+| `transfer_distance` | 0.0 -- 1.0 | Near transfer (same domain) | Far/novel transfer (cross-domain) |
 
-### Example Audience Vectors
+### Default Vectors
+
+Defined in `conductor.py`:
 
 ```python
-# Child (~10 years old)
-child = AudienceProfile(
-    label="child",
-    control_vector={"l": 0.2, "a": 0.2, "r": 0.1, "m": 0.0, "d": 0.1, "k": 0.3, "t": 0.3}
-)
-
-# PhD Researcher
-phd = AudienceProfile(
-    label="phd",
-    control_vector={"l": 0.9, "a": 0.9, "r": 0.9, "m": 0.8, "d": 0.9, "k": 0.9, "t": 0.8}
-)
-
-# Business Executive
-executive = AudienceProfile(
-    label="executive",
-    control_vector={"l": 0.7, "a": 0.5, "r": 0.4, "m": 0.1, "d": 0.6, "k": 0.5, "t": 0.6}
-)
+DEFAULT_VECTORS = {
+    "child": AudienceControlVector(
+        language_level=0.1, abstraction=0.1, rigor=0.1, math_density=0.0,
+        domain_specificity=0.0, cognitive_load=0.2, transfer_distance=0.2,
+    ),
+    "general": AudienceControlVector(),  # all 0.5 except math_density=0.0
+    "data_scientist": AudienceControlVector(
+        language_level=0.8, abstraction=0.7, rigor=0.8, math_density=0.7,
+        domain_specificity=0.8, cognitive_load=0.8, transfer_distance=0.6,
+    ),
+    "phd": AudienceControlVector(
+        language_level=0.9, abstraction=0.9, rigor=0.95, math_density=0.9,
+        domain_specificity=0.9, cognitive_load=0.9, transfer_distance=0.8,
+    ),
+}
 ```
 
 ### How the Vector Gates Each Layer
@@ -672,18 +533,16 @@ executive = AudienceProfile(
 | Layer | Low Vector | High Vector |
 |---|---|---|
 | Activation | Story hooks, relatable scenarios | Open research problems, quantitative stakes |
-| Metaphor | Physical, everyday analogies (pub, kitchen) | Dynamical systems, formal mappings |
-| Structure | Plain-English definitions, simple lists | Formal notation, equations, proofs |
-| Interrogation | Simple "why?" chains, 2-3 questions | Causal probes, edge cases, counterexamples |
+| Metaphor | Physical, everyday analogies | Formal mappings, dynamical systems |
+| Structure | Plain-English definitions, simple lists | Formal notation, equations |
+| Interrogation | Simple "why?" chains | Causal probes, edge cases, counterexamples |
 | Encoding | Rhymes, mnemonics, visual chunking | Compact heuristics, retrieval derivations |
 | Transfer | Toy examples, playground scenarios | Real-world cases, quantitative problems |
-| Reflection | Simple teach-back ("explain to a friend") | Calibration, error decomposition, model revision |
+| Reflection | Simple teach-back | Calibration, error decomposition |
 
 ---
 
 ## 8. Scoring Model
-
-The scoring model produces a single quality metric for an artifact.
 
 ### Formula
 
@@ -693,568 +552,269 @@ Score = sum(w_k * x_k) / sum(w_k)
 
 Where:
 
-- `w_k` = weight for layer `k` (from profile or runtime override)
-- `x_k` = confidence score from operator `k`'s `LayerOutput` (0.0 to 1.0)
+- `w_k` = weight for layer `k` (from `LayerConfig.weight`)
+- `x_k` = confidence score from layer `k`'s `LayerOutput` (0.0 to 1.0)
 
 ### Rules
 
 1. **Disabled layers** are excluded from both numerator and denominator
-2. **Required layers** that are enabled but have empty/null output trigger a **penalty multiplier of 0.7** applied to the final score
-3. **Score range:** 0.0 to 1.0
+2. **Enabled but empty layers** are included in the denominator (score 0.0), penalizing gaps
+3. **Required layers** that are enabled but empty trigger a **penalty multiplier of 0.7** on the final score
+4. **Score range:** 0.0 to 1.0
 
 ### Implementation
 
 ```python
-def score_artifact(artifact: CognitiveArtifact, toggles: dict) -> float:
-    """Compute weighted quality score for a CognitiveArtifact."""
-    LAYER_NAMES = [
-        "activation", "metaphor", "structure", "interrogation",
-        "encoding", "transfer", "reflection"
-    ]
+REQUIRED_PENALTY = 0.7
 
-    numerator = 0.0
-    denominator = 0.0
-    penalty_triggered = False
+class LayerConfig:
+    def __init__(self, enabled=True, required=False, weight=1.0): ...
 
-    for layer_name in LAYER_NAMES:
-        toggle = toggles.get(layer_name, {})
+def score_artifact(artifact: CognitiveArtifact,
+                   layer_configs: Dict[str, LayerConfig]) -> EvaluationResult:
+    numerator, denominator = 0.0, 0.0
+    for layer in LayerName:
+        config = layer_configs.get(layer.value, LayerConfig(enabled=False))
+        if not config.enabled:
+            continue
+        output = artifact.get_layer(layer)
+        if output is not None:
+            numerator += config.weight * output.confidence
+        elif config.required:
+            missing_required.append(layer.value)
+        denominator += config.weight
 
-        if not toggle.get("enabled", False):
-            continue  # Disabled: skip entirely
+    overall = numerator / denominator if denominator else 0.0
+    if missing_required:
+        overall *= REQUIRED_PENALTY
 
-        weight = toggle.get("weight", 1.0)
-        layer_output: LayerOutput | None = getattr(artifact, layer_name)
-
-        if layer_output is not None:
-            numerator += weight * layer_output.confidence
-            denominator += weight
-        else:
-            # Enabled but empty
-            denominator += weight
-            if toggle.get("required", False):
-                penalty_triggered = True
-
-    if denominator == 0:
-        return 0.0
-
-    score = numerator / denominator
-
-    if penalty_triggered:
-        score *= 0.7  # Required-layer-missing penalty
-
-    return round(score, 4)
+    return EvaluationResult(overall_score=round(overall, 4), ...)
 ```
 
-### Diagnostic Flags
+### EvaluationResult
 
-Beyond the numeric score, the `GradingOperator` also produces qualitative diagnostic flags:
-
-| Condition | Diagnostic |
-|---|---|
-| Metaphor present, Structure absent | "Metaphor without Structure: high misconception risk" |
-| Structure present, Transfer absent | "Structure without Transfer: likely inert knowledge" |
-| Encoding present, Interrogation absent | "Encoding without Interrogation: memorization without understanding" |
-| No Activation | "No Activation: attention/engagement risk" |
+```python
+class EvaluationResult(BaseModel):
+    overall_score: float = Field(0.0, ge=0.0, le=1.0)
+    layer_scores: Dict[str, float]       # per-layer confidence
+    penalty_applied: bool = False
+    penalty_reason: Optional[str] = None
+    missing_required: List[str]           # layers that were required but empty
+    weights_used: Dict[str, float]        # weights applied per layer
+```
 
 ---
 
 ## 9. Integration Profiles
 
-Three integration profiles ship with v0.1. Each profile is a YAML file in `profiles/` that configures which layers are enabled, which are required, and their weights.
+Three profiles ship with v0.1. Each is a YAML file in `profiles/`.
 
 ### Profile 1: `chatbot_tutor`
 
-**Purpose:** Interactive learning with turn-by-turn scaffolding. Optimizes for engagement and comprehension checks.
+Full cognitive scaffolding for interactive tutoring. All 7 layers enabled.
 
-```yaml
-profile: chatbot_tutor
-version: "0.1"
-description: "Full cognitive scaffolding for interactive tutoring"
+| Layer | Enabled | Required | Weight |
+|---|---|---|---|
+| activation | yes | **yes** | 1.2 |
+| metaphor | yes | no | 1.5 |
+| structure | yes | **yes** | 1.3 |
+| interrogation | yes | no | 1.0 |
+| encoding | yes | **yes** | 1.2 |
+| transfer | yes | no | 1.0 |
+| reflection | yes | no | 0.8 |
 
-layers:
-  activation:
-    enabled: true
-    required: true
-    weight: 1.0
-  metaphor:
-    enabled: true
-    required: false
-    weight: 2.0
-  structure:
-    enabled: true
-    required: true
-    weight: 2.0
-  interrogation:
-    enabled: true
-    required: true
-    weight: 2.0
-  encoding:
-    enabled: true
-    required: true
-    weight: 1.0
-  transfer:
-    enabled: true
-    required: true
-    weight: 2.0
-  reflection:
-    enabled: true
-    required: true
-    weight: 1.0
-
-evaluation:
-  grading_enabled: true
-  misconception_probes: true
-  regeneration_threshold: 0.35
-
-output:
-  format: conversational
-  include_provenance: false
-```
-
-**Key characteristics:**
-- All 7 layers enabled
-- Activation and Encoding are required (guaranteed engagement and retention)
-- Heavy weight on Structure, Interrogation, Transfer (comprehension core)
+Settings: `max_tokens_per_layer: 1500`, `progressive_disclosure: true`
 
 ### Profile 2: `rag_explainer`
 
-**Purpose:** Grounded explanations based on retrieved documents. Optimizes for accuracy, citation, and boundary conditions.
+Optimized for RAG pipeline document enrichment. Metaphor + Structure + Transfer enabled.
 
-```yaml
-profile: rag_explainer
-version: "0.1"
-description: "Retrieval-grounded explanation with citation"
+| Layer | Enabled | Required | Weight |
+|---|---|---|---|
+| activation | no | no | 0.5 |
+| metaphor | yes | **yes** | 1.5 |
+| structure | yes | **yes** | 1.5 |
+| interrogation | no | no | 0.5 |
+| encoding | no | no | 0.5 |
+| transfer | yes | no | 1.2 |
+| reflection | no | no | 0.3 |
 
-layers:
-  activation:
-    enabled: false
-    required: false
-    weight: 0.0
-  metaphor:
-    enabled: true
-    required: false
-    weight: 1.5
-  structure:
-    enabled: true
-    required: true
-    weight: 2.5
-  interrogation:
-    enabled: false
-    required: false
-    weight: 0.0
-  encoding:
-    enabled: false
-    required: false
-    weight: 0.0
-  transfer:
-    enabled: true
-    required: false
-    weight: 2.0
-  reflection:
-    enabled: false
-    required: false
-    weight: 0.0
-
-evaluation:
-  grading_enabled: true
-  misconception_probes: false
-  regeneration_threshold: 0.25
-
-output:
-  format: structured_answer
-  include_provenance: true
-  include_citations: true
-  fast_mode: true
-```
-
-**Key characteristics:**
-- Metaphor + Structure + Transfer enabled; others disabled
-- Structure is required and heavily weighted (accuracy focus)
-- Fast mode for low-latency retrieval contexts
-- Provenance and citations mandatory
+Settings: `max_tokens_per_layer: 1000`, `progressive_disclosure: false`
 
 ### Profile 3: `etl_explain`
 
-**Purpose:** Explain ETL transformations, anomalies, schema semantics. Outputs actionable runbooks.
+Structured output for ETL data pipelines. Structure-heavy, batch-friendly.
 
-```yaml
-profile: etl_explain
-version: "0.1"
-description: "ETL pipeline explanation and diagnostics"
+| Layer | Enabled | Required | Weight |
+|---|---|---|---|
+| activation | no | no | 0.3 |
+| metaphor | yes | no | 1.0 |
+| structure | yes | **yes** | 2.0 |
+| interrogation | no | no | 0.3 |
+| encoding | no | no | 0.3 |
+| transfer | yes | no | 0.8 |
+| reflection | yes | no | 1.0 |
 
-layers:
-  activation:
-    enabled: false
-    required: false
-    weight: 0.0
-  metaphor:
-    enabled: false
-    required: false
-    weight: 0.0
-  structure:
-    enabled: true
-    required: true
-    weight: 3.0
-  interrogation:
-    enabled: false
-    required: false
-    weight: 0.0
-  encoding:
-    enabled: false
-    required: false
-    weight: 0.0
-  transfer:
-    enabled: false
-    required: false
-    weight: 0.0
-  reflection:
-    enabled: false
-    required: false
-    weight: 0.0
+Settings: `max_tokens_per_layer: 800`, `progressive_disclosure: false`, `batch_mode: true`
 
-evaluation:
-  grading_enabled: true
-  misconception_probes: false
-  regeneration_threshold: 0.20
-
-output:
-  format: structured_record
-  include_provenance: true
-  metadata_heavy: true
-  batch_friendly: true
-```
-
-**Key characteristics:**
-- Structure + Grading are the primary enabled layers
-- Metadata-heavy output for data pipeline integration
-- Batch-friendly design for processing multiple explanations
-- Provenance mandatory for lineage tracking
-
-### Profile Comparison Matrix
+### Profile Comparison
 
 | Feature | chatbot_tutor | rag_explainer | etl_explain |
 |---|---|---|---|
-| Activation | Required | Disabled | Disabled |
-| Metaphor | Enabled | Enabled (optional) | Disabled |
-| Structure | Required | Required | Required |
-| Interrogation | Required | Disabled | Disabled |
-| Encoding | Required | Disabled | Disabled |
-| Transfer | Required | Enabled (optional) | Disabled |
-| Reflection | Required | Disabled | Disabled |
-| Grading | Enabled | Enabled | Enabled |
-| Provenance | No | Yes | Yes |
-| Citations | No | Yes | No |
-| Output Format | Conversational | Structured answer | Structured record |
+| Layers enabled | 7 | 3 | 4 |
+| Required layers | activation, structure, encoding | metaphor, structure | structure |
+| Heaviest weight | metaphor (1.5) | metaphor, structure (1.5) | structure (2.0) |
+| Progressive disclosure | yes | no | no |
 
 ---
 
 ## 10. Adapters
 
-Adapters transform a `CognitiveArtifact` into the format expected by the host system. They sit at the integration boundary and have no knowledge of how the artifact was produced.
+Adapters transform an `ArtifactRecord` into the format expected by the host system. They implement `BaseAdapter.format(record)`.
 
-### Adapter 1: ChatbotAdapter
+### ChatbotAdapter
 
-**Purpose:** Format `CognitiveArtifact` as streaming chat messages with progressive disclosure.
-
-```python
-class ChatbotAdapter:
-    """Transforms CognitiveArtifact into conversational chat messages."""
-
-    def format(self, artifact: CognitiveArtifact) -> list[ChatMessage]:
-        """
-        Returns ordered chat messages that progressively reveal layers:
-        1. Activation hook (attention grabber)
-        2. Metaphor (conceptual anchor)
-        3. Structure (precision)
-        4. Interrogation (interactive questions, one at a time)
-        5. Encoding (memory aids)
-        6. Transfer (practice)
-        7. Reflection (metacognition check)
-        """
-        ...
-
-    def format_streaming(self, artifact: CognitiveArtifact) -> Iterator[ChatMessage]:
-        """Yield messages one at a time for streaming interfaces."""
-        ...
-```
-
-**Key behaviors:**
-- Progressive disclosure -- layers presented sequentially as conversation turns
-- Interactive interrogation -- questions delivered one at a time, awaiting response
-- Warm tone adapted from the audience control vector
-
-### Adapter 2: RAGAdapter
-
-**Purpose:** Format `CognitiveArtifact` as enriched document chunks with metadata for vector stores.
+Formats as a list of chat messages with progressive disclosure:
 
 ```python
-class RAGAdapter:
-    """Transforms CognitiveArtifact into vector-store-ready chunks."""
-
-    def format(self, artifact: CognitiveArtifact) -> list[EnrichedChunk]:
-        """
-        Returns enriched chunks suitable for vector store ingestion:
-        - Each layer becomes a chunk with metadata tags
-        - Citations and provenance embedded per chunk
-        - Metaphor boundary conditions included as metadata
-        """
-        ...
+class ChatbotAdapter(BaseAdapter):
+    def format(self, record: ArtifactRecord) -> List[Dict[str, Any]]:
+        """Returns list of dicts with 'role', 'content', 'layer', 'confidence', 'metadata'.
+        Messages ordered: activation -> metaphor -> structure -> ... -> reflection.
+        Includes evaluation summary as final system message."""
 ```
 
-**Key behaviors:**
-- Each populated layer maps to one or more document chunks
-- Metadata includes: layer name, confidence score, audience vector, provenance
-- Metaphor boundary conditions surfaced as explicit metadata (prevents false grounding)
-- Citation links preserved from source retrieval
+Per-layer formatting converts structured content into readable text (e.g., activation `hook` + `stakes`, metaphor `metaphor` + `mapping`, structure `definition` + `key_terms`).
 
-### Adapter 3: ETLAdapter
+### RAGAdapter
 
-**Purpose:** Format `CognitiveArtifact` as structured records for data pipelines.
+Formats as enriched document chunks for vector store ingestion:
 
 ```python
-class ETLAdapter:
-    """Transforms CognitiveArtifact into structured data pipeline records."""
-
-    def format(self, artifact: CognitiveArtifact) -> dict[str, Any]:
-        """
-        Returns a flat or nested dict/JSON suitable for:
-        - Database insertion
-        - Data pipeline message queues
-        - Batch processing systems
-        """
-        ...
-
-    def format_batch(self, artifacts: list[CognitiveArtifact]) -> list[dict[str, Any]]:
-        """Format multiple artifacts for batch processing."""
-        ...
+class RAGAdapter(BaseAdapter):
+    def format(self, record: ArtifactRecord) -> List[Dict[str, Any]]:
+        """Returns list of dicts with 'chunk_id', 'content', 'metadata'.
+        One chunk per significant content field per layer.
+        Metadata includes topic, audience, layer, field, confidence, score."""
 ```
 
-**Key behaviors:**
-- Output is JSON/dict, not conversational text
-- Metadata-heavy: includes provenance, scores, diagnostic flags
-- Batch-friendly: `format_batch()` processes lists efficiently
-- Schema-stable: output structure does not change between calls
+### ETLAdapter
+
+Formats as a single flat dictionary for data pipeline ingestion:
+
+```python
+class ETLAdapter(BaseAdapter):
+    def format(self, record: ArtifactRecord) -> Dict[str, Any]:
+        """Returns flat dict with: artifact_id, topic, audience_id,
+        cv_* fields (control vector), score, penalty_*,
+        layer_<name>_populated, layer_<name>_confidence for each layer,
+        layers_populated list, num_layers count."""
+```
 
 ---
 
 ## 11. Migration Strategy
 
-### Approach: Option B -- Fat Operator Wrapping
+### Approach: Fat Operator Wrapping (Option B)
 
-The `MetaphorOperator` wraps the existing `MetaphorEngine` from the `metaphor-mcp-server` project as a **"fat operator" via import**, not code copy.
+The `MetaphorOperator` wraps the existing `MetaphorEngine` via `sys.path` import:
 
 ```python
-# src/cognitive_scaffolding/operators/metaphor.py
-
-from metaphor_mcp_server.engine import MetaphorEngine  # import, not copy
+# operators/metaphor.py
+import sys
+sys.path.insert(0, "/home/robkacz/python/projects/metaphor-mcp-server")
+from src.core.engines.metaphor_engine import MetaphorEngine
 
 class MetaphorOperator(BaseOperator):
-    def __init__(self):
-        self.engine = MetaphorEngine()  # Existing engine, fully reused
+    def __init__(self, ai_client=None, engine=None):
+        super().__init__(ai_client)
+        self.engine = engine or _metaphor_engine  # module-level singleton
 
     def execute(self, topic, audience, context, config=None):
-        # Delegate to existing engine
-        result = self.engine.generate_metaphors(
-            concept=topic,
-            audience=audience.label,
-            domain=config.get("domain") if config else None,
-        )
-        return LayerOutput(
-            content=result,
-            confidence=self._assess_confidence(result),
-            provenance=self._record_provenance(topic, audience),
-        )
+        if self.engine is not None:
+            return self._execute_via_engine(...)  # use existing engine
+        return super().execute(...)  # fall back to LLM
 ```
 
 ### Shared Infrastructure
 
-Resources that are common between the metaphor-mcp-server and cognitive_scaffolding are **copied** into `cognitive_scaffolding`:
+Copied from metaphor-mcp-server into cognitive_scaffolding (not linked):
 
-- **Models** -- audience profiles, concept definitions (copied to `data/`)
-- **Utils** -- YAML loading utilities, AI client abstraction (copied to `utils/`)
-- **Data** -- concept YAMLs, audience YAMLs, domain YAMLs, template YAMLs (copied to `data/`)
+| Source | Destination |
+|---|---|
+| `src/models/audience.py` | `core/audience.py` |
+| `src/models/concept.py` | `core/concept.py` |
+| `src/models/domain.py` | `core/domain.py` |
+| `src/utils/ai_client.py` | `utils/ai_client.py` |
+| `src/utils/cache.py` | `utils/cache.py` |
+| `src/utils/file_utils.py` | `utils/yaml_utils.py` |
+| `src/core/audience_inheritance.py` | `core/audience_inheritance.py` |
+| `data/**` | `data/**` |
+
+A backup of the original metaphor-mcp-server exists at `/home/robkacz/python/projects/metaphor-mcp-server-backup/`.
 
 ### Future Refactoring
 
-Later iterations can extract shared code into a common package (e.g., `cognitive-common`) that both projects depend on. This is not a v0.1 requirement.
+Later iterations can extract shared code into a common package. Not a v0.1 requirement.
 
 ---
 
-## 12. Non-Goals (v0.1)
+## 12. Data Assets
 
-The following are explicitly out of scope for the initial release:
+| Category | Location | Count | Source |
+|---|---|---|---|
+| Audiences | `data/audiences/` | 16 | Copied from metaphor-mcp-server |
+| Concepts | `data/concepts/` | 218 | Copied from metaphor-mcp-server |
+| Domains | `data/domains/` | 29 | Copied from metaphor-mcp-server |
+| Templates | `data/templates/` | 4 files | Copied from metaphor-mcp-server |
+
+Templates include 14 explanation styles (extended_metaphor, quick_analogy, progressive_revelation, interactive_dialogue, narrative_journey, visual_construction, problem_solution_cycle, misconception_decoder, ecosystem_perspective, hands_on_workshop, temporal_evolution, multi_perspective_lens, failure_recovery_cycle, comparative_metaphor).
+
+---
+
+## 13. Non-Goals (v0.1)
 
 | Non-Goal | Rationale |
 |---|---|
-| Real-time streaming of partial artifacts | Adds complexity to the conductor loop; not needed for initial validation |
-| Multi-concept dependency graphs | Single-concept compilation is sufficient to prove the architecture |
-| Persistent storage | All artifacts are in-memory; no database, no file persistence |
-| Authentication / authorization | Middleware is called by trusted host systems in v0.1 |
-| UI / frontend | No Streamlit, no web interface; API-only |
-| Multi-language support | English only for v0.1 |
-| Concurrent operator execution | Operators run sequentially; parallel execution is a future optimization |
+| Real-time streaming of partial artifacts | Adds complexity; not needed for validation |
+| Multi-concept dependency graphs | Single-concept compilation proves the architecture |
+| Persistent storage | All in-memory; no database |
+| Authentication / authorization | Middleware is called by trusted host systems |
+| UI / frontend | API-only |
+| Multi-language support | English only |
+| Concurrent operator execution | Sequential execution is simpler and sufficient |
 
 ---
 
-## 13. Data Assets
+## 14. Testing Strategy
 
-### Audiences (18 profiles)
+### Unit Tests (30 tests in `tests/unit/`)
 
-Located in `data/audiences/`. Each YAML defines:
+| Test File | Coverage |
+|---|---|
+| `test_models.py` | AudienceControlVector, LayerOutput, CognitiveArtifact, ArtifactRecord |
+| `test_scoring.py` | Weighted scoring, penalty multiplier, disabled-layer exclusion, edge cases |
+| `test_toggle_manager.py` | Profile loading, missing profiles, runtime overrides, experiment variants |
+| `test_operators.py` | All 8 operators: fallback execution, prompt building, grading logic |
 
-- `audience_id`, `name`, `description`
-- `characteristics`, `preferred_metaphors`, `language_style`
-- Optional: `parent`, `age_range`, `show_formulas`, `show_code`, `complexity_preference`
+### Integration Tests (4 tests in `tests/integration/`)
 
-**Current audiences include:** academics, business, business_analyst, communications, data_analyst, data_scientist, financial_analyst, genai_engineer, general, geospatial_professional, investor_relations, marketing_professional, ml_engineer, policy_maker, technical, technical_workers
+| Test | What It Validates |
+|---|---|
+| `TestChatbotPipeline` | Full compile + ChatbotAdapter.format produces chat messages |
+| `TestRAGPipeline` | Full compile + RAGAdapter.format produces document chunks |
+| `TestETLPipeline` | Full compile + ETLAdapter.format produces flat dict |
+| `TestOverrides` | Runtime overrides disable layers correctly |
 
-### Concepts (200+)
+### Running Tests
 
-Located in `data/concepts/`. Each YAML defines a concept with metadata including domain, prerequisites, and related concepts. Coverage spans AI/ML, data engineering, ethics, tooling, and domain applications.
-
-### Domains (25+)
-
-Located in `data/domains/`. Each YAML defines a metaphor domain with:
-
-- Domain name and description
-- Available metaphor mappings
-- Source-target correspondences
-
-**Current domains include:** city_map, city_power_grid, construction_architecture, cooking_culinary, dog_man_walking, ecosystem_biology, educational_progression, factory_assembly_line, farmers_market, filing_cabinet, financial_economics, garden_ecosystem, general, highway_system, library_catalog, manufacturing_production, medical_healthcare, navigation_movement, orchestra_conductor, research_collaboration, restaurant, restaurant_kitchen, service_coordination, signal_transformation, social_interaction, sports_athletics, storytelling_narrative, symphony_tuning, transport_logistics
-
-### Templates (14 explanation styles)
-
-Located in `data/templates/`. Includes:
-
-- **explanation_styles.yaml** -- 14 styles: extended_metaphor, comparative_metaphor, quick_analogy, progressive_revelation, interactive_dialogue, narrative_journey, visual_construction, problem_solution_cycle, misconception_decoder, ecosystem_perspective, hands_on_workshop, temporal_evolution, multi_perspective_lens, failure_recovery_cycle
-- **diagram_templates.yaml** -- Diagram generation templates
-- **manim_components.yaml** -- Animation component definitions
-- **basic_explanation.yaml** -- Simple explanation template
-
----
-
-## 14. Key Interfaces and Types
-
-### Core Types
-
-```python
-from dataclasses import dataclass, field
-from typing import Any
-
-@dataclass
-class AudienceProfile:
-    """7-dimensional control vector for audience adaptation."""
-    label: str
-    control_vector: dict[str, float]  # keys: l, a, r, m, d, k, t
-
-    def validate(self) -> bool:
-        required_keys = {"l", "a", "r", "m", "d", "k", "t"}
-        return (
-            set(self.control_vector.keys()) == required_keys
-            and all(0.0 <= v <= 1.0 for v in self.control_vector.values())
-        )
-
-@dataclass
-class ProvenanceRecord:
-    """Tracks a single operator invocation."""
-    operator: str
-    timestamp_utc: str
-    inputs_hash: str
-    model_version: str | None = None
-    output_keys: list[str] = field(default_factory=list)
-
-@dataclass
-class LayerOutput:
-    """Output from a single operator."""
-    content: dict[str, Any]
-    confidence: float
-    provenance: ProvenanceRecord
-
-@dataclass
-class RevisionRecord:
-    """Tracks a single mutation to the artifact."""
-    timestamp_utc: str
-    layer: str
-    operator: str
-    reason: str  # "initial" | "regeneration" | "override"
-    previous_confidence: float | None
-    new_confidence: float
-
-@dataclass
-class EvaluationResult:
-    """Output from the GradingOperator."""
-    layer_scores: dict[str, float]
-    overall_score: float
-    diagnostics: list[str]
-    missing_critical: list[str]
-    revision_plan: dict[str, Any] | None
-
-@dataclass
-class CognitiveArtifact:
-    """Core intermediate representation."""
-    topic: str
-    audience_profile: AudienceProfile
-
-    activation: LayerOutput | None = None
-    metaphor: LayerOutput | None = None
-    structure: LayerOutput | None = None
-    interrogation: LayerOutput | None = None
-    encoding: LayerOutput | None = None
-    transfer: LayerOutput | None = None
-    reflection: LayerOutput | None = None
-
-    evaluation: EvaluationResult | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
-    revision_history: list[RevisionRecord] = field(default_factory=list)
+```bash
+pytest tests/unit/       # 30 tests
+pytest tests/integration/ # 4 tests
+pytest tests/            # all 34 tests
 ```
-
-### Formal Relationships
-
-The system can be expressed as:
-
-```
-CognitiveArtifact = Orchestrator(Input, Profile, Audience)
-```
-
-Where:
-
-```
-Artifact = ( Product over m in Profile ) Operator_m (Input)
-```
-
-The profile determines the set of active operators:
-
-```
-Profile_chatbot  = {A, M, S, I, E, T, R, G}
-Profile_rag      = {M, S, T, G}
-Profile_etl      = {S, G}
-```
-
----
-
-## 15. Testing Strategy
-
-### Unit Tests
-
-Located in `tests/unit/`. Each operator and core component gets dedicated test coverage:
-
-- **Operator tests** -- Each operator's `execute()`, `build_prompt()`, and `validate_output()` are tested independently with mock context
-- **Scoring tests** -- Verify weighted scoring formula, penalty multiplier, disabled-layer exclusion
-- **Audience tests** -- Validate control vector ranges, audience profile loading
-- **Toggle tests** -- Verify three-level resolution (profile -> override -> experiment)
-
-### Integration Tests
-
-Located in `tests/integration/`. End-to-end compilation flows:
-
-- **Profile compilation** -- Run full compilation loop for each profile with a known topic/audience pair
-- **Schema validation** -- Verify all operator outputs conform to JSON schema contracts
-- **Regeneration** -- Verify that targeted regeneration produces improved scores
-- **Adapter output** -- Verify each adapter produces well-formed output from a completed artifact
 
 ### Dependencies
-
-Specified in `pyproject.toml`:
 
 ```toml
 [project]
@@ -1277,43 +837,14 @@ dev = [
 
 ---
 
-## Appendix A: Architectural Decision Summary
+## Appendix: Architectural Decision Summary
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| Core artifact name | `CognitiveArtifact` (not `LessonArtifact`) | Broader than education -- covers explanation, debugging, synthesis |
-| Versioning | Mutable with linear revision history | Simplest model that provides audit trail; no branching needed for v0.1 |
-| Operator communication | Via conductor context dict, never direct | Clean separation; operators remain independently testable |
-| Migration strategy | Fat operator wrap via import | Reuses MetaphorEngine without code duplication; clean boundary |
-| Shared data | Copy into cognitive_scaffolding | Independence from metaphor-mcp-server; later unify via common package |
-| Operator naming | `operators/` (not `mcps/`) | More abstract; does not assume MCP transport in v0.1 |
-| Profile format | YAML | Consistent with existing data assets; human-editable |
-
-## Appendix B: Cognitive Architecture Diagram
-
-```
-[Activation]
-      |
-[Metaphor / Anchoring]
-      |
-[Structure]
-      |
-[Interrogation]
-      |
-[Encoding]
-      |
-[Transfer]
-      |
-[Reflection]
-      |  (loops back if grading detects weakness)
-      v
-[Grading] ---> if weak ---> targeted regeneration
-```
-
-Learning is not linear -- it is a state machine with recursive entry points:
-
-- Failed Transfer -> return to Structure
-- Weak Encoding -> return to Interrogation
-- High misconception risk -> regenerate Metaphor + Structure + Interrogation
-
-The state evolves iteratively: `S(n+1) = f(S(n), Feedback)`
+| Core artifact name | `CognitiveArtifact` | Broader than education |
+| Versioning | Mutable with linear revision history | Simplest model with audit trail |
+| Operator communication | Via conductor context dict, never direct | Clean separation; independently testable |
+| Migration strategy | Fat operator wrap via sys.path import | Reuses MetaphorEngine without duplication |
+| Shared data | Copy into cognitive_scaffolding | Independence; unify later |
+| Scoring | Weighted average with required-layer penalty | Simple, interpretable, toggleable |
+| Profile format | YAML with `layers:` + `settings:` sections | Human-editable, consistent with data assets |
