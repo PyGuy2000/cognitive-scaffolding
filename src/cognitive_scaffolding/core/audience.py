@@ -1,11 +1,12 @@
 """Audience model - adapted from metaphor-mcp-server."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import List
 
 
 class Audience(BaseModel):
     """Model for an audience definition loaded from YAML."""
+    model_config = ConfigDict(extra="allow")
     audience_id: str
     name: str
     description: str = ""

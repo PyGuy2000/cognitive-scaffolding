@@ -75,6 +75,7 @@ class CognitiveConductor:
         profile_name: str = "chatbot_tutor",
         overrides: Optional[Dict[str, Dict[str, Any]]] = None,
         audience_vector: Optional[AudienceControlVector] = None,
+        domain_id: Optional[str] = None,
     ) -> ArtifactRecord:
         """Compile a CognitiveArtifact for the given topic and audience.
 
@@ -84,6 +85,7 @@ class CognitiveConductor:
             profile_name: Integration profile to use
             overrides: Runtime toggle overrides per layer
             audience_vector: Explicit audience control vector (overrides default)
+            domain_id: Optional domain identifier for domain-aware metaphors
         """
         run_id = str(uuid.uuid4())[:8]
         logger.info(f"[{run_id}] Compiling: topic='{topic}', audience='{audience_id}', profile='{profile_name}'")
@@ -115,6 +117,23 @@ class CognitiveConductor:
         concept = self._data_loader.get_concept(concept_id)
         concept_dict = concept.model_dump() if concept else None
 
+        # Load audience YAML data for audience-aware fallbacks
+        audience_yaml = self._data_loader.get_audience(audience_id)
+        audience_dict = audience_yaml.model_dump() if audience_yaml else None
+
+        # Load domain data for domain-aware compilation
+        domain = None
+        if domain_id:
+            domain = self._data_loader.get_domain(domain_id)
+        elif audience_dict and audience_dict.get("preferred_domains"):
+            for d_id in audience_dict["preferred_domains"]:
+                domain = self._data_loader.get_domain(d_id)
+                if domain:
+                    break
+        if not domain:
+            domain = self._data_loader.get_domain("general")
+        domain_dict = domain.model_dump() if domain else None
+
         # Execute operators
         provenance = ProvenanceTracker(run_id=run_id)
         context: Dict[str, Any] = {}
@@ -126,6 +145,10 @@ class CognitiveConductor:
                 step_config = dict(step.config)
                 if concept_dict:
                     step_config["concept"] = concept_dict
+                if audience_dict:
+                    step_config["audience_data"] = audience_dict
+                if domain_dict:
+                    step_config["domain"] = domain_dict
                 output = operator.execute(topic, audience, context, step_config)
                 artifact.set_layer(step.layer, output)
                 context[step.layer.value] = output.content

@@ -49,6 +49,12 @@ Return ONLY valid JSON, no markdown."""
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+
+        # Audience-aware: show_formulas, complexity_preference
+        show_formulas = (aud.get("show_formulas") or "") if aud else ""
+        complexity = (aud.get("complexity_preference") or "medium") if aud else "medium"
+
         if concept:
             desc = concept.get("description", f"{topic} is a concept involving structured processes and components.")
             category = concept.get("category", "general").replace("_", " ")
@@ -56,19 +62,37 @@ Return ONLY valid JSON, no markdown."""
             related = concept.get("related_concepts", [])
             key_terms = {c.replace("_", " "): f"A key component of {topic}" for c in components} if components else {topic.lower(): "The primary concept under study"}
             relationships = [{"from": topic, "to": r.replace("_", " "), "type": "related_to"} for r in related] if related else [{"from": "input", "to": "output", "type": "transforms"}]
+
+            # Formal notation when audience expects formulas
+            formal = ""
+            if show_formulas:
+                formal = f"f({topic.lower().replace(' ', '_')}) = transform(input, parameters)"
+
+            # Richer definition for high-complexity audiences
+            if complexity in ("very_high", "high"):
+                definition = f"{topic} — {desc}. This encompasses multiple interacting subsystems."
+            else:
+                definition = f"{topic} — {desc}."
+
             return json.dumps({
-                "definition": f"{topic} — {desc}.",
+                "definition": definition,
                 "taxonomy": {"category": category, "subcategories": [c.replace("_", " ") for c in components[:3]]},
                 "key_terms": key_terms,
                 "relationships": relationships,
                 "diagram_description": f"A flowchart showing the main components of {topic} and their connections.",
-                "formal_notation": "",
+                "formal_notation": formal,
             })
+
+        # Generic branch with audience awareness
+        formal = ""
+        if show_formulas:
+            formal = f"f({topic.lower().replace(' ', '_')}) = transform(input, parameters)"
+
         return json.dumps({
             "definition": f"{topic} is a concept involving structured processes and components.",
             "taxonomy": {"category": "general", "subcategories": ["core", "supporting"]},
             "key_terms": {topic.lower(): "The primary concept under study"},
             "relationships": [{"from": "input", "to": "output", "type": "transforms"}],
             "diagram_description": f"A flowchart showing the main components of {topic} and their connections.",
-            "formal_notation": "",
+            "formal_notation": formal,
         })

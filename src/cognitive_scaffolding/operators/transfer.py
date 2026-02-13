@@ -48,11 +48,41 @@ Return ONLY valid JSON, no markdown."""
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+        domain = config.get("domain")
+
+        # Audience-aware: preferred_domains, primary_tools
+        preferred_domains = (aud.get("preferred_domains") or []) if aud else []
+        primary_tools = (aud.get("primary_tools") or []) if aud else []
+
+        # Domain-aware: name, examples
+        domain_name = (domain.get("name") or "") if domain else ""
+        domain_examples = (domain.get("examples") or []) if domain else []
+
         if concept:
             related = concept.get("related_concepts", [])
             components = concept.get("key_components", [])
-            steps = [f"Understand {c.replace('_', ' ')}" for c in components] if components else ["Identify the components", "Apply the principle", "Verify the result"]
-            cross_domain = f"{topic} connects to {', '.join(r.replace('_', ' ') for r in related)}." if related else f"{topic} has parallels in natural systems."
+
+            # Steps use domain examples or audience tools when available
+            if domain_examples:
+                steps = [f"Apply {e.replace('_', ' ')} to understand {c.replace('_', ' ')}" for c, e in zip(components, domain_examples)] if components else [f"Use {e.replace('_', ' ')}" for e in domain_examples[:3]]
+            elif primary_tools:
+                tool = primary_tools[0].replace("_", " ")
+                steps = [f"In {tool}, implement {c.replace('_', ' ')}" for c in components] if components else [f"Use {tool} to explore the concept"]
+            else:
+                steps = [f"Understand {c.replace('_', ' ')}" for c in components] if components else ["Identify the components", "Apply the principle", "Verify the result"]
+
+            # Cross-domain: domain name > audience preferred_domains > related concepts
+            if domain_name and domain_name.lower() != "general":
+                cross_domain = f"{topic} can be understood through {domain_name} — the same principles apply."
+            elif preferred_domains:
+                domain_ref = preferred_domains[0].replace("_", " ")
+                cross_domain = f"{topic} connects to {domain_ref} and {', '.join(r.replace('_', ' ') for r in related)}." if related else f"{topic} connects to {domain_ref}."
+            elif related:
+                cross_domain = f"{topic} connects to {', '.join(r.replace('_', ' ') for r in related)}."
+            else:
+                cross_domain = f"{topic} has parallels in natural systems."
+
             return json.dumps({
                 "worked_example": {
                     "problem": f"Apply {topic} to a simple scenario",
@@ -66,10 +96,27 @@ Return ONLY valid JSON, no markdown."""
                 "simulation_prompt": f"Imagine a system where {topic} is the key mechanism. What happens when you change one variable?",
                 "cross_domain_transfer": cross_domain,
             })
+
+        # Generic branch with audience/domain awareness
+        if domain_examples:
+            steps = [f"Use {e.replace('_', ' ')}" for e in domain_examples[:3]]
+        elif primary_tools:
+            tool = primary_tools[0].replace("_", " ")
+            steps = [f"Use {tool} to identify the components", "Apply the principle", "Verify the result"]
+        else:
+            steps = ["Identify the components", "Apply the principle", "Verify the result"]
+
+        if domain_name and domain_name.lower() != "general":
+            cross_domain = f"{topic} can be understood through {domain_name} — the same principles apply."
+        elif preferred_domains:
+            cross_domain = f"{topic} connects to {preferred_domains[0].replace('_', ' ')}."
+        else:
+            cross_domain = f"{topic} has parallels in natural systems."
+
         return json.dumps({
             "worked_example": {
                 "problem": f"Apply {topic} to a simple scenario",
-                "steps": ["Identify the components", "Apply the principle", "Verify the result"],
+                "steps": steps,
                 "solution": "The result demonstrates the core principle.",
             },
             "practice_problems": [
@@ -77,5 +124,5 @@ Return ONLY valid JSON, no markdown."""
             ],
             "real_world_applications": [f"{topic} is used in industry for optimization."],
             "simulation_prompt": f"Imagine a system where {topic} is the key mechanism. What happens when you change one variable?",
-            "cross_domain_transfer": f"{topic} has parallels in natural systems.",
+            "cross_domain_transfer": cross_domain,
         })

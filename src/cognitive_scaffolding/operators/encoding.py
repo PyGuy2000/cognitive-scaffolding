@@ -48,34 +48,66 @@ Return ONLY valid JSON, no markdown."""
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+
+        # Audience-aware: attention_span, learning_assets
+        attention_span = (aud.get("attention_span") or "medium") if aud else "medium"
+        learning_assets = (aud.get("learning_assets") or []) if aud else []
+
+        # Adjust chunk count based on attention span
+        if attention_span in ("short", "low"):
+            max_chunks = 3
+        elif attention_span in ("long", "high"):
+            max_chunks = 6
+        else:
+            max_chunks = 4
+
         if concept:
             components = concept.get("key_components", [])
             name = concept.get("name", topic)
             properties = concept.get("properties", [])
-            chunks = [{"label": c.replace("_", " ").title(), "summary": f"A key aspect of {topic}"} for c in components] if components else [
+            chunks = [{"label": c.replace("_", " ").title(), "summary": f"A key aspect of {topic}"} for c in components[:max_chunks]] if components else [
                 {"label": "What", "summary": f"What {topic} is"},
                 {"label": "Why", "summary": f"Why {topic} matters"},
                 {"label": "How", "summary": f"How {topic} works"},
-            ]
+            ][:max_chunks]
             # First-letter acronym from the concept name words
             words = name.split()
             mnemonic = "".join(w[0].upper() for w in words) if len(words) > 1 else f"Remember {name} by its key components."
             retrieval_cues = [f"When you think of {p.replace('_', ' ')}, recall {topic}." for p in properties[:3]] if properties else [f"When you hear '{topic}', think of..."]
+
+            # Visual anchor references preferred learning assets
+            if learning_assets:
+                asset = learning_assets[0].replace("_", " ")
+                visual = f"Picture a {asset} showing {topic}'s main components."
+            else:
+                visual = f"Picture a diagram of {topic}'s main components."
+
             return json.dumps({
                 "mnemonic": mnemonic,
                 "chunks": chunks,
                 "retrieval_cues": retrieval_cues,
                 "spaced_repetition": [{"question": f"What is {topic}?", "answer": concept.get("description", "A concept involving...")}],
-                "visual_anchor": f"Picture a diagram of {topic}'s main components.",
+                "visual_anchor": visual,
             })
+
+        # Generic branch with audience awareness
+        default_chunks = [
+            {"label": "What", "summary": f"What {topic} is"},
+            {"label": "Why", "summary": f"Why {topic} matters"},
+            {"label": "How", "summary": f"How {topic} works"},
+        ][:max_chunks]
+
+        if learning_assets:
+            asset = learning_assets[0].replace("_", " ")
+            visual = f"Picture a {asset} showing {topic}'s main components."
+        else:
+            visual = f"Picture a diagram of {topic}'s main components."
+
         return json.dumps({
             "mnemonic": f"Remember {topic} by its key components.",
-            "chunks": [
-                {"label": "What", "summary": f"What {topic} is"},
-                {"label": "Why", "summary": f"Why {topic} matters"},
-                {"label": "How", "summary": f"How {topic} works"},
-            ],
+            "chunks": default_chunks,
             "retrieval_cues": [f"When you hear '{topic}', think of...", f"The key insight about {topic} is..."],
             "spaced_repetition": [{"question": f"What is {topic}?", "answer": "A concept involving..."}],
-            "visual_anchor": f"Picture a diagram of {topic}'s main components.",
+            "visual_anchor": visual,
         })

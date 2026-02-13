@@ -54,26 +54,57 @@ Return ONLY valid JSON, no markdown."""
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+
+        # Audience-aware: core_skills, complexity_preference
+        core_skills = (aud.get("core_skills") or []) if aud else []
+        complexity = (aud.get("complexity_preference") or "medium") if aud else "medium"
+
         if concept:
             misconceptions = concept.get("common_misconceptions", [])
             components = concept.get("key_components", [])
             properties = concept.get("properties", [])
             misconception_probes = [f"Is it true that '{m.replace('_', ' ')}'?" for m in misconceptions] if misconceptions else [f"Is it true that {topic} always works the same way?"]
             edge_cases = [f"What happens when {c.replace('_', ' ')} reaches its limits?" for c in components] if components else [f"What happens at the boundary conditions of {topic}?"]
-            socratic = [f"Why is {p.replace('_', ' ')} important for {topic}?" for p in properties[:3]] if properties else [f"What is the fundamental purpose of {topic}?"]
+
+            # Questions framed using familiar skills
+            if core_skills:
+                skill_ref = core_skills[0].replace("_", " ")
+                socratic = [f"How does your experience with {skill_ref} help you understand {p.replace('_', ' ')} in {topic}?" for p in properties[:3]] if properties else [f"How does your {skill_ref} background inform your understanding of {topic}?"]
+            else:
+                socratic = [f"Why is {p.replace('_', ' ')} important for {topic}?" for p in properties[:3]] if properties else [f"What is the fundamental purpose of {topic}?"]
+
+            # Deeper synthesis for high-complexity audiences
+            if complexity in ("very_high", "high"):
+                synthesis = f"How do all the components of {topic} interact, and where are the failure modes?"
+            else:
+                synthesis = f"How do all the components of {topic} work together as a system?"
+
             return json.dumps({
                 "socratic_questions": socratic,
                 "counterexamples": [f"Consider a scenario where {topic} produces unexpected results."],
                 "edge_cases": edge_cases,
                 "misconception_probes": misconception_probes,
-                "synthesis_prompt": f"How do all the components of {topic} work together as a system?",
+                "synthesis_prompt": synthesis,
             })
-        return json.dumps({
-            "socratic_questions": [
+
+        # Generic branch with audience awareness
+        if core_skills:
+            skill_ref = core_skills[0].replace("_", " ")
+            socratic = [
+                f"How does your {skill_ref} background inform your understanding of {topic}?",
+                f"How would {topic} behave differently under extreme conditions?",
+                f"What would happen if a key component of {topic} were removed?",
+            ]
+        else:
+            socratic = [
                 f"What is the fundamental purpose of {topic}?",
                 f"How would {topic} behave differently under extreme conditions?",
                 f"What would happen if a key component of {topic} were removed?",
-            ],
+            ]
+
+        return json.dumps({
+            "socratic_questions": socratic,
             "counterexamples": [f"Consider a scenario where {topic} produces unexpected results."],
             "edge_cases": [f"What happens at the boundary conditions of {topic}?"],
             "misconception_probes": [f"Is it true that {topic} always works the same way?"],

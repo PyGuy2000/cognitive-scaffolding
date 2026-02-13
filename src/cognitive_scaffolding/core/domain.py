@@ -1,11 +1,12 @@
 """Domain model - adapted from metaphor-mcp-server."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import List
 
 
 class Domain(BaseModel):
     """Model for a metaphor domain loaded from YAML."""
+    model_config = ConfigDict(extra="allow")
     domain_id: str
     name: str
     description: str = ""

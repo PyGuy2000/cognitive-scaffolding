@@ -143,7 +143,8 @@ def cmd_compile(args: argparse.Namespace) -> None:
     _header(f"Compile ({fmt})  |  topic={args.topic!r}  audience={args.audience!r}  profile={profile!r}")
 
     conductor = _build_conductor(args)
-    record = conductor.compile(args.topic, args.audience, profile)
+    domain_id = getattr(args, "domain", None)
+    record = conductor.compile(args.topic, args.audience, profile, domain_id=domain_id)
 
     if args.regenerate:
         layer_configs = conductor.toggle_manager.load_profile(profile)
@@ -231,6 +232,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_compile.add_argument(
         "--format", choices=["chatbot", "rag", "etl"], default="chatbot",
         help="Output format (default: chatbot)",
+    )
+    p_compile.add_argument(
+        "--domain", default=None,
+        help="Domain ID for domain-aware metaphors (e.g., cooking_culinary)",
     )
     p_compile.add_argument(
         "--regenerate", action="store_true",

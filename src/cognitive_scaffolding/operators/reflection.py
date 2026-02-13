@@ -55,13 +55,32 @@ Return ONLY valid JSON, no markdown."""
         self, topic: str, audience: AudienceProfile, context: Dict[str, Any], config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+
+        # Audience-aware: preferred_domains, learning_assets
+        preferred_domains = (aud.get("preferred_domains") or []) if aud else []
+        learning_assets = (aud.get("learning_assets") or []) if aud else []
+
         if concept:
             misconceptions = concept.get("common_misconceptions", [])
             prereqs = concept.get("prerequisite_concepts", [])
             related = concept.get("related_concepts", [])
             alerts = [f"Watch out: '{m.replace('_', ' ')}' is a common misconception." for m in misconceptions] if misconceptions else [f"Don't confuse {topic} with similar-sounding concepts."]
             connections = [f"How does {topic} build on {p.replace('_', ' ')}?" for p in prereqs] if prereqs else [f"How does {topic} relate to what you already know?"]
-            next_steps = [f"Explore {r.replace('_', ' ')}" for r in related] if related else [f"Explore advanced aspects of {topic}", "Try applying it to a real problem"]
+
+            # Next steps include preferred learning resources
+            if learning_assets:
+                asset_steps = [f"Try a {a.replace('_', ' ')} on {r.replace('_', ' ')}" for a, r in zip(learning_assets, related)] if related else [f"Create a {a.replace('_', ' ')} for {topic}" for a in learning_assets[:2]]
+                next_steps = asset_steps
+            elif related:
+                next_steps = [f"Explore {r.replace('_', ' ')}" for r in related]
+            else:
+                next_steps = [f"Explore advanced aspects of {topic}", "Try applying it to a real problem"]
+
+            # Add preferred domain exploration
+            if preferred_domains:
+                next_steps.append(f"Apply {topic} in {preferred_domains[0].replace('_', ' ')}")
+
             return json.dumps({
                 "calibration_questions": [
                     f"Can you explain {topic} in your own words?",
@@ -73,6 +92,16 @@ Return ONLY valid JSON, no markdown."""
                 "connection_prompts": connections,
                 "next_steps": next_steps,
             })
+
+        # Generic branch with audience awareness
+        if learning_assets:
+            next_steps = [f"Create a {learning_assets[0].replace('_', ' ')} for {topic}", "Try applying it to a real problem"]
+        else:
+            next_steps = [f"Explore advanced aspects of {topic}", "Try applying it to a real problem"]
+
+        if preferred_domains:
+            next_steps.append(f"Apply {topic} in {preferred_domains[0].replace('_', ' ')}")
+
         return json.dumps({
             "calibration_questions": [
                 f"Can you explain {topic} in your own words?",
@@ -82,5 +111,5 @@ Return ONLY valid JSON, no markdown."""
             "confidence_check": f"On a scale of 1-10, how confident are you in your understanding of {topic}?",
             "misconception_alerts": [f"Don't confuse {topic} with similar-sounding concepts."],
             "connection_prompts": [f"How does {topic} relate to what you already know?"],
-            "next_steps": [f"Explore advanced aspects of {topic}", "Try applying it to a real problem"],
+            "next_steps": next_steps,
         })

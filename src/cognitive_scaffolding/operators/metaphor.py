@@ -131,21 +131,70 @@ Return ONLY valid JSON, no markdown."""
         config: Dict[str, Any],
     ) -> str:
         concept = config.get("concept")
+        aud = config.get("audience_data")
+        domain = config.get("domain")
+
+        # Audience-aware: preferred metaphors/domains
+        preferred_metaphors = (aud.get("preferred_metaphors") or []) if aud else []
+        preferred_domains = (aud.get("preferred_domains") or []) if aud else []
+
+        # Domain-aware: vocabulary, metaphor_types, name
+        domain_name = (domain.get("name") or "").lower() if domain else ""
+        domain_vocab = (domain.get("vocabulary") or []) if domain else []
+        domain_metaphor_types = (domain.get("metaphor_types") or []) if domain else []
+
         if concept:
             components = concept.get("key_components", [])
             desc = concept.get("description", topic)
             mapping = {c.replace("_", " "): f"part of the system that handles {c.replace('_', ' ')}" for c in components} if components else {"input": "ingredients", "process": "cooking", "output": "dish"}
+
+            # Source domain: domain > audience preference > default
+            if domain_name and domain_name != "general":
+                source = domain_name
+                vocab_phrase = domain_vocab[0] if domain_vocab else f"like {domain_name}"
+                metaphor = f"Think of {topic} as a system where {desc}. {vocab_phrase.capitalize()}, each part plays a role."
+            elif preferred_metaphors:
+                source = preferred_metaphors[0].replace("_", " ")
+                metaphor = f"Think of {topic} through the lens of {source}: {desc}. Each part plays a role."
+            elif preferred_domains:
+                source = preferred_domains[0].replace("_", " ")
+                metaphor = f"Think of {topic} as a system where {desc}. Each part plays a role, much like {source}."
+            else:
+                source = "organized_team"
+                metaphor = f"Think of {topic} as a system where {desc}. Each part plays a role, much like a well-organized team."
+
+            # Enrich mapping with domain metaphor types
+            if domain_metaphor_types:
+                mapping["metaphor_style"] = domain_metaphor_types[0].replace("_", " ")
+
             return json.dumps({
-                "metaphor": f"Think of {topic} as a system where {desc}. Each part plays a role, much like a well-organized team.",
-                "source_domain": "organized_team",
+                "metaphor": metaphor,
+                "source_domain": source,
                 "mapping": mapping,
                 "limitations": ["Real systems are more complex", "Scale differs significantly"],
                 "extension": f"To understand {topic} more deeply, consider how these components interact under pressure.",
             })
+
+        # Generic branch with audience/domain awareness
+        if domain_name and domain_name != "general":
+            vocab_phrase = domain_vocab[0] if domain_vocab else f"like {domain_name}"
+            source = domain_name
+            metaphor = f"Think of {topic} {vocab_phrase} — each component has a specific role and they work together to produce a final result."
+        elif preferred_metaphors:
+            source = preferred_metaphors[0].replace("_", " ")
+            metaphor = f"Think of {topic} through the lens of {source} — each component has a specific role."
+        else:
+            source = "restaurant_kitchen"
+            metaphor = f"Think of {topic} like a well-organized kitchen - each component has a specific role and they work together to produce a final result."
+
+        mapping = {"input": "ingredients", "process": "cooking", "output": "dish"}
+        if domain_metaphor_types:
+            mapping["metaphor_style"] = domain_metaphor_types[0].replace("_", " ")
+
         return json.dumps({
-            "metaphor": f"Think of {topic} like a well-organized kitchen - each component has a specific role and they work together to produce a final result.",
-            "source_domain": "restaurant_kitchen",
-            "mapping": {"input": "ingredients", "process": "cooking", "output": "dish"},
+            "metaphor": metaphor,
+            "source_domain": source,
+            "mapping": mapping,
             "limitations": ["Real systems are more complex", "Scale differs significantly"],
-            "extension": f"To understand {topic} more deeply, consider how the kitchen handles peak hours.",
+            "extension": f"To understand {topic} more deeply, consider how the system handles peak demand.",
         })
