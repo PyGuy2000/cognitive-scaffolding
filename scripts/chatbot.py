@@ -25,11 +25,19 @@ from cognitive_scaffolding.core.data_loader import DataLoader
 from cognitive_scaffolding.core.models import LayerName
 from cognitive_scaffolding.orchestrator.conductor import CognitiveConductor
 from cognitive_scaffolding.adapters.chatbot_adapter import ChatbotAdapter
+from cognitive_scaffolding.adapters.rag_adapter import RAGAdapter
+from cognitive_scaffolding.adapters.etl_adapter import ETLAdapter
 from utils.ai_client import AIClient
 
 # ── Constants ──────────────────────────────────────────────
 
 PROFILES = ["chatbot_tutor", "rag_explainer", "etl_explain"]
+
+PROFILE_ADAPTERS = {
+    "chatbot_tutor": "chatbot",
+    "rag_explainer": "rag",
+    "etl_explain": "etl",
+}
 
 LAYER_LABELS = {
     "diagnostic": "Diagnostic",
@@ -148,8 +156,8 @@ def render_sidebar() -> dict:
 # ── Compilation ────────────────────────────────────────────
 
 
-def compile_topic(topic: str, config: dict) -> tuple[list, dict]:
-    """Compile a topic and return (messages, scores)."""
+def compile_topic(topic: str, config: dict) -> dict:
+    """Compile a topic and return all adapter outputs + scores."""
     conductor = get_conductor(config["use_ai"])
     record = conductor.compile(
         topic=topic,
@@ -158,9 +166,12 @@ def compile_topic(topic: str, config: dict) -> tuple[list, dict]:
         overrides=config["overrides"],
         domain_id=config["domain_id"],
     )
-    messages = ChatbotAdapter().format(record)
-    scores = _extract_scores(record)
-    return messages, scores
+    return {
+        "chatbot": ChatbotAdapter().format(record),
+        "rag": RAGAdapter().format(record),
+        "etl": ETLAdapter().format(record),
+        "scores": _extract_scores(record),
+    }
 
 
 def generate_raw_response(topic: str, audience: str, use_ai: bool) -> str:
@@ -229,18 +240,93 @@ def render_layer_details(messages: list) -> None:
             st.markdown("---")
 
 
+def render_rag_output(chunks: list) -> None:
+    """Render RAG adapter output as document chunks."""
+    st.subheader(f"RAG Document Chunks ({len(chunks)} chunks)")
+
+    if not chunks:
+        st.info("No chunks generated. Enable more layers to produce document chunks.")
+        return
+
+    # Summary table
+    import pandas as pd
+
+    summary = []
+    for chunk in chunks:
+        meta = chunk.get("metadata", {})
+        summary.append({
+            "Layer": LAYER_LABELS.get(meta.get("layer", ""), meta.get("layer", "")),
+            "Field": meta.get("field", ""),
+            "Confidence": meta.get("confidence", 0),
+            "Length": len(chunk.get("content", "")),
+        })
+    st.dataframe(pd.DataFrame(summary), use_container_width=True)
+
+    # Individual chunks in expander
+    with st.expander("Chunk Details"):
+        for i, chunk in enumerate(chunks):
+            meta = chunk.get("metadata", {})
+            layer = LAYER_LABELS.get(meta.get("layer", ""), meta.get("layer", ""))
+            field = meta.get("field", "")
+            confidence = meta.get("confidence", 0)
+            st.markdown(f"**Chunk {i + 1}** | {layer} / {field} ({confidence:.0%})")
+            st.code(chunk.get("content", ""), language=None)
+            st.caption(f"`chunk_id: {chunk.get('chunk_id', '')}`")
+            st.markdown("---")
+
+
+def render_etl_output(record: dict) -> None:
+    """Render ETL adapter output as a structured flat record."""
+    st.subheader("ETL Flat Record")
+
+    if not record:
+        st.info("No ETL record generated.")
+        return
+
+    import pandas as pd
+
+    # Split into sections for readability
+    meta_keys = ["artifact_id", "record_id", "topic", "audience_id", "audience_name",
+                 "expertise_level", "profile_name", "revision", "created_at", "updated_at"]
+    cv_keys = [k for k in record if k.startswith("cv_")]
+    score_keys = ["score", "penalty_applied", "penalty_reason", "missing_required"]
+    layer_keys = [k for k in record if k.startswith("layer_")]
+    summary_keys = ["layers_populated", "num_layers"]
+
+    sections = [
+        ("Metadata", meta_keys),
+        ("Control Vector", cv_keys),
+        ("Scoring", score_keys),
+        ("Layer Status", layer_keys),
+        ("Summary", summary_keys),
+    ]
+
+    for section_name, keys in sections:
+        with st.expander(section_name, expanded=(section_name == "Layer Status")):
+            rows = []
+            for k in keys:
+                if k in record:
+                    val = record[k]
+                    if isinstance(val, list):
+                        val = ", ".join(str(v) for v in val)
+                    rows.append({"Field": k, "Value": val})
+            if rows:
+                st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+
 # ── Main ───────────────────────────────────────────────────
 
 
 def main() -> None:
     st.set_page_config(
-        page_title="Cognitive Scaffolding Chatbot",
+        page_title="Cognitive Scaffolding Dashboard",
         page_icon="🧠",
         layout="wide",
     )
-    st.title("Cognitive Scaffolding Chatbot")
+    st.title("Cognitive Scaffolding Dashboard")
 
     config = render_sidebar()
+    adapter_type = PROFILE_ADAPTERS.get(config["profile"], "chatbot")
 
     # Topic input
     topic = st.text_input("Topic", placeholder="e.g., neural networks")
@@ -250,43 +336,53 @@ def main() -> None:
         st.session_state.topic = topic
 
         with st.spinner("Compiling cognitive scaffold..."):
-            messages, scores = compile_topic(topic, config)
-            st.session_state.messages = messages
-            st.session_state.scores = scores
+            result = compile_topic(topic, config)
+            st.session_state.compile_result = result
 
-        with st.spinner("Generating raw LLM baseline..."):
-            raw = generate_raw_response(topic, config["audience"], config["use_ai"])
-            st.session_state.raw_response = raw
+        if adapter_type == "chatbot":
+            with st.spinner("Generating raw LLM baseline..."):
+                raw = generate_raw_response(topic, config["audience"], config["use_ai"])
+                st.session_state.raw_response = raw
 
     # Render results
-    if st.session_state.get("messages"):
-        scores = st.session_state.get("scores", {})
+    result = st.session_state.get("compile_result")
+    if result:
+        scores = result.get("scores", {})
 
-        # Scores bar chart
+        # Scores bar chart (all profiles)
         if scores:
             render_scores(scores)
 
-        # Side-by-side: scaffolded synthesis vs raw LLM
-        col1, col2 = st.columns(2)
+        if adapter_type == "chatbot":
+            messages = result["chatbot"]
 
-        with col1:
-            st.subheader("Scaffolded Response")
-            synthesis = get_synthesis_content(st.session_state["messages"])
-            if synthesis:
-                st.markdown(synthesis)
-            else:
-                st.info("No synthesis layer output. Enable the Synthesis layer to see a unified response.")
+            # Side-by-side: scaffolded synthesis vs raw LLM
+            col1, col2 = st.columns(2)
 
-        with col2:
-            st.subheader("Raw LLM Response")
-            raw = st.session_state.get("raw_response", "")
-            if raw:
-                st.markdown(raw)
-            else:
-                st.info("No raw response available.")
+            with col1:
+                st.subheader("Scaffolded Response")
+                synthesis = get_synthesis_content(messages)
+                if synthesis:
+                    st.markdown(synthesis)
+                else:
+                    st.info("No synthesis layer output. Enable the Synthesis layer to see a unified response.")
 
-        # Layer details in expander
-        render_layer_details(st.session_state["messages"])
+            with col2:
+                st.subheader("Raw LLM Response")
+                raw = st.session_state.get("raw_response", "")
+                if raw:
+                    st.markdown(raw)
+                else:
+                    st.info("No raw response available.")
+
+            # Layer details in expander
+            render_layer_details(messages)
+
+        elif adapter_type == "rag":
+            render_rag_output(result["rag"])
+
+        elif adapter_type == "etl":
+            render_etl_output(result["etl"])
 
 
 if __name__ == "__main__":
