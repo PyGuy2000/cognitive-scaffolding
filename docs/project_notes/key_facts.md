@@ -14,26 +14,35 @@
 - **Phases 0-5**: Complete (core code, operators, orchestrator, adapters, CI, README)
 - **Phase 6**: Complete (audience-aware fallbacks, domain-aware compilation, E2E AI test)
 - **Phase 7**: Complete (SynthesisOperator + dashboard redesign)
+- **Phase 8**: Complete (5 new cognitive layers, ConceptGraph DAG, schema-based confidence)
 - **CI**: GitHub Actions — ruff + pytest on Python 3.12 (`.github/workflows/ci.yml`)
-- **Tests**: 131 passing (123 unit + 4 integration + 4 AI integration gated on API key)
+- **Tests**: 220 passing (unit + integration; 2 pre-existing AI pipeline failures, 4 AI integration gated on API key)
 - **Build**: Installed in `.venv/` via `pip install -e ".[dev]"`
 - **Streamlit**: `python -m streamlit run scripts/chatbot.py` (installed in venv)
 - **Topic-aware fallbacks**: Operators use concept YAML data when available, generic templates otherwise
-- **Audience-aware fallbacks**: All 7 operators use audience YAML data (preferred_analogies, core_skills, show_formulas, learning_assets, etc.)
-- **Domain-aware fallbacks**: Metaphor, activation, transfer operators use domain YAML data (vocabulary, metaphor_types, examples)
+- **Audience-aware fallbacks**: All 12 content operators use audience YAML data (preferred_analogies, core_skills, show_formulas, learning_assets, etc.)
+- **Domain-aware fallbacks**: Metaphor, activation, transfer, contextualization operators use domain YAML data (vocabulary, metaphor_types, examples)
+- **Schema-based confidence**: All operators declare expected_keys for semantic confidence scoring (replaces length heuristic)
 
 ## Architecture
-- **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 8 optional LayerOutput slots (7 content + synthesis)
-- **Operators**: 9 total (activation, metaphor, structure, interrogation, encoding, transfer, reflection, synthesis, grading)
+- **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 13 optional LayerOutput slots (12 content + synthesis)
+- **Operators**: 14 total — diagnostic, activation, contextualization, metaphor, narrative, structure, interrogation, encoding, transfer, challenge, reflection, elaboration, synthesis, grading
+- **ConceptGraph**: `core/concept_graph.py` — prerequisite DAG with transitive closure, learning paths, related-concept clustering, difficulty estimation
 - **Orchestrator**: CognitiveConductor.compile() - loads profile → builds CallPlan → executes operators → scores
 - **Adapters**: ChatbotAdapter (chat messages), RAGAdapter (document chunks), ETLAdapter (flat dict)
 - **Toggle system**: Profile YAML → Runtime overrides → A/B experiments
 
 ## Key Files
-- `src/cognitive_scaffolding/core/models.py` — All Pydantic data models
+- `src/cognitive_scaffolding/core/models.py` — All Pydantic data models (LayerName enum, CognitiveArtifact, AudienceProfile, etc.)
 - `src/cognitive_scaffolding/core/scoring.py` — Weighted scoring formula
 - `src/cognitive_scaffolding/core/data_loader.py` — YAML data loader for concepts, audiences, domains
-- `src/cognitive_scaffolding/operators/base.py` — BaseOperator ABC
+- `src/cognitive_scaffolding/core/concept_graph.py` — ConceptGraph DAG (prerequisites, learning paths, difficulty estimation)
+- `src/cognitive_scaffolding/operators/base.py` — BaseOperator ABC with schema-based confidence estimation
+- `src/cognitive_scaffolding/operators/diagnostic.py` — Pre-assessment (knowledge gaps, recommended depth)
+- `src/cognitive_scaffolding/operators/contextualization.py` — Big-picture context (field landscape, trends, adjacencies)
+- `src/cognitive_scaffolding/operators/narrative.py` — Story-based explanation (characters, conflict, resolution)
+- `src/cognitive_scaffolding/operators/challenge.py` — Bloom's taxonomy challenges (calibrated to expertise + cognitive_load)
+- `src/cognitive_scaffolding/operators/elaboration.py` — Deep-dive subtopics (selected by diagnostic gaps)
 - `src/cognitive_scaffolding/orchestrator/conductor.py` — Main compilation loop (loads concept/audience/domain data, injects into operators)
 - `src/cognitive_scaffolding/orchestrator/toggle_manager.py` — Feature toggle system
 - `src/cognitive_scaffolding/orchestrator/regeneration.py` — Targeted re-run of weak layers

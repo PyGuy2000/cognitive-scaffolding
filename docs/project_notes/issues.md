@@ -53,3 +53,14 @@ Track completed work, in-progress tasks, and ticket references.
   - Domain ranking is broken (flat scores, no differentiation) — bug in MCP server
   - AI-generated metaphor prose quality is comparable (same LLM), but MCP injects richer context
   - MCP has zero fallback when AI is unavailable; cognitive_scaffolding handles this better
+
+### 2026-02-13 - Feature Strengthening: New Layers, ConceptGraph, Schema Confidence
+- **Status**: Completed
+- **Description**: Implemented the feature strengthening plan from the gap analysis. Three categories of improvements shipped in one commit (`b3113ef`):
+  1. **Schema-based confidence (C1)** — Replaced length heuristic in BaseOperator.estimate_confidence() with schema-aware scoring. Each operator declares `expected_keys` list. Confidence = 40% keys present + 40% non-empty values + 20% content richness. Legacy fallback preserved for operators without expected_keys (GradingOperator).
+  2. **Concept Prerequisite DAG (D1)** — New `core/concept_graph.py` with ConceptGraph class. Uses Python's `graphlib.TopologicalSorter` for topological ordering. Methods: get_prerequisites() (transitive DFS), get_learning_path() (topo sort), get_related_cluster() (BFS with max_depth), estimate_difficulty() (60% depth + 40% count), get_dependents() (reverse lookup), cycle detection.
+  3. **Five new cognitive layers (A1-A5)** — DiagnosticOperator (pre-assessment with expertise mapping), ContextualizationOperator (big picture using evolution_rate/category/related_concepts), NarrativeOperator (story with audience-adapted characters), ChallengeOperator (Bloom's taxonomy calibrated by diagnostic gaps + cognitive_load), ElaborationOperator (deep-dive into subtopics selected by diagnostic gaps).
+- **Cross-cutting updates**: LayerName enum (8→13), CognitiveArtifact (5 new slots), all 3 profile YAMLs (new layers default disabled except diagnostic in chatbot_tutor), SynthesisOperator (integrates all new layers), ChatbotAdapter (5 new format methods), GradingOperator (expected_layers list expanded), CallPlan (5 new operator mappings), all 7 existing operators (added expected_keys).
+- **Test count**: 131 → 220 (89 new tests across 3 new test files: test_new_operators.py, test_concept_graph.py, test_new_fallback_enrichment.py)
+- **Known issue**: 2 pre-existing AI pipeline test failures — test_ai_pipeline.py passes strings instead of LayerName enums to get_layer()
+- **URL**: https://github.com/PyGuy2000/cognitive-scaffolding

@@ -32,13 +32,18 @@ from utils.ai_client import AIClient
 PROFILES = ["chatbot_tutor", "rag_explainer", "etl_explain"]
 
 LAYER_LABELS = {
+    "diagnostic": "Diagnostic",
     "activation": "Activation",
+    "contextualization": "Contextualization",
     "metaphor": "Metaphor",
+    "narrative": "Narrative",
     "structure": "Structure",
     "interrogation": "Interrogation",
     "encoding": "Encoding",
     "transfer": "Transfer",
+    "challenge": "Challenge",
     "reflection": "Reflection",
+    "elaboration": "Elaboration",
     "synthesis": "Synthesis",
 }
 

@@ -93,3 +93,29 @@ Do **not** connect to the MCP server at runtime or fix the sys.path import. Inst
 - Remove the dead sys.path import from MetaphorOperator (lines 17-27) and the engine parameter
 - Extract style selection, domain comparison, and audience inheritance as native features over subsequent sessions
 - The metaphor-mcp-server remains a standalone tool for Claude Desktop use — it doesn't need to be coupled to this project
+
+## ADR-008: Schema-Based Confidence Estimation (C1)
+- **Date**: 2026-02-13
+- **Status**: Accepted
+- **Context**: `estimate_confidence()` in BaseOperator used a crude length heuristic — a 500-character nonsense string scored 0.8. This was the single biggest quality weakness.
+- **Decision**: Each operator declares `expected_keys: List[str]`. Confidence is a weighted combination of: keys present (40%), non-empty values (40%), and content richness (20%). Operators without `expected_keys` fall back to the legacy length heuristic for backward compatibility.
+- **Consequences**: Confidence scores are now semantically meaningful. All 7 existing operators + 5 new operators declare expected_keys. GradingOperator intentionally uses legacy heuristic (no structured output schema).
+
+## ADR-009: Concept Prerequisite DAG (D1)
+- **Date**: 2026-02-13
+- **Status**: Accepted
+- **Context**: 216 concept YAMLs have `prerequisite_concepts` and `related_concepts` fields forming an implicit DAG that was never materialized. DiagnosticOperator needs transitive prerequisite resolution.
+- **Decision**: New `core/concept_graph.py` with `ConceptGraph` class using Python's `graphlib.TopologicalSorter`. Provides transitive prerequisite closure, topologically sorted learning paths, related-concept BFS clustering, difficulty estimation (60% depth + 40% count), and cycle detection.
+- **Consequences**: No new dependencies (graphlib is stdlib since Python 3.9). Enables prerequisite gap detection for DiagnosticOperator and learning path generation. Difficulty estimation available for future conditional layer activation.
+
+## ADR-010: Five New Cognitive Layers (A1-A5)
+- **Date**: 2026-02-13
+- **Status**: Accepted
+- **Context**: The pipeline had 7 content layers + synthesis but gaps in pre-assessment, big-picture context, narrative pedagogy, structured challenges, and deep-dive elaboration.
+- **Decision**: Add 5 new operators following the existing BaseOperator pattern:
+  1. **DiagnosticOperator** (pre-assessment) — runs before Activation, produces knowledge_assessment, prerequisite_gaps, recommended_depth, skip_basics, estimated_familiarity
+  2. **ContextualizationOperator** (big picture) — between Activation and Metaphor, uses concept category/evolution_rate/related_concepts
+  3. **NarrativeOperator** (story-based) — between Contextualization and Structure, embeds concepts in temporal narrative with characters, conflict, resolution
+  4. **ChallengeOperator** (Bloom's taxonomy) — between Transfer and Reflection, calibrates challenges using expertise level, diagnostic gaps, and cognitive_load
+  5. **ElaborationOperator** (deep-dive) — between Reflection and Synthesis, selects most relevant subtopic based on diagnostic gaps or default ordering
+- **Consequences**: LayerName enum grows from 8 to 13. CognitiveArtifact gets 5 new slots. All 3 profiles updated with new layers defaulting to `enabled: false` (except diagnostic in chatbot_tutor). SynthesisOperator integrates all new layers. ChatbotAdapter formats all new layers. Backward compatible — existing behavior unchanged unless new layers are explicitly enabled.
