@@ -13,16 +13,18 @@
 ## Implementation Status
 - **Phases 0-5**: Complete (core code, operators, orchestrator, adapters, CI, README)
 - **Phase 6**: Complete (audience-aware fallbacks, domain-aware compilation, E2E AI test)
+- **Phase 7**: Complete (SynthesisOperator + dashboard redesign)
 - **CI**: GitHub Actions — ruff + pytest on Python 3.12 (`.github/workflows/ci.yml`)
-- **Tests**: 128 passing (120 unit + 4 integration + 4 AI integration gated on API key)
+- **Tests**: 131 passing (123 unit + 4 integration + 4 AI integration gated on API key)
 - **Build**: Installed in `.venv/` via `pip install -e ".[dev]"`
+- **Streamlit**: `python -m streamlit run scripts/chatbot.py` (installed in venv)
 - **Topic-aware fallbacks**: Operators use concept YAML data when available, generic templates otherwise
 - **Audience-aware fallbacks**: All 7 operators use audience YAML data (preferred_analogies, core_skills, show_formulas, learning_assets, etc.)
 - **Domain-aware fallbacks**: Metaphor, activation, transfer operators use domain YAML data (vocabulary, metaphor_types, examples)
 
 ## Architecture
-- **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 7 optional LayerOutput slots
-- **Operators**: 8 total (activation, metaphor, structure, interrogation, encoding, transfer, reflection, grading)
+- **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 8 optional LayerOutput slots (7 content + synthesis)
+- **Operators**: 9 total (activation, metaphor, structure, interrogation, encoding, transfer, reflection, synthesis, grading)
 - **Orchestrator**: CognitiveConductor.compile() - loads profile → builds CallPlan → executes operators → scores
 - **Adapters**: ChatbotAdapter (chat messages), RAGAdapter (document chunks), ETLAdapter (flat dict)
 - **Toggle system**: Profile YAML → Runtime overrides → A/B experiments
@@ -46,8 +48,11 @@
 
 ## Related Projects
 - **metaphor-mcp-server**: `/home/robkacz/python/projects/metaphor-mcp-server/`
-  - MetaphorEngine referenced via sys.path import in MetaphorOperator
+  - MetaphorEngine referenced via sys.path import in MetaphorOperator (currently fails — see ADR-007)
   - Models, utils, data copied (not linked) into cognitive_scaffolding
+  - MCP has: 215 concepts, 29 domains, 16 audiences, 14 explanation styles, audience inheritance, Manim/D3/Mermaid visual generation, multi-domain metaphor comparison
+  - `mcp` package now installed in cognitive_scaffolding venv (dependency resolved)
+  - MetaphorEngine constructor requires `data_dir` param — the sys.path import in MetaphorOperator doesn't pass it
 - **Backup**: `/home/robkacz/python/projects/metaphor-mcp-server-backup/`
 
 ## Scoring Formula

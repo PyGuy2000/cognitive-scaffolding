@@ -32,6 +32,10 @@ layers:
     enabled: false
     required: false
     weight: 0.3
+  synthesis:
+    enabled: true
+    required: false
+    weight: 1.0
 
 settings:
   max_tokens_per_layer: 1000

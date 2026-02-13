@@ -11,6 +11,7 @@ from cognitive_scaffolding.operators.interrogation import InterrogationOperator
 from cognitive_scaffolding.operators.encoding import EncodingOperator
 from cognitive_scaffolding.operators.transfer import TransferOperator
 from cognitive_scaffolding.operators.reflection import ReflectionOperator
+from cognitive_scaffolding.operators.synthesis import SynthesisOperator
 from cognitive_scaffolding.operators.grading import GradingOperator
 
 
@@ -89,6 +90,51 @@ class TestReflectionOperator:
         output = op.execute("neural networks", audience, {})
         assert output.layer == LayerName.REFLECTION
         assert "calibration_questions" in output.content
+
+
+class TestSynthesisOperator:
+    def test_fallback_execution(self, audience):
+        """Synthesis with all 7 layers populated produces synthesized_response."""
+        op = SynthesisOperator(ai_client=None)
+        context = {
+            "activation": {"hook": "Did you know?", "curiosity_gap": "Most people misunderstand this."},
+            "metaphor": {"metaphor": "Neural networks are like a kitchen brigade."},
+            "structure": {"definition": "A neural network is a computational model.", "key_terms": {"neuron": "basic unit"}},
+            "interrogation": {"socratic_questions": ["What happens without hidden layers?"], "synthesis_prompt": "How do layers combine?"},
+            "encoding": {"mnemonic": "INPUT-HIDDEN-OUTPUT"},
+            "transfer": {"real_world_applications": ["image recognition", "speech processing"], "cross_domain_transfer": "Similar to decision trees."},
+            "reflection": {"next_steps": ["study backpropagation", "try a simple network"]},
+        }
+        output = op.execute("neural networks", audience, context)
+        assert output.layer == LayerName.SYNTHESIS
+        assert "synthesized_response" in output.content
+        assert "key_takeaway" in output.content
+        assert "layers_integrated" in output.content
+        assert len(output.content["layers_integrated"]) == 7
+        assert output.confidence > 0.5
+
+    def test_partial_context(self, audience):
+        """Synthesis with only 3 layers still produces output."""
+        op = SynthesisOperator(ai_client=None)
+        context = {
+            "activation": {"hook": "Did you know?"},
+            "structure": {"definition": "A neural network is a computational model."},
+            "encoding": {"mnemonic": "INPUT-HIDDEN-OUTPUT"},
+        }
+        output = op.execute("neural networks", audience, context)
+        assert output.layer == LayerName.SYNTHESIS
+        assert "synthesized_response" in output.content
+        assert len(output.content["layers_integrated"]) == 3
+        assert output.confidence > 0
+
+    def test_empty_context(self, audience):
+        """Synthesis with empty context produces minimal fallback."""
+        op = SynthesisOperator(ai_client=None)
+        output = op.execute("neural networks", audience, {})
+        assert output.layer == LayerName.SYNTHESIS
+        assert "synthesized_response" in output.content
+        assert output.content["layers_integrated"] == []
+        assert output.confidence == 0.2
 
 
 class TestParseOutput:

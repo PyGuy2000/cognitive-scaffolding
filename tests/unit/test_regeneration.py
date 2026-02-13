@@ -80,7 +80,7 @@ class TestRegenerateWeakLayers:
         result = regenerate_weak_layers(record, configs, conductor, threshold=1.0)
         assert result.current_revision > original_rev
         last_rev = result.revision_history[-1]
-        assert len(last_rev.changed_layers) == 7
+        assert len(last_rev.changed_layers) == 8
 
     def test_disabled_layers_not_regenerated(self):
         conductor = _make_conductor()

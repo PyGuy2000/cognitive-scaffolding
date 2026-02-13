@@ -98,6 +98,11 @@ def _layer_content():
             "connection_prompts": ["How does this relate to statistics?"],
             "next_steps": ["Explore deep learning", "Try a hands-on tutorial"],
         },
+        LayerName.SYNTHESIS: {
+            "synthesized_response": "Neural networks are computational models inspired by biological brains.",
+            "key_takeaway": "Neural networks learn patterns from data through interconnected layers.",
+            "layers_integrated": ["activation", "metaphor", "structure", "interrogation", "encoding", "transfer", "reflection"],
+        },
     }
 
 
@@ -141,7 +146,7 @@ class TestChatbotAdapter:
         messages = ChatbotAdapter().format(full_record)
         layer_order = [m["layer"] for m in messages if m["layer"] != "evaluation"]
         expected = ["activation", "metaphor", "structure", "interrogation",
-                    "encoding", "transfer", "reflection"]
+                    "encoding", "transfer", "reflection", "synthesis"]
         assert layer_order == expected
 
     def test_evaluation_message_appended(self, full_record):

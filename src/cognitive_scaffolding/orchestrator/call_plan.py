@@ -46,6 +46,7 @@ class CallPlan(BaseModel):
             LayerName.ENCODING: "cognitive_scaffolding.operators.encoding.EncodingOperator",
             LayerName.TRANSFER: "cognitive_scaffolding.operators.transfer.TransferOperator",
             LayerName.REFLECTION: "cognitive_scaffolding.operators.reflection.ReflectionOperator",
+            LayerName.SYNTHESIS: "cognitive_scaffolding.operators.synthesis.SynthesisOperator",
         }
 
         steps = []

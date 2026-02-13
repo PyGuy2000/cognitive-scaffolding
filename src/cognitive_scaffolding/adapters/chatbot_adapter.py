@@ -31,6 +31,7 @@ class ChatbotAdapter(BaseAdapter):
             LayerName.ENCODING,
             LayerName.TRANSFER,
             LayerName.REFLECTION,
+            LayerName.SYNTHESIS,
         ]
 
         for layer in layer_order:
@@ -75,6 +76,7 @@ class ChatbotAdapter(BaseAdapter):
             LayerName.ENCODING: self._format_encoding,
             LayerName.TRANSFER: self._format_transfer,
             LayerName.REFLECTION: self._format_reflection,
+            LayerName.SYNTHESIS: self._format_synthesis,
         }
         formatter = formatters.get(layer)
         if formatter:
@@ -234,4 +236,13 @@ class ChatbotAdapter(BaseAdapter):
             parts.append("\n**Next steps:**")
             for s in steps:
                 parts.append(f"  - {s}")
+        return "\n".join(parts) if parts else str(c)
+
+    @staticmethod
+    def _format_synthesis(c: Dict) -> str:
+        parts = []
+        if response := c.get("synthesized_response"):
+            parts.append(response)
+        if takeaway := c.get("key_takeaway"):
+            parts.append(f"\n**Key takeaway:** {takeaway}")
         return "\n".join(parts) if parts else str(c)

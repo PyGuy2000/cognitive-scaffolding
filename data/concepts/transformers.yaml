@@ -4,21 +4,11 @@ category: machine_learning
 complexity: advanced
 description: A neural network architecture that uses self-attention mechanisms to process sequential data
 key_components:
-  - self_attention:
-      description: Mechanism to weigh the importance of different parts of the input
-      importance: critical
-  - multi_head_attention:
-      description: Multiple parallel attention mechanisms
-      importance: high
-  - positional_encoding:
-      description: Method to inject sequence order information
-      importance: high
-  - feed_forward_networks:
-      description: Point-wise fully connected layers
-      importance: medium
-  - layer_normalization:
-      description: Normalization technique for stable training
-      importance: medium
+  - self_attention
+  - multi_head_attention
+  - positional_encoding
+  - feed_forward_networks
+  - layer_normalization
 prerequisites:
   - neural_networks
   - linear_algebra

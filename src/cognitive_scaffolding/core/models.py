@@ -9,7 +9,7 @@ import uuid
 
 
 class LayerName(str, Enum):
-    """The 7 cognitive layers."""
+    """The 7 cognitive layers + synthesis."""
     ACTIVATION = "activation"
     METAPHOR = "metaphor"
     STRUCTURE = "structure"
@@ -17,6 +17,7 @@ class LayerName(str, Enum):
     ENCODING = "encoding"
     TRANSFER = "transfer"
     REFLECTION = "reflection"
+    SYNTHESIS = "synthesis"
 
 
 class AudienceControlVector(BaseModel):
@@ -81,6 +82,7 @@ class CognitiveArtifact(BaseModel):
     encoding: Optional[LayerOutput] = None
     transfer: Optional[LayerOutput] = None
     reflection: Optional[LayerOutput] = None
+    synthesis: Optional[LayerOutput] = None
 
     evaluation: Optional[EvaluationResult] = None
     metadata: Dict[str, Any] = Field(default_factory=dict)

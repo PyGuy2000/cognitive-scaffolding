@@ -45,3 +45,51 @@
 - **Context**: No test validated the pipeline with a real AI client. Need to ensure AI output is valid JSON, scores higher than fallbacks, and references concept-specific content.
 - **Decision**: Tests gated with `@pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"))` and `@pytest.mark.slow`. Tests skip in CI and local runs without credentials. AIClient import deferred to function body to avoid import errors.
 - **Consequences**: CI stays fast (tests skip). Developers with API keys can run full validation. No flaky tests from network issues in CI.
+
+## ADR-007: MCP Engine Integration — Gap Analysis and Recommendations
+- **Date**: 2026-02-12
+- **Status**: Proposed
+- **Context**: The metaphor-mcp-server has substantial capabilities that are not used by the cognitive_scaffolding MetaphorOperator. A live comparison was performed with both systems running against the same LLM (Claude Sonnet). The `sys.path` import hack in MetaphorOperator (line 20) fails because MetaphorEngine now requires a `data_dir` argument, so the MCP engine path is dead code.
+
+### Gap Analysis
+
+**What the MCP engine has that cognitive_scaffolding does not use:**
+1. **14 explanation styles** — extended_metaphor, progressive_revelation, misconception_decoder, narrative_journey, etc. with context-aware selection based on expertise, time, and learning objective. *High value.* No equivalent exists in any CS operator.
+2. **Multi-domain metaphor comparison** — `compare_metaphor_approaches()` generates the same concept across N domains and ranks them. *High value.* Lets the system present the best metaphor, not just the first one.
+3. **Audience inheritance hierarchy** — data_scientist inherits from technical_workers inherits from technical, cascading show_formulas, show_code, benchmark_focus, etc. *Medium value.* CS has flat audience profiles with extra fields, which works but doesn't scale well for specialized roles.
+4. **Domain fitness scoring** — scores each domain against concept category, audience preferences, and complexity. *Medium value but currently broken* — ranking returns flat scores for all domains (bug in MCP server).
+5. **Dynamic concept analysis** — LLM-based analysis of any concept for abstractness, complexity, field classification. *Low-medium value.* CS already passes concept YAML data to operators; dynamic analysis adds value only for concepts not in the YAML library.
+6. **Visual generation** — Manim scripts, D3.js, Mermaid diagrams per domain. *Low priority for current use cases.* Would matter if building visual learning tools.
+
+**What cognitive_scaffolding does better:**
+- Template fallbacks — every operator produces useful output without AI. MCP returns empty fallback messages.
+- Scoring and evaluation — weighted per-layer scoring with penalty system. MCP has no self-evaluation.
+- Multi-layer integration — 7 content layers + synthesis + grading. MCP only covers metaphor.
+- Revision tracking — ArtifactRecord with linear revision history.
+
+### Recommendation: Selective Extraction (Not Full Integration)
+
+Do **not** connect to the MCP server at runtime or fix the sys.path import. Instead, extract specific high-value logic into the cognitive_scaffolding operators as native Python:
+
+1. **Style selection matrix** (HIGH priority) — Extract the 14-style selection logic from `metaphor-mcp-server/data/templates/` and `metaphor_engine.py`. This would benefit **all 7 operators**, not just metaphor. Each operator could vary its output structure based on style (e.g., progressive_revelation for activation, misconception_decoder for interrogation). Implement as a shared utility or a style parameter in BaseOperator.
+
+2. **Multi-domain metaphor comparison** (HIGH priority) — Add a `compare_domains()` method to MetaphorOperator that generates metaphors for 2-3 top domains and picks the best. The domain selection logic itself is simple (concept category → suitable domains), and the comparison is just N parallel LLM calls. Can be implemented without any MCP dependency.
+
+3. **Audience inheritance** (MEDIUM priority) — Add a parent field to audience YAMLs and a simple inheritance resolver in DataLoader. The MCP's `audience_inheritance.py` is ~200 lines and could be adapted. This would let the 16 audience profiles share base properties cleanly instead of repeating fields.
+
+4. **Fix domain ranking** (MEDIUM priority) — The MCP's domain ranking is broken (flat scores), but the *concept* of scoring domains by (concept_category, audience_preferences, complexity_match) is sound. Implement a clean version in MetaphorOperator or DataLoader using the existing domain YAML metadata (suitable_for, metaphor_types).
+
+5. **Dynamic concept analysis** (LOW priority) — Only matters for topics not in the 215 concept YAMLs. The SynthesisOperator and AI-backed operators already handle unknown topics via LLM prompts.
+
+6. **Visual generation** (DEFER) — Manim/D3/Mermaid generation is useful but orthogonal to the core scaffolding pipeline. Add only if building a visual learning product.
+
+### Rationale for extraction over integration
+- The MCP server has a different AI client, different models, different error handling. Bridging them adds coupling.
+- The valuable logic (style selection, domain scoring, audience inheritance) is algorithmic — it doesn't need the MCP protocol or server infrastructure.
+- Extraction lets us add proper fallbacks (which the MCP lacks) and integrate with the existing scoring system.
+- The sys.path hack is fragile and creates namespace collisions (both projects have `utils.ai_client`).
+
+### Consequence
+- Remove the dead sys.path import from MetaphorOperator (lines 17-27) and the engine parameter
+- Extract style selection, domain comparison, and audience inheritance as native features over subsequent sessions
+- The metaphor-mcp-server remains a standalone tool for Claude Desktop use — it doesn't need to be coupled to this project

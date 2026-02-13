@@ -37,3 +37,19 @@ Track completed work, in-progress tasks, and ticket references.
   3. **E2E AI integration test** — Gated on `ANTHROPIC_API_KEY`, marked `@slow`. 4 tests: valid artifact, AI >= fallback score, richer content, concept-specific terms.
 - **Test count**: 98 → 128 (21 audience + 9 domain + 4 AI integration, minus 4 skipped when no API key)
 - **URL**: https://github.com/PyGuy2000/cognitive-scaffolding
+
+### 2026-02-12 - Synthesis Operator + Dashboard Redesign
+- **Status**: Completed
+- **Description**: Added SynthesisOperator (Layer 8) that reads all 7 layer outputs and produces one unified response. Redesigned Streamlit chatbot dashboard with side-by-side comparison: scaffolded synthesis (left) vs raw LLM baseline (right). Layer details moved to expander. Removed old comparison toggle.
+- **Files changed**: models.py (SYNTHESIS enum + slot), operators/synthesis.py (new), call_plan.py, chatbot_adapter.py, scripts/chatbot.py, 3 profile YAMLs, test_operators.py, test_adapters.py, test_regeneration.py
+- **Test count**: 128 → 131 (3 new SynthesisOperator tests + 2 existing tests updated for 8th layer)
+- **URL**: https://github.com/PyGuy2000/cognitive-scaffolding
+
+### 2026-02-12 - MCP Engine Analysis: What's Missing
+- **Status**: Analysis complete (no code changes)
+- **Description**: Installed `mcp` package and ran the metaphor-mcp-server MetaphorEngine with live AI to compare output quality. Documented gaps between MCP engine capabilities and cognitive_scaffolding MetaphorOperator. See ADR-007 for recommendations.
+- **Key findings**:
+  - MCP engine has 29 domains, 215 concepts, 16 audiences, 14 explanation styles, audience inheritance, visual generation (Manim/D3/Mermaid), multi-domain comparison
+  - Domain ranking is broken (flat scores, no differentiation) — bug in MCP server
+  - AI-generated metaphor prose quality is comparable (same LLM), but MCP injects richer context
+  - MCP has zero fallback when AI is unavailable; cognitive_scaffolding handles this better
