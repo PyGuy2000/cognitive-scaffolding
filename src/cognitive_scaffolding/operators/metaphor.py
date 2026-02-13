@@ -31,6 +31,7 @@ class MetaphorOperator(BaseOperator):
     """Wraps existing MetaphorEngine or generates metaphors via LLM."""
 
     layer_name = LayerName.METAPHOR
+    expected_keys = ["metaphor", "source_domain", "mapping", "limitations", "extension"]
 
     def __init__(self, ai_client=None, engine=None):
         super().__init__(ai_client)

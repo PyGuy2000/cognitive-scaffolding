@@ -14,6 +14,7 @@ class EncodingOperator(BaseOperator):
     """Generates memory-consolidation aids: mnemonics, chunking, retrieval cues."""
 
     layer_name = LayerName.ENCODING
+    expected_keys = ["mnemonic", "chunks", "retrieval_cues", "spaced_repetition", "visual_anchor"]
 
     def build_prompt(
         self,

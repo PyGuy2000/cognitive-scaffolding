@@ -14,6 +14,7 @@ class ReflectionOperator(BaseOperator):
     """Generates metacognitive content: calibration, self-assessment, reflection."""
 
     layer_name = LayerName.REFLECTION
+    expected_keys = ["calibration_questions", "confidence_check", "misconception_alerts", "connection_prompts", "next_steps"]
 
     def build_prompt(
         self,

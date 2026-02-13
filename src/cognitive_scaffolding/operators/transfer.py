@@ -14,6 +14,7 @@ class TransferOperator(BaseOperator):
     """Generates application content: examples, problems, real-world scenarios."""
 
     layer_name = LayerName.TRANSFER
+    expected_keys = ["worked_example", "practice_problems", "real_world_applications", "simulation_prompt", "cross_domain_transfer"]
 
     def build_prompt(
         self,

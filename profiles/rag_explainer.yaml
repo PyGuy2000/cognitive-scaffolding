@@ -4,7 +4,15 @@ name: rag_explainer
 description: Optimized for RAG pipeline document enrichment
 
 layers:
+  diagnostic:
+    enabled: false
+    required: false
+    weight: 0.5
   activation:
+    enabled: false
+    required: false
+    weight: 0.5
+  contextualization:
     enabled: false
     required: false
     weight: 0.5
@@ -12,6 +20,10 @@ layers:
     enabled: true
     required: true
     weight: 1.5
+  narrative:
+    enabled: false
+    required: false
+    weight: 0.5
   structure:
     enabled: true
     required: true
@@ -28,10 +40,18 @@ layers:
     enabled: true
     required: false
     weight: 1.2
+  challenge:
+    enabled: false
+    required: false
+    weight: 0.5
   reflection:
     enabled: false
     required: false
     weight: 0.3
+  elaboration:
+    enabled: false
+    required: false
+    weight: 0.5
   synthesis:
     enabled: true
     required: false

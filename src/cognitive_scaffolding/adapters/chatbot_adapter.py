@@ -24,13 +24,18 @@ class ChatbotAdapter(BaseAdapter):
 
         # Layer ordering for progressive disclosure
         layer_order = [
+            LayerName.DIAGNOSTIC,
             LayerName.ACTIVATION,
+            LayerName.CONTEXTUALIZATION,
             LayerName.METAPHOR,
+            LayerName.NARRATIVE,
             LayerName.STRUCTURE,
             LayerName.INTERROGATION,
             LayerName.ENCODING,
             LayerName.TRANSFER,
+            LayerName.CHALLENGE,
             LayerName.REFLECTION,
+            LayerName.ELABORATION,
             LayerName.SYNTHESIS,
         ]
 
@@ -69,19 +74,43 @@ class ChatbotAdapter(BaseAdapter):
     def _format_layer_content(self, layer: LayerName, content: Dict[str, Any]) -> str:
         """Format a layer's content as readable chat text."""
         formatters = {
+            LayerName.DIAGNOSTIC: self._format_diagnostic,
             LayerName.ACTIVATION: self._format_activation,
+            LayerName.CONTEXTUALIZATION: self._format_contextualization,
             LayerName.METAPHOR: self._format_metaphor,
+            LayerName.NARRATIVE: self._format_narrative,
             LayerName.STRUCTURE: self._format_structure,
             LayerName.INTERROGATION: self._format_interrogation,
             LayerName.ENCODING: self._format_encoding,
             LayerName.TRANSFER: self._format_transfer,
+            LayerName.CHALLENGE: self._format_challenge,
             LayerName.REFLECTION: self._format_reflection,
+            LayerName.ELABORATION: self._format_elaboration,
             LayerName.SYNTHESIS: self._format_synthesis,
         }
         formatter = formatters.get(layer)
         if formatter:
             return formatter(content)
         return str(content)
+
+    @staticmethod
+    def _format_diagnostic(c: Dict) -> str:
+        parts = []
+        if depth := c.get("recommended_depth"):
+            parts.append(f"**Recommended depth:** {depth}")
+        if gaps := c.get("prerequisite_gaps"):
+            parts.append("\n**Prerequisite gaps:**")
+            for g in gaps:
+                parts.append(f"  - {g}")
+        if assessment := c.get("knowledge_assessment"):
+            parts.append("\n**Knowledge assessment:**")
+            for k, v in assessment.items():
+                parts.append(f"  - **{k}**: {v}")
+        if c.get("skip_basics"):
+            parts.append("\n*Basics will be skipped based on your background.*")
+        if (fam := c.get("estimated_familiarity")) is not None:
+            parts.append(f"\n**Estimated familiarity:** {fam:.0%}")
+        return "\n".join(parts) if parts else str(c)
 
     @staticmethod
     def _format_activation(c: Dict) -> str:
@@ -96,6 +125,23 @@ class ChatbotAdapter(BaseAdapter):
             parts.append(f"\n**Emotional trigger:** {trigger}")
         if bridge := c.get("prior_knowledge_bridge"):
             parts.append(f"\n**Build on what you know:** {bridge}")
+        return "\n".join(parts) if parts else str(c)
+
+    @staticmethod
+    def _format_contextualization(c: Dict) -> str:
+        parts = []
+        if ctx := c.get("field_context"):
+            parts.append(ctx)
+        if timeline := c.get("historical_timeline"):
+            parts.append("\n**Historical timeline:**")
+            for item in timeline:
+                parts.append(f"  - {item}")
+        if trends := c.get("current_trends"):
+            parts.append(f"\n**Current trends:** {trends}")
+        if adjacent := c.get("adjacent_topics"):
+            parts.append(f"\n**Adjacent topics:** {', '.join(adjacent)}")
+        if why := c.get("why_now"):
+            parts.append(f"\n**Why now:** {why}")
         return "\n".join(parts) if parts else str(c)
 
     @staticmethod
@@ -118,6 +164,23 @@ class ChatbotAdapter(BaseAdapter):
                 parts.append(f"  {limitations}")
         if extension := c.get("extension"):
             parts.append(f"\n**Taking it further:** {extension}")
+        return "\n".join(parts) if parts else str(c)
+
+    @staticmethod
+    def _format_narrative(c: Dict) -> str:
+        parts = []
+        if story := c.get("story"):
+            parts.append(story)
+        if chars := c.get("characters"):
+            parts.append("\n**Characters:**")
+            for ch in chars:
+                parts.append(f"  - {ch}")
+        if conflict := c.get("conflict"):
+            parts.append(f"\n**Conflict:** {conflict}")
+        if resolution := c.get("resolution"):
+            parts.append(f"\n**Resolution:** {resolution}")
+        if embedded := c.get("concept_embedded_at"):
+            parts.append(f"\n**Key moment:** {embedded}")
         return "\n".join(parts) if parts else str(c)
 
     @staticmethod
@@ -216,6 +279,25 @@ class ChatbotAdapter(BaseAdapter):
         return "\n".join(parts) if parts else str(c)
 
     @staticmethod
+    def _format_challenge(c: Dict) -> str:
+        parts = []
+        if level := c.get("bloom_level"):
+            parts.append(f"**Bloom's level:** {level}")
+        if prompt := c.get("challenge_prompt"):
+            parts.append(f"\n**Challenge:** {prompt}")
+        if hints := c.get("scaffolded_hints"):
+            parts.append("\n**Hints (if stuck):**")
+            for i, h in enumerate(hints, 1):
+                parts.append(f"  {i}. {h}")
+        if justification := c.get("difficulty_justification"):
+            parts.append(f"\n**Why this difficulty:** {justification}")
+        if struggles := c.get("expected_struggle_points"):
+            parts.append("\n**Common struggle points:**")
+            for s in struggles:
+                parts.append(f"  - {s}")
+        return "\n".join(parts) if parts else str(c)
+
+    @staticmethod
     def _format_reflection(c: Dict) -> str:
         parts = []
         if check := c.get("confidence_check"):
@@ -236,6 +318,23 @@ class ChatbotAdapter(BaseAdapter):
             parts.append("\n**Next steps:**")
             for s in steps:
                 parts.append(f"  - {s}")
+        return "\n".join(parts) if parts else str(c)
+
+    @staticmethod
+    def _format_elaboration(c: Dict) -> str:
+        parts = []
+        if subtopic := c.get("selected_subtopic"):
+            parts.append(f"**Deep dive:** {subtopic}")
+        if deep_dive := c.get("deep_dive"):
+            parts.append(f"\n{deep_dive}")
+        if connections := c.get("connections_to_main"):
+            parts.append(f"\n**Connection to main topic:** {connections}")
+        if further := c.get("further_reading"):
+            parts.append("\n**Further reading:**")
+            for f in further:
+                parts.append(f"  - {f}")
+        if selection := c.get("selection_rationale"):
+            parts.append(f"\n**Why this subtopic:** {selection}")
         return "\n".join(parts) if parts else str(c)
 
     @staticmethod

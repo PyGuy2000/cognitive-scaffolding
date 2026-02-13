@@ -145,6 +145,7 @@ class TestChatbotAdapter:
     def test_message_ordering(self, full_record):
         messages = ChatbotAdapter().format(full_record)
         layer_order = [m["layer"] for m in messages if m["layer"] != "evaluation"]
+        # full_record fixture has original 8 layers populated
         expected = ["activation", "metaphor", "structure", "interrogation",
                     "encoding", "transfer", "reflection", "synthesis"]
         assert layer_order == expected
@@ -304,9 +305,23 @@ class TestETLAdapter:
 
     def test_per_layer_populated_and_confidence(self, full_record):
         result = ETLAdapter().format(full_record)
-        for layer in LayerName:
+        # Check the original 8 layers populated in fixture
+        original_layers = [
+            LayerName.ACTIVATION, LayerName.METAPHOR, LayerName.STRUCTURE,
+            LayerName.INTERROGATION, LayerName.ENCODING, LayerName.TRANSFER,
+            LayerName.REFLECTION, LayerName.SYNTHESIS,
+        ]
+        for layer in original_layers:
             assert result[f"layer_{layer.value}_populated"] is True
             assert result[f"layer_{layer.value}_confidence"] == 0.75
+        # New layers should not be populated in this fixture
+        new_layers = [
+            LayerName.DIAGNOSTIC, LayerName.CONTEXTUALIZATION,
+            LayerName.NARRATIVE, LayerName.CHALLENGE, LayerName.ELABORATION,
+        ]
+        for layer in new_layers:
+            assert result[f"layer_{layer.value}_populated"] is False
+            assert result[f"layer_{layer.value}_confidence"] is None
 
     def test_score_and_evaluation_fields(self, full_record):
         result = ETLAdapter().format(full_record)

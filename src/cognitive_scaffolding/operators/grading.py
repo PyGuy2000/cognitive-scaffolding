@@ -82,8 +82,9 @@ class GradingOperator(BaseOperator):
 
     def _identify_gaps(self, context: Dict[str, Any], config: Dict[str, Any]) -> list:
         """Identify missing or weak areas."""
-        expected_layers = ["activation", "metaphor", "structure", "interrogation",
-                          "encoding", "transfer", "reflection"]
+        expected_layers = ["diagnostic", "activation", "contextualization", "metaphor",
+                          "narrative", "structure", "interrogation", "encoding",
+                          "transfer", "challenge", "reflection", "elaboration"]
         gaps = []
         for layer in expected_layers:
             if layer not in context:

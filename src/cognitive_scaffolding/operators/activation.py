@@ -14,6 +14,7 @@ class ActivationOperator(BaseOperator):
     """Generates attention hooks and engagement triggers."""
 
     layer_name = LayerName.ACTIVATION
+    expected_keys = ["hook", "curiosity_gap", "stakes", "emotional_trigger", "prior_knowledge_bridge"]
 
     def build_prompt(
         self,

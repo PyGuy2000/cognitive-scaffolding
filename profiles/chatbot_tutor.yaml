@@ -1,17 +1,29 @@
 # Chatbot Tutor Profile
-# All 7 layers enabled for comprehensive interactive teaching
+# All core layers enabled for comprehensive interactive teaching
 name: chatbot_tutor
 description: Full cognitive scaffolding for interactive chatbot tutoring
 
 layers:
+  diagnostic:
+    enabled: true
+    required: false
+    weight: 0.8
   activation:
     enabled: true
     required: true
     weight: 1.2
+  contextualization:
+    enabled: false
+    required: false
+    weight: 0.8
   metaphor:
     enabled: true
     required: false
     weight: 1.5
+  narrative:
+    enabled: false
+    required: false
+    weight: 0.8
   structure:
     enabled: true
     required: true
@@ -28,8 +40,16 @@ layers:
     enabled: true
     required: false
     weight: 1.0
+  challenge:
+    enabled: false
+    required: false
+    weight: 0.8
   reflection:
     enabled: true
+    required: false
+    weight: 0.8
+  elaboration:
+    enabled: false
     required: false
     weight: 0.8
   synthesis:

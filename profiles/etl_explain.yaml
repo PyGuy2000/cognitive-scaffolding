@@ -4,7 +4,15 @@ name: etl_explain
 description: Structured output for ETL data pipelines
 
 layers:
+  diagnostic:
+    enabled: false
+    required: false
+    weight: 0.3
   activation:
+    enabled: false
+    required: false
+    weight: 0.3
+  contextualization:
     enabled: false
     required: false
     weight: 0.3
@@ -12,6 +20,10 @@ layers:
     enabled: true
     required: false
     weight: 1.0
+  narrative:
+    enabled: false
+    required: false
+    weight: 0.3
   structure:
     enabled: true
     required: true
@@ -28,10 +40,18 @@ layers:
     enabled: true
     required: false
     weight: 0.8
+  challenge:
+    enabled: false
+    required: false
+    weight: 0.3
   reflection:
     enabled: true
     required: false
     weight: 1.0
+  elaboration:
+    enabled: false
+    required: false
+    weight: 0.3
   synthesis:
     enabled: true
     required: false

@@ -14,6 +14,7 @@ class StructureOperator(BaseOperator):
     """Generates structured, precise content: definitions, taxonomies, diagrams."""
 
     layer_name = LayerName.STRUCTURE
+    expected_keys = ["definition", "taxonomy", "key_terms", "relationships", "diagram_description", "formal_notation"]
 
     def build_prompt(
         self,

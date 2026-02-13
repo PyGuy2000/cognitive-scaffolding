@@ -14,6 +14,7 @@ class InterrogationOperator(BaseOperator):
     """Generates Socratic questions and deep-processing prompts."""
 
     layer_name = LayerName.INTERROGATION
+    expected_keys = ["socratic_questions", "counterexamples", "edge_cases", "misconception_probes", "synthesis_prompt"]
 
     def build_prompt(
         self,

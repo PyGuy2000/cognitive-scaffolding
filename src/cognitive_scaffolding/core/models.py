@@ -9,14 +9,19 @@ import uuid
 
 
 class LayerName(str, Enum):
-    """The 7 cognitive layers + synthesis."""
+    """Cognitive layers: diagnostic (pre-assessment) + 7 content layers + new layers + synthesis."""
+    DIAGNOSTIC = "diagnostic"
     ACTIVATION = "activation"
+    CONTEXTUALIZATION = "contextualization"
     METAPHOR = "metaphor"
+    NARRATIVE = "narrative"
     STRUCTURE = "structure"
     INTERROGATION = "interrogation"
     ENCODING = "encoding"
     TRANSFER = "transfer"
+    CHALLENGE = "challenge"
     REFLECTION = "reflection"
+    ELABORATION = "elaboration"
     SYNTHESIS = "synthesis"
 
 
@@ -74,14 +79,19 @@ class CognitiveArtifact(BaseModel):
     topic: str
     audience: AudienceProfile
 
-    # 7 optional layer slots
+    # Layer slots (all optional, populated by corresponding operators)
+    diagnostic: Optional[LayerOutput] = None
     activation: Optional[LayerOutput] = None
+    contextualization: Optional[LayerOutput] = None
     metaphor: Optional[LayerOutput] = None
+    narrative: Optional[LayerOutput] = None
     structure: Optional[LayerOutput] = None
     interrogation: Optional[LayerOutput] = None
     encoding: Optional[LayerOutput] = None
     transfer: Optional[LayerOutput] = None
+    challenge: Optional[LayerOutput] = None
     reflection: Optional[LayerOutput] = None
+    elaboration: Optional[LayerOutput] = None
     synthesis: Optional[LayerOutput] = None
 
     evaluation: Optional[EvaluationResult] = None

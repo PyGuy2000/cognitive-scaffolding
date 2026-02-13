@@ -11,15 +11,20 @@ from cognitive_scaffolding.core.models import AudienceProfile, LayerName
 from cognitive_scaffolding.operators.base import BaseOperator
 
 
-# The 7 content layers (everything except synthesis itself)
+# All content layers (everything except synthesis itself)
 CONTENT_LAYERS = [
+    LayerName.DIAGNOSTIC,
     LayerName.ACTIVATION,
+    LayerName.CONTEXTUALIZATION,
     LayerName.METAPHOR,
+    LayerName.NARRATIVE,
     LayerName.STRUCTURE,
     LayerName.INTERROGATION,
     LayerName.ENCODING,
     LayerName.TRANSFER,
+    LayerName.CHALLENGE,
     LayerName.REFLECTION,
+    LayerName.ELABORATION,
 ]
 
 
@@ -76,6 +81,14 @@ Return ONLY valid JSON, no markdown."""
         parts = []
         layers_integrated = []
 
+        # Diagnostic context (not displayed directly, but noted)
+        diagnostic = context.get("diagnostic", {})
+        if diagnostic:
+            layers_integrated.append("diagnostic")
+            depth = diagnostic.get("recommended_depth", "")
+            if depth:
+                parts.append(f"[Depth: {depth}]")
+
         # Open with activation hook
         activation = context.get("activation", {})
         if activation:
@@ -87,6 +100,17 @@ Return ONLY valid JSON, no markdown."""
             if gap:
                 parts.append(gap)
 
+        # Contextualization: big picture
+        contextualization = context.get("contextualization", {})
+        if contextualization:
+            layers_integrated.append("contextualization")
+            field_ctx = contextualization.get("field_context", "")
+            if field_ctx:
+                parts.append(field_ctx)
+            why_now = contextualization.get("why_now", "")
+            if why_now:
+                parts.append(why_now)
+
         # Bridge with metaphor
         metaphor = context.get("metaphor", {})
         if metaphor:
@@ -94,6 +118,14 @@ Return ONLY valid JSON, no markdown."""
             met_text = metaphor.get("metaphor", "")
             if met_text:
                 parts.append(met_text)
+
+        # Narrative story
+        narrative = context.get("narrative", {})
+        if narrative:
+            layers_integrated.append("narrative")
+            story = narrative.get("story", "")
+            if story:
+                parts.append(story)
 
         # Core explanation from structure
         structure = context.get("structure", {})
@@ -134,6 +166,14 @@ Return ONLY valid JSON, no markdown."""
             if cross:
                 parts.append(cross)
 
+        # Challenge prompt
+        challenge = context.get("challenge", {})
+        if challenge:
+            layers_integrated.append("challenge")
+            prompt = challenge.get("challenge_prompt", "")
+            if prompt:
+                parts.append(f"Challenge: {prompt}")
+
         # Reflection next steps
         reflection = context.get("reflection", {})
         if reflection:
@@ -141,6 +181,14 @@ Return ONLY valid JSON, no markdown."""
             next_steps = reflection.get("next_steps", [])
             if next_steps:
                 parts.append(f"Next, explore: {'; '.join(next_steps[:3])}.")
+
+        # Elaboration deep dive
+        elaboration = context.get("elaboration", {})
+        if elaboration:
+            layers_integrated.append("elaboration")
+            deep_dive = elaboration.get("deep_dive", "")
+            if deep_dive:
+                parts.append(deep_dive)
 
         if not parts:
             synthesized = (
