@@ -31,3 +31,17 @@
   2. Runtime overrides (API caller can override any toggle)
   3. A/B experiments (compare scores with different toggle combinations)
 - **Consequences**: Profiles cover 80% of use cases. Runtime overrides handle edge cases. Experiment system enables data-driven optimization. Toggle state must be tracked in provenance.
+
+## ADR-005: Audience/Domain Data Injection via ConfigDict(extra="allow")
+- **Date**: 2026-02-12
+- **Status**: Accepted
+- **Context**: Audience and domain YAMLs have many fields beyond the Pydantic model definitions (preferred_metaphors, communication_style, show_formulas, vocabulary, examples, etc.). These were silently dropped during loading, making fallback templates audience/domain-agnostic.
+- **Decision**: Add `model_config = ConfigDict(extra="allow")` to Audience and Domain models. Conductor loads YAML data via DataLoader.get_audience()/get_domain(), serializes with model_dump(), and injects as `audience_data`/`domain` keys in each operator's step_config. Operators read these dicts in generate_fallback() — this augments existing concept-aware and generic branches rather than adding a third branch.
+- **Consequences**: Extra YAML fields preserved without schema changes. Operators can progressively adopt audience/domain fields. No breaking changes to existing behavior (empty config still produces generic output). Domain selection cascades: explicit domain_id → audience preferred_domains → "general" fallback.
+
+## ADR-006: Gated E2E AI Integration Tests
+- **Date**: 2026-02-12
+- **Status**: Accepted
+- **Context**: No test validated the pipeline with a real AI client. Need to ensure AI output is valid JSON, scores higher than fallbacks, and references concept-specific content.
+- **Decision**: Tests gated with `@pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"))` and `@pytest.mark.slow`. Tests skip in CI and local runs without credentials. AIClient import deferred to function body to avoid import errors.
+- **Consequences**: CI stays fast (tests skip). Developers with API keys can run full validation. No flaky tests from network issues in CI.

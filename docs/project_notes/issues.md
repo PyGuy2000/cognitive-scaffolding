@@ -28,3 +28,12 @@ Track completed work, in-progress tasks, and ticket references.
 ### 2026-02-12 - README and Project Notes Update
 - **Status**: Completed
 - **Description**: Created README.md with architecture overview, quickstart, CLI usage, and project structure. Updated key_facts.md and issues.md to reflect current state (98 tests, CI green, Phase 5 complete).
+
+### 2026-02-12 - Audience-Aware Fallbacks, Domain-Aware Compilation, E2E AI Test
+- **Status**: Completed
+- **Description**: Three enhancements shipped in one commit (`51c3a51`):
+  1. **Audience-aware fallbacks** — Added `ConfigDict(extra="allow")` to Audience model. Conductor loads audience YAML data and injects into all 7 operators. Each operator's `generate_fallback()` uses audience fields (preferred_analogies, core_skills, show_formulas, learning_assets, attention_span, preferred_domains, primary_tools, communication_style, complexity_preference) to personalize output.
+  2. **Domain-aware compilation** — Added `ConfigDict(extra="allow")` to Domain model. Conductor accepts `domain_id` param with cascading selection (explicit → audience preferred_domains → "general"). Domain data (vocabulary, metaphor_types, examples) enriches metaphor, activation, and transfer operators. Added `--domain` CLI flag to demo.py.
+  3. **E2E AI integration test** — Gated on `ANTHROPIC_API_KEY`, marked `@slow`. 4 tests: valid artifact, AI >= fallback score, richer content, concept-specific terms.
+- **Test count**: 98 → 128 (21 audience + 9 domain + 4 AI integration, minus 4 skipped when no API key)
+- **URL**: https://github.com/PyGuy2000/cognitive-scaffolding

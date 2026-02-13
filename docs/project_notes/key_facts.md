@@ -12,10 +12,13 @@
 
 ## Implementation Status
 - **Phases 0-5**: Complete (core code, operators, orchestrator, adapters, CI, README)
+- **Phase 6**: Complete (audience-aware fallbacks, domain-aware compilation, E2E AI test)
 - **CI**: GitHub Actions — ruff + pytest on Python 3.12 (`.github/workflows/ci.yml`)
-- **Tests**: 98 passing (94 unit + 4 integration)
+- **Tests**: 128 passing (120 unit + 4 integration + 4 AI integration gated on API key)
 - **Build**: Installed in `.venv/` via `pip install -e ".[dev]"`
 - **Topic-aware fallbacks**: Operators use concept YAML data when available, generic templates otherwise
+- **Audience-aware fallbacks**: All 7 operators use audience YAML data (preferred_analogies, core_skills, show_formulas, learning_assets, etc.)
+- **Domain-aware fallbacks**: Metaphor, activation, transfer operators use domain YAML data (vocabulary, metaphor_types, examples)
 
 ## Architecture
 - **Core IR**: CognitiveArtifact (Pydantic BaseModel) with 7 optional LayerOutput slots
@@ -29,10 +32,10 @@
 - `src/cognitive_scaffolding/core/scoring.py` — Weighted scoring formula
 - `src/cognitive_scaffolding/core/data_loader.py` — YAML data loader for concepts, audiences, domains
 - `src/cognitive_scaffolding/operators/base.py` — BaseOperator ABC
-- `src/cognitive_scaffolding/orchestrator/conductor.py` — Main compilation loop (loads concept data, injects into operators)
+- `src/cognitive_scaffolding/orchestrator/conductor.py` — Main compilation loop (loads concept/audience/domain data, injects into operators)
 - `src/cognitive_scaffolding/orchestrator/toggle_manager.py` — Feature toggle system
 - `src/cognitive_scaffolding/orchestrator/regeneration.py` — Targeted re-run of weak layers
-- `scripts/demo.py` — CLI demo (compile, experiment, --regenerate)
+- `scripts/demo.py` — CLI demo (compile, experiment, --regenerate, --domain)
 
 ## Dependencies
 - pydantic>=2.0.0
